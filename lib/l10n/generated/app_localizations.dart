@@ -301,6 +301,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No minutes left.'**
   String get failOutOfPulses;
+
+  /// No description provided for @metroPassport.
+  ///
+  /// In en, this message translates to:
+  /// **'METRO PASSPORT'**
+  String get metroPassport;
+
+  /// No description provided for @stampEarned.
+  ///
+  /// In en, this message translates to:
+  /// **'Stamp earned!'**
+  String get stampEarned;
+
+  /// No description provided for @stampedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Stamped {date}'**
+  String stampedOn(String date);
+
+  /// No description provided for @nightDispatcher.
+  ///
+  /// In en, this message translates to:
+  /// **'NIGHT DISPATCHER'**
+  String get nightDispatcher;
+
+  /// No description provided for @nightDispatcherBody.
+  ///
+  /// In en, this message translates to:
+  /// **'All five cities stamped. The night network is yours.'**
+  String get nightDispatcherBody;
+
+  /// No description provided for @cityProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{done}/{total}'**
+  String cityProgress(int done, int total);
+
+  /// No description provided for @greetingAnkara.
+  ///
+  /// In en, this message translates to:
+  /// **'Hoş geldin, başkent!'**
+  String get greetingAnkara;
+
+  /// No description provided for @greetingBaku.
+  ///
+  /// In en, this message translates to:
+  /// **'Xoş gəlmisən!'**
+  String get greetingBaku;
+
+  /// No description provided for @greetingParis.
+  ///
+  /// In en, this message translates to:
+  /// **'Bienvenue !'**
+  String get greetingParis;
+
+  /// No description provided for @greetingLondon.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome aboard!'**
+  String get greetingLondon;
+
+  /// No description provided for @greetingMoscow.
+  ///
+  /// In en, this message translates to:
+  /// **'Добро пожаловать!'**
+  String get greetingMoscow;
 }
 
 class _AppLocalizationsDelegate

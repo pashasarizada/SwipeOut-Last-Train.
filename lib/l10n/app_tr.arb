@@ -33,5 +33,16 @@
   "failHeadOn": "Kafa kafaya! İki tren aynı rayda.",
   "failBlocked": "Bir tren bekleyen trene çarptı.",
   "failWrongGoal": "Yanlış hat: o durak başka trenin.",
-  "failOutOfPulses": "Dakika kalmadı."
+  "failOutOfPulses": "Dakika kalmadı.",
+  "metroPassport": "METRO PASSPORT",
+  "stampEarned": "Damga kazanıldı!",
+  "stampedOn": "Damga: {date}",
+  "nightDispatcher": "NIGHT DISPATCHER",
+  "nightDispatcherBody": "Beş şehrin damgası tamam. Gece ağı artık senin.",
+  "cityProgress": "{done}/{total}",
+  "greetingAnkara": "Hoş geldin, başkent!",
+  "greetingBaku": "Xoş gəlmisən!",
+  "greetingParis": "Bienvenue !",
+  "greetingLondon": "Welcome aboard!",
+  "greetingMoscow": "Добро пожаловать!"
 }

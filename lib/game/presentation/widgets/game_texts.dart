@@ -14,6 +14,15 @@ extension GameTexts on AppLocalizations {
     CityId.moscow => cityMoscow,
   };
 
+  /// The local-language welcome shown on a city's pages.
+  String greeting(CityId city) => switch (city) {
+    CityId.ankara => greetingAnkara,
+    CityId.baku => greetingBaku,
+    CityId.paris => greetingParis,
+    CityId.london => greetingLondon,
+    CityId.moscow => greetingMoscow,
+  };
+
   /// `ANKARA 01`.
   String levelCode(LevelDefinition level) =>
       '${cityName(level.city)} ${level.number.toString().padLeft(2, '0')}';

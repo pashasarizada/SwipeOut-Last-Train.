@@ -122,4 +122,42 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get failOutOfPulses => 'Dakika kalmadı.';
+
+  @override
+  String get metroPassport => 'METRO PASSPORT';
+
+  @override
+  String get stampEarned => 'Damga kazanıldı!';
+
+  @override
+  String stampedOn(String date) {
+    return 'Damga: $date';
+  }
+
+  @override
+  String get nightDispatcher => 'NIGHT DISPATCHER';
+
+  @override
+  String get nightDispatcherBody =>
+      'Beş şehrin damgası tamam. Gece ağı artık senin.';
+
+  @override
+  String cityProgress(int done, int total) {
+    return '$done/$total';
+  }
+
+  @override
+  String get greetingAnkara => 'Hoş geldin, başkent!';
+
+  @override
+  String get greetingBaku => 'Xoş gəlmisən!';
+
+  @override
+  String get greetingParis => 'Bienvenue !';
+
+  @override
+  String get greetingLondon => 'Welcome aboard!';
+
+  @override
+  String get greetingMoscow => 'Добро пожаловать!';
 }

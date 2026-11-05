@@ -81,5 +81,33 @@
   "failHeadOn": "Head-on! Two trains on one track.",
   "failBlocked": "A train ran into a waiting one.",
   "failWrongGoal": "Wrong line: that stop belongs to another train.",
-  "failOutOfPulses": "No minutes left."
+  "failOutOfPulses": "No minutes left.",
+  "metroPassport": "METRO PASSPORT",
+  "stampEarned": "Stamp earned!",
+  "stampedOn": "Stamped {date}",
+  "@stampedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "nightDispatcher": "NIGHT DISPATCHER",
+  "nightDispatcherBody": "All five cities stamped. The night network is yours.",
+  "cityProgress": "{done}/{total}",
+  "@cityProgress": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "greetingAnkara": "Hoş geldin, başkent!",
+  "greetingBaku": "Xoş gəlmisən!",
+  "greetingParis": "Bienvenue !",
+  "greetingLondon": "Welcome aboard!",
+  "greetingMoscow": "Добро пожаловать!"
 }

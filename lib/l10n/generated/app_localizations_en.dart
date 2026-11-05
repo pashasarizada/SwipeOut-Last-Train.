@@ -122,4 +122,42 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get failOutOfPulses => 'No minutes left.';
+
+  @override
+  String get metroPassport => 'METRO PASSPORT';
+
+  @override
+  String get stampEarned => 'Stamp earned!';
+
+  @override
+  String stampedOn(String date) {
+    return 'Stamped $date';
+  }
+
+  @override
+  String get nightDispatcher => 'NIGHT DISPATCHER';
+
+  @override
+  String get nightDispatcherBody =>
+      'All five cities stamped. The night network is yours.';
+
+  @override
+  String cityProgress(int done, int total) {
+    return '$done/$total';
+  }
+
+  @override
+  String get greetingAnkara => 'Hoş geldin, başkent!';
+
+  @override
+  String get greetingBaku => 'Xoş gəlmisən!';
+
+  @override
+  String get greetingParis => 'Bienvenue !';
+
+  @override
+  String get greetingLondon => 'Welcome aboard!';
+
+  @override
+  String get greetingMoscow => 'Добро пожаловать!';
 }
