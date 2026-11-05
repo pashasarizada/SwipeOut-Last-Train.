@@ -129,11 +129,20 @@ void main() {
     await _app(tester);
     await tester.tap(find.text('CHOOSE CITY'));
     await tester.pumpAndSettle();
-    await tester.drag(find.byType(PageView), const Offset(-300, 0));
+    // More than half a page, so the carousel moves on to Baku.
+    await tester.drag(find.byType(PageView), const Offset(-500, 0));
     await tester.pumpAndSettle();
 
     expect(find.text('LINE UNDER CONSTRUCTION'), findsWidgets);
-    await tester.tap(find.byKey(const ValueKey('ticket-baku')));
+    // The centred page is now Baku's ticket; tap what is on screen.
+    final centre = tester.getCenter(find.byType(PageView));
+    expect(
+      tester
+          .getRect(find.byKey(const ValueKey('ticket-baku')))
+          .contains(centre),
+      isTrue,
+    );
+    await tester.tapAt(centre);
     await tester.pumpAndSettle();
     expect(find.byType(CityMapScreen), findsNothing);
   });
