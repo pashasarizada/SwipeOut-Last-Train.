@@ -168,4 +168,10 @@ void main() {
       (CityId.paris, 6, true),
     );
   });
+
+  test('PAR-02: the first signal holds red so blue can pass', () {
+    final level = levels.firstWhere((l) => l.id == 'PAR-02');
+    expect(level.initialSignals.keys, ['G']);
+    expect(level.solution.whereType<ToggleSignal>(), hasLength(2));
+  });
 }

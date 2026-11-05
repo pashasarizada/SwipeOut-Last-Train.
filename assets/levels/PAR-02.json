@@ -1,0 +1,47 @@
+{
+  "id": "PAR-02",
+  "city": "paris",
+  "number": 2,
+  "tutorial": false,
+  "title": {"tr": "Kırmızı Sinyal", "en": "Red Signal"},
+  "maxPulses": 8,
+  "parPulses": 6,
+  "maxChangesPerPulse": 1,
+  "nodes": [
+    {"id": "A", "kind": "depot", "x": 0.06, "y": 0.18},
+    {"id": "G", "kind": "signal", "x": 0.22, "y": 0.34},
+    {"id": "D", "kind": "depot", "x": 0.06, "y": 0.86},
+    {"id": "E", "kind": "track", "x": 0.22, "y": 0.70},
+    {"id": "M", "kind": "switch", "x": 0.38, "y": 0.52},
+    {"id": "C", "kind": "track", "x": 0.56, "y": 0.52},
+    {"id": "S", "kind": "switch", "x": 0.74, "y": 0.52},
+    {"id": "R", "kind": "goal", "x": 0.92, "y": 0.26},
+    {"id": "B", "kind": "goal", "x": 0.92, "y": 0.78}
+  ],
+  "edges": [
+    {"id": "AG", "a": "A", "b": "G"},
+    {"id": "GM", "a": "G", "b": "M"},
+    {"id": "DE", "a": "D", "b": "E"},
+    {"id": "EM", "a": "E", "b": "M"},
+    {"id": "MC", "a": "M", "b": "C"},
+    {"id": "CS", "a": "C", "b": "S"},
+    {"id": "SR", "a": "S", "b": "R"},
+    {"id": "SB", "a": "S", "b": "B"}
+  ],
+  "switches": [
+    {"nodeId": "M", "trunkEdge": "MC", "branchAEdge": "GM", "branchBEdge": "EM", "selectedBranch": "B"},
+    {"nodeId": "S", "trunkEdge": "CS", "branchAEdge": "SR", "branchBEdge": "SB", "selectedBranch": "B"}
+  ],
+  "signals": [
+    {"nodeId": "G", "initial": "green"}
+  ],
+  "trains": [
+    {"id": "red_1", "startNode": "A", "goalNode": "R", "symbol": "circle", "style": "coral"},
+    {"id": "blue_1", "startNode": "D", "goalNode": "B", "symbol": "triangle", "style": "azure"}
+  ],
+  "tutorialSteps": [
+    {"tr": "Sinyale dokun: kırmızı ışık treni durdurur.", "en": "Tap the signal: red light holds the train."},
+    {"tr": "Yeşil yakınca tren yoluna devam eder.", "en": "Turn it green and the train moves on."}
+  ],
+  "solution": ["wait", "signal:G", "signal:G", "switch:M", "wait", "switch:S"]
+}
