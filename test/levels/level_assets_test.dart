@@ -207,4 +207,17 @@ void main() {
     };
     expect(touched, {...finale.switches.keys, ...finale.initialSignals.keys});
   });
+
+  test('LON-01: a missed exit sends the train round the ring', () {
+    final level = levels.firstWhere((l) => l.id == 'LON-01');
+    final engine = PulseEngine(level);
+    // The recorded solution, but the last minute's exit switch is missed.
+    final missed = [...level.solution.take(level.solution.length - 1), null];
+    var state = level.initialState;
+    for (final action in missed) {
+      state = (engine.simulatePulse(state, action) as PulseApplied).state;
+    }
+    expect(state.trainById('red_1')!.nodeId, 'Z');
+    expect(state.trainById('red_1')!.delivered, isFalse);
+  });
 }

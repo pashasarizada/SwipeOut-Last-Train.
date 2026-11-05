@@ -54,7 +54,7 @@ void main() {
 
   test('a city without levels yet is empty', () async {
     expect(
-      await AssetLevelRepository(rootBundle).loadCity(CityId.london),
+      await AssetLevelRepository(rootBundle).loadCity(CityId.moscow),
       isEmpty,
     );
   });

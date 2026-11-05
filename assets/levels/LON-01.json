@@ -1,0 +1,50 @@
+{
+  "id": "LON-01",
+  "city": "london",
+  "number": 1,
+  "tutorial": false,
+  "title": {"tr": "Halka Girişi", "en": "Ring Entrance"},
+  "maxPulses": 8,
+  "parPulses": 5,
+  "maxChangesPerPulse": 1,
+  "nodes": [
+    {"id": "A", "kind": "depot", "x": 0.06, "y": 0.16},
+    {"id": "E", "kind": "switch", "x": 0.28, "y": 0.30},
+    {"id": "P", "kind": "track", "x": 0.55, "y": 0.16},
+    {"id": "Y", "kind": "switch", "x": 0.80, "y": 0.30},
+    {"id": "D", "kind": "depot", "x": 0.96, "y": 0.10},
+    {"id": "X", "kind": "switch", "x": 0.82, "y": 0.66},
+    {"id": "R", "kind": "goal", "x": 0.96, "y": 0.86},
+    {"id": "Z", "kind": "switch", "x": 0.55, "y": 0.82},
+    {"id": "B", "kind": "goal", "x": 0.34, "y": 0.98},
+    {"id": "Q", "kind": "track", "x": 0.28, "y": 0.66}
+  ],
+  "edges": [
+    {"id": "AE", "a": "A", "b": "E"},
+    {"id": "EP", "a": "E", "b": "P"},
+    {"id": "PY", "a": "P", "b": "Y"},
+    {"id": "DY", "a": "D", "b": "Y"},
+    {"id": "YX", "a": "Y", "b": "X"},
+    {"id": "XR", "a": "X", "b": "R"},
+    {"id": "XZ", "a": "X", "b": "Z"},
+    {"id": "ZB", "a": "Z", "b": "B"},
+    {"id": "ZQ", "a": "Z", "b": "Q"},
+    {"id": "QE", "a": "Q", "b": "E"}
+  ],
+  "switches": [
+    {"nodeId": "E", "trunkEdge": "EP", "branchAEdge": "QE", "branchBEdge": "AE", "selectedBranch": "B"},
+    {"nodeId": "Y", "trunkEdge": "YX", "branchAEdge": "PY", "branchBEdge": "DY", "selectedBranch": "A"},
+    {"nodeId": "X", "trunkEdge": "YX", "branchAEdge": "XZ", "branchBEdge": "XR", "selectedBranch": "A"},
+    {"nodeId": "Z", "trunkEdge": "XZ", "branchAEdge": "ZQ", "branchBEdge": "ZB", "selectedBranch": "A"}
+  ],
+  "signals": [],
+  "trains": [
+    {"id": "red_1", "startNode": "A", "goalNode": "R", "symbol": "circle", "style": "coral"},
+    {"id": "blue_1", "startNode": "D", "goalNode": "B", "symbol": "triangle", "style": "azure"}
+  ],
+  "tutorialSteps": [
+    {"tr": "Halkada tren dönmeye devam eder.", "en": "On the ring a train keeps going round."},
+    {"tr": "Çıkış makasını zamanında çevir.", "en": "Turn the exit switch in time."}
+  ],
+  "solution": ["wait", "switch:Y", "switch:Y", "switch:Z", "switch:X"]
+}
