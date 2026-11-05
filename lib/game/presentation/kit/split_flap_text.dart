@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'motion_settings.dart';
 
-/// Departure-board text: when it appears or changes, each character flips
-/// into place one after another (120 ms per flip, 40 ms stagger).
+/// Departure-board text: when it appears or changes, each character that
+/// changed flips into place one after another (120 ms per flip, 40 ms
+/// stagger); characters that stay the same never move.
 final class SplitFlapText extends StatefulWidget {
   const SplitFlapText(this.text, {super.key, this.style});
 
@@ -22,6 +23,9 @@ class _SplitFlapTextState extends State<SplitFlapText>
   late final AnimationController _controller = AnimationController(vsync: this);
   String _from = '';
 
+  /// Flip order of each changed character; unchanged ones are absent.
+  Map<int, int> _slots = const {};
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -36,14 +40,18 @@ class _SplitFlapTextState extends State<SplitFlapText>
 
   void _start(String from) {
     _from = from;
-    if (MotionSettings.reducedOf(context)) {
+    final text = widget.text;
+    var order = 0;
+    _slots = {
+      for (var i = 0; i < text.length; i++)
+        if (i >= from.length || from[i] != text[i]) i: order++,
+    };
+    if (MotionSettings.reducedOf(context) || _slots.isEmpty) {
       _controller.value = 1;
       return;
     }
-    final length = widget.text.length;
     _controller.duration =
-        SplitFlapText.flip +
-        SplitFlapText.stagger * (length > 0 ? length - 1 : 0);
+        SplitFlapText.flip + SplitFlapText.stagger * (_slots.length - 1);
     _controller.forward(from: 0);
   }
 
@@ -72,9 +80,14 @@ class _SplitFlapTextState extends State<SplitFlapText>
         final elapsed = _controller.value * total;
         final chars = <Widget>[];
         for (var i = 0; i < widget.text.length; i++) {
-          final start = SplitFlapText.stagger.inMicroseconds * i;
-          final t = ((elapsed - start) / SplitFlapText.flip.inMicroseconds)
-              .clamp(0.0, 1.0);
+          final slot = _slots[i];
+          final start = SplitFlapText.stagger.inMicroseconds * (slot ?? 0);
+          final t = slot == null
+              ? 1.0
+              : ((elapsed - start) / SplitFlapText.flip.inMicroseconds).clamp(
+                  0.0,
+                  1.0,
+                );
           final shown = t < 0.5
               ? (i < _from.length ? _from[i] : ' ')
               : widget.text[i];

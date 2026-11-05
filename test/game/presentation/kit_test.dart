@@ -119,6 +119,28 @@ void main() {
       await _pump(tester, const SplitFlapText('23:54'), reduced: true);
       expect(find.text('23:54'), findsOneWidget);
     });
+
+    testWidgets('only the characters that change flip', (tester) async {
+      await _pump(tester, const SplitFlapText('23:54'));
+      await tester.pumpAndSettle();
+      await _pump(tester, const SplitFlapText('23:55'));
+      await tester.pump(const Duration(milliseconds: 30));
+
+      double scaleOf(String char) {
+        final flip = find.ancestor(
+          of: find.text(char),
+          matching: find.byType(Transform),
+        );
+        return tester.widget<Transform>(flip.first).transform.storage[5];
+      }
+
+      for (final steady in ['2', '3', ':']) {
+        expect(scaleOf(steady), 1.0, reason: steady);
+      }
+      expect(find.text('23:55'), findsNothing, reason: 'the last digit flips');
+      await tester.pumpAndSettle();
+      expect(find.text('23:55'), findsOneWidget);
+    });
   });
 
   group('ControlTicket', () {
