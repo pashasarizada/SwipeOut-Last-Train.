@@ -21,7 +21,8 @@ Object? _read(String file) =>
     jsonDecode(File('${LevelIndex.assetDir}/$file').readAsStringSync());
 
 /// docs/UI_UX_GUIDELINES.md: every node stays a 44 pt target on the
-/// smallest phone on sale (375×667, iPhone SE) with large text (D-029).
+/// iPhone SE (375×667) and the original SE (320×568) with large text
+/// (D-029).
 void main() {
   final index = LevelIndex.fromJson(_read(LevelIndex.fileName));
   final levels = <LevelDefinition>[
@@ -30,47 +31,50 @@ void main() {
         const LevelJsonCodec().decode(_read(file)! as Map<String, Object?>),
   ];
 
-  for (final level in levels) {
-    testWidgets('${level.id} keeps its nodes 44 pt apart at 375×667', (
-      tester,
-    ) async {
-      tester.view.physicalSize = const Size(375, 667);
-      tester.view.devicePixelRatio = 1;
-      tester.platformDispatcher.textScaleFactorTestValue = 1.3;
-      tester.platformDispatcher.accessibilityFeaturesTestValue =
-          const FakeAccessibilityFeatures(disableAnimations: true);
-      addTearDown(tester.view.reset);
-      addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
-      addTearDown(
-        tester.platformDispatcher.clearAccessibilityFeaturesTestValue,
-      );
-      final store = ProgressStore(
-        catalog: {
-          level.city: [level],
-        },
-        repository: MemoryProgressRepository(const Progress()),
-        progress: const Progress(),
-      );
-      await tester.pumpWidget(
-        SwipeOutApp(
-          store: store,
-          home: PulseGameScreen(level: level),
-        ),
-      );
-      await tester.pumpAndSettle();
-      expect(tester.takeException(), isNull);
+  for (final screen in [const Size(375, 667), const Size(320, 568)]) {
+    for (final level in levels) {
+      testWidgets('${level.id} keeps its nodes 44 pt apart at '
+          '${screen.width.toInt()}×${screen.height.toInt()}', (tester) async {
+        tester.view.physicalSize = screen;
+        tester.view.devicePixelRatio = 1;
+        tester.platformDispatcher.textScaleFactorTestValue = 1.3;
+        tester.platformDispatcher.accessibilityFeaturesTestValue =
+            const FakeAccessibilityFeatures(disableAnimations: true);
+        addTearDown(tester.view.reset);
+        addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+        addTearDown(
+          tester.platformDispatcher.clearAccessibilityFeaturesTestValue,
+        );
+        final store = ProgressStore(
+          catalog: {
+            level.city: [level],
+          },
+          repository: MemoryProgressRepository(const Progress()),
+          progress: const Progress(),
+        );
+        await tester.pumpWidget(
+          SwipeOutApp(
+            store: store,
+            home: PulseGameScreen(level: level),
+          ),
+        );
+        await tester.pumpAndSettle();
+        expect(tester.takeException(), isNull);
 
-      final layout = BoardLayout(size: tester.getSize(find.byType(BoardView)));
-      final points = [
-        for (final n in level.nodes.values) layout.toScreen(n.position),
-      ];
-      var nearest = double.infinity;
-      for (var i = 0; i < points.length; i++) {
-        for (var j = i + 1; j < points.length; j++) {
-          nearest = math.min(nearest, (points[i] - points[j]).distance);
+        final layout = BoardLayout(
+          size: tester.getSize(find.byType(BoardView)),
+        );
+        final points = [
+          for (final n in level.nodes.values) layout.toScreen(n.position),
+        ];
+        var nearest = double.infinity;
+        for (var i = 0; i < points.length; i++) {
+          for (var j = i + 1; j < points.length; j++) {
+            nearest = math.min(nearest, (points[i] - points[j]).distance);
+          }
         }
-      }
-      expect(nearest, greaterThanOrEqualTo(44));
-    });
+        expect(nearest, greaterThanOrEqualTo(44));
+      });
+    }
   }
 }

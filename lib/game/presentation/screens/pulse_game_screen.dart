@@ -130,12 +130,14 @@ class _PulseGameScreenState extends State<PulseGameScreen> {
       header: PulseHud(controller: _controller),
       body: Column(
         children: [
-          for (final step in widget.level.tutorialSteps)
+          for (final step in widget.level.tutorialSteps.take(
+            isCompactScreen(context) ? 1 : 2,
+          ))
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 step.of(language),
-                maxLines: 2,
+                maxLines: isCompactScreen(context) ? 1 : 2,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
                 style: const TextStyle(

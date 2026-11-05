@@ -25,13 +25,26 @@ final class PulseControls extends StatelessWidget {
         final idle = !controller.isAnimating;
         final playing = idle && !controller.isSolved && !controller.isLost;
         final pending = controller.pending;
+        final compact = isCompactScreen(context);
+        final undo = GameButton(
+          label: l.undo,
+          size: GameButtonSize.small,
+          color: AppColors.track,
+          onPressed: idle && controller.canUndo ? controller.undo : null,
+        );
+        final restart = GameButton(
+          label: l.restart,
+          size: GameButtonSize.small,
+          color: AppColors.track,
+          onPressed: idle && controller.canUndo ? controller.restart : null,
+        );
         return Padding(
-          padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+          padding: EdgeInsets.fromLTRB(16, 0, 16, compact ? 6 : 10),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(
-                height: 52,
+                height: compact ? 48 : 52,
                 child: pending == null
                     ? null
                     : Center(
@@ -48,32 +61,15 @@ final class PulseControls extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Expanded(
-                    child: GameButton(
-                      label: l.undo,
-                      size: GameButtonSize.small,
-                      color: AppColors.track,
-                      onPressed: idle && controller.canUndo
-                          ? controller.undo
-                          : null,
-                    ),
-                  ),
+                  Expanded(child: undo),
                   const SizedBox(width: 12),
-                  Expanded(
-                    child: GameButton(
-                      label: l.restart,
-                      size: GameButtonSize.small,
-                      color: AppColors.track,
-                      onPressed: idle && controller.canUndo
-                          ? controller.restart
-                          : null,
-                    ),
-                  ),
+                  Expanded(child: restart),
                 ],
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: compact ? 6 : 10),
               AdvanceLever(
                 label: l.advance,
+                compact: compact,
                 onPressed: playing ? controller.advance : null,
               ),
             ],
@@ -83,3 +79,8 @@ final class PulseControls extends StatelessWidget {
     );
   }
 }
+
+/// Short phones (the original iPhone SE, 568 pt) get a tighter platform so
+/// the board keeps its 44 pt touch targets (D-029).
+bool isCompactScreen(BuildContext context) =>
+    MediaQuery.sizeOf(context).height < 700;

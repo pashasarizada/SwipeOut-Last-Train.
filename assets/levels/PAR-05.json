@@ -15,7 +15,7 @@
     {"id": "F", "kind": "depot", "x": 0.10, "y": 0.92},
     {"id": "H", "kind": "signal", "x": 0.26, "y": 0.78},
     {"id": "N", "kind": "switch", "x": 0.42, "y": 0.62},
-    {"id": "C", "kind": "track", "x": 0.58, "y": 0.56},
+    {"id": "C", "kind": "track", "x": 0.60, "y": 0.58},
     {"id": "S", "kind": "switch", "x": 0.72, "y": 0.42},
     {"id": "L", "kind": "goal", "x": 0.92, "y": 0.18},
     {"id": "K", "kind": "switch", "x": 0.82, "y": 0.66},

@@ -7,10 +7,18 @@ import 'game_haptics.dart';
 /// The big "advance one minute" control at the bottom of the platform:
 /// a hero-sized game button with a clock mark and a medium thump.
 final class AdvanceLever extends StatelessWidget {
-  const AdvanceLever({super.key, required this.label, this.onPressed});
+  const AdvanceLever({
+    super.key,
+    required this.label,
+    this.onPressed,
+    this.compact = false,
+  });
 
   final String label;
   final VoidCallback? onPressed;
+
+  /// On short screens the lever is large instead of hero-sized.
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +27,7 @@ final class AdvanceLever extends StatelessWidget {
       child: GameButton(
         label: label,
         onPressed: onPressed,
-        size: GameButtonSize.hero,
+        size: compact ? GameButtonSize.large : GameButtonSize.hero,
         haptic: HapticKind.medium,
         icon: const SizedBox.square(
           dimension: 26,

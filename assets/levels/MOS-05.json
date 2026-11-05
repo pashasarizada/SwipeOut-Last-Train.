@@ -9,13 +9,13 @@
   "maxChangesPerPulse": 1,
   "nodes": [
     {"id": "A", "kind": "depot", "x": 0.30, "y": 0.02},
-    {"id": "G", "kind": "signal", "x": 0.10, "y": 0.08},
-    {"id": "M", "kind": "switch", "x": 0.18, "y": 0.22},
-    {"id": "D", "kind": "depot", "x": 0.04, "y": 0.56},
-    {"id": "E", "kind": "track", "x": 0.10, "y": 0.38},
+    {"id": "G", "kind": "signal", "x": 0.08, "y": 0.06},
+    {"id": "M", "kind": "switch", "x": 0.18, "y": 0.24},
+    {"id": "D", "kind": "depot", "x": 0.02, "y": 0.58},
+    {"id": "E", "kind": "track", "x": 0.10, "y": 0.40},
     {"id": "F", "kind": "depot", "x": 0.18, "y": 0.96},
     {"id": "N", "kind": "switch", "x": 0.34, "y": 0.80},
-    {"id": "H", "kind": "depot", "x": 0.82, "y": 0.98},
+    {"id": "H", "kind": "depot", "x": 0.84, "y": 0.98},
     {"id": "V", "kind": "track", "x": 0.64, "y": 0.98},
     {"id": "T", "kind": "track", "x": 0.46, "y": 0.94},
     {"id": "P", "kind": "switch", "x": 0.36, "y": 0.50},
@@ -25,7 +25,7 @@
     {"id": "B", "kind": "goal", "x": 0.96, "y": 0.38},
     {"id": "K", "kind": "switch", "x": 0.84, "y": 0.74},
     {"id": "L", "kind": "goal", "x": 0.98, "y": 0.58},
-    {"id": "Q", "kind": "goal", "x": 0.98, "y": 0.90}
+    {"id": "Q", "kind": "goal", "x": 0.98, "y": 0.88}
   ],
   "edges": [
     {"id": "AG", "a": "A", "b": "G"},

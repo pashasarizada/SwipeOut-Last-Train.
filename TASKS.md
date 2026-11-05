@@ -37,19 +37,19 @@
 - [ ] Ayarlar: ses (ses efektleri gelince), High Contrast (S).
 - [x] Sonraki pulse "hayalet tren" önizlemesi (S) — yer değiştirecek trenin varacağı düğümde soluk halka; yalnız bir pulse ileri (§3.2/5).
 
-## P1 — Küçük ekran (320×568) kompakt oyun düzeni
-- [ ] Tahta 320×568'de ~180 pt kalıyor; Geri Al/Baştan'ı ikonlu tek satıra al, ipuçlarını tek satıra indir; hedef: tüm bölümler 320×568'de 44 pt (D-029) (M).
+## P1 — Küçük ekran (320×568) kompakt oyun düzeni — tamamlandı 06.11.2026
+- [x] Yükseklik < 700 pt'de: tek ipucu satırı, daha sıkı kontroller, kol `large` boy; 30 bölümün hepsi 320×568 + ×1.3 yazıda 44 pt (D-029).
 
 ## P1 — V2-UX son inceleme küçük bulguları (ertelendi)
-- [ ] SplitFlapText değişmeyen karakteri çevirmesin (S).
-- [ ] Kayıt yükleme kayıt-bazlı tolerans; `getString` try içinde (S).
-- [ ] Restart/undo sonrası vagon yönünü sıfırla (S).
-- [ ] Ortam parçacık döngüsü 8 sn'de sıçramasın; statik arka plan katmanlarını ayrı boya (S).
-- [ ] GameButton devre dışıyken bırakma; CitySelect PageController dispose (S).
-- [ ] 200 satırı aşan ekranları böl: city_map, city_select, pulse_game (M).
-- [ ] Bakü bilet testi boşa dokunuyor — düzelt (S).
-- [ ] Plan sapmaları: HUD tren glifi, parallax, Reduced Motion süre yarılama, ayar dişlisi, bilet yırtma animasyonu, yerel tarih biçimi, damga tekrar oynatma (M).
-- [ ] ControlTicket `tearLabel` zorunlu; `saveRun` hata yakalama (S).
+- [x] SplitFlapText değişmeyen karakteri çevirmesin (S).
+- [x] Kayıt yükleme kayıt-bazlı tolerans; `getString` try içinde (S).
+- [x] Restart/undo sonrası vagon yönünü sıfırla (S).
+- [x] Ortam parçacık döngüsü 8 sn'de sıçramasın; statik arka plan katmanlarını ayrı boya (S).
+- [x] GameButton devre dışıyken bırakma; CitySelect PageController dispose (S).
+- [x] 200 satırı aşan ekranları böl: city_map, city_select, pulse_game (M).
+- [x] Bakü bilet testi boşa dokunuyor — düzelt (S).
+- [ ] Plan sapmaları kalan: parallax, Reduced Motion süre yarılama, bilet yırtma animasyonu, damga tekrar oynatma (M). (Yapıldı: HUD "TREN" etiketi, ayar dişlisi, yerel tarih biçimi.)
+- [x] ControlTicket `tearLabel` zorunlu; `saveRun` hata yakalama (S).
 
 ## P2 — V2-C/D
 - [x] Paris 6 — PAR-01 çapraz rota · 02 ilk sinyal · 03 iki sinyal · 04 üç tren · 05 üç tren + iki kırmızı sinyal · 06 final, tüm kontroller (06.11.2026).
