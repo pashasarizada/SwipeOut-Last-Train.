@@ -142,4 +142,16 @@ void main() {
       expect(level.solution.whereType<ToggleSwitch>(), hasLength(6));
     },
   );
+
+  test('BAK-05: rushing red into the corridor meets blue head-on', () {
+    final level = levels.firstWhere((l) => l.id == 'BAK-05');
+    final engine = PulseEngine(level);
+    var state = level.initialState;
+    PulseResult result = PulseApplied(state);
+    for (var i = 0; i < 3 && result is PulseApplied; i++) {
+      state = result.state;
+      result = engine.simulatePulse(state, null);
+    }
+    expect((result as PulseFailed).reason, PulseFailure.headOn);
+  });
 }

@@ -1,0 +1,45 @@
+{
+  "id": "BAK-05",
+  "city": "baku",
+  "number": 5,
+  "tutorial": false,
+  "title": {"tr": "Kapanan Koridor", "en": "Closing Corridor"},
+  "maxPulses": 8,
+  "parPulses": 6,
+  "maxChangesPerPulse": 1,
+  "nodes": [
+    {"id": "A", "kind": "depot", "x": 0.06, "y": 0.14},
+    {"id": "H", "kind": "switch", "x": 0.20, "y": 0.34},
+    {"id": "Z", "kind": "terminal", "x": 0.40, "y": 0.14},
+    {"id": "L", "kind": "switch", "x": 0.34, "y": 0.52},
+    {"id": "B", "kind": "goal", "x": 0.08, "y": 0.70},
+    {"id": "W", "kind": "switch", "x": 0.66, "y": 0.52},
+    {"id": "R", "kind": "goal", "x": 0.92, "y": 0.28},
+    {"id": "F", "kind": "track", "x": 0.80, "y": 0.76},
+    {"id": "D", "kind": "depot", "x": 0.58, "y": 0.90}
+  ],
+  "edges": [
+    {"id": "AH", "a": "A", "b": "H"},
+    {"id": "HZ", "a": "H", "b": "Z"},
+    {"id": "HL", "a": "H", "b": "L"},
+    {"id": "LB", "a": "L", "b": "B"},
+    {"id": "LW", "a": "L", "b": "W"},
+    {"id": "WR", "a": "W", "b": "R"},
+    {"id": "WF", "a": "W", "b": "F"},
+    {"id": "DF", "a": "D", "b": "F"}
+  ],
+  "switches": [
+    {"nodeId": "H", "trunkEdge": "HL", "branchAEdge": "AH", "branchBEdge": "HZ", "selectedBranch": "A"},
+    {"nodeId": "L", "trunkEdge": "LW", "branchAEdge": "HL", "branchBEdge": "LB", "selectedBranch": "A"},
+    {"nodeId": "W", "trunkEdge": "LW", "branchAEdge": "WR", "branchBEdge": "WF", "selectedBranch": "B"}
+  ],
+  "signals": [],
+  "trains": [
+    {"id": "red_1", "startNode": "A", "goalNode": "R", "symbol": "circle", "style": "coral"},
+    {"id": "blue_1", "startNode": "D", "goalNode": "B", "symbol": "triangle", "style": "azure"}
+  ],
+  "tutorialSteps": [
+    {"tr": "Bazen en iyi hamle beklemektir.", "en": "Sometimes the best move is to wait."}
+  ],
+  "solution": ["wait", "switch:H", "switch:L", "switch:H", "switch:L", "switch:W"]
+}
