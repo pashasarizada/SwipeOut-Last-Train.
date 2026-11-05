@@ -5,12 +5,14 @@ import 'app.dart';
 import 'game/data/asset_level_repository.dart';
 import 'game/data/level_repository.dart';
 import 'game/data/prefs_progress_repository.dart';
+import 'game/data/prefs_settings_repository.dart';
 import 'game/presentation/game/progress_store.dart';
+import 'game/presentation/game/settings_store.dart';
 import 'game/presentation/screens/home_screen.dart';
 import 'game/presentation/screens/tunnel_intro_screen.dart';
 
 /// Composition root: concrete dependencies are created only here. Levels and
-/// progress load while the dark native launch screen is still showing.
+/// progress and settings load while the dark launch screen is showing.
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -21,9 +23,15 @@ Future<void> main() async {
     repository: progressRepository,
     progress: await progressRepository.load(),
   );
+  final settingsRepository = await PrefsSettingsRepository.open();
+  final settings = SettingsStore(
+    repository: settingsRepository,
+    settings: await settingsRepository.load(),
+  );
   runApp(
     SwipeOutApp(
       store: store,
+      settings: settings,
       home: const TunnelIntroScreen(next: HomeScreen()),
     ),
   );
