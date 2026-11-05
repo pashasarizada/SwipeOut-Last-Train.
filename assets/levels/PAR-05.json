@@ -1,0 +1,58 @@
+{
+  "id": "PAR-05",
+  "city": "paris",
+  "number": 5,
+  "tutorial": false,
+  "title": {"tr": "Üç Son Sefer", "en": "Three Last Services"},
+  "maxPulses": 9,
+  "parPulses": 8,
+  "maxChangesPerPulse": 1,
+  "nodes": [
+    {"id": "A", "kind": "depot", "x": 0.05, "y": 0.10},
+    {"id": "G", "kind": "signal", "x": 0.16, "y": 0.28},
+    {"id": "D", "kind": "depot", "x": 0.05, "y": 0.52},
+    {"id": "M", "kind": "switch", "x": 0.28, "y": 0.42},
+    {"id": "F", "kind": "depot", "x": 0.10, "y": 0.92},
+    {"id": "H", "kind": "signal", "x": 0.26, "y": 0.78},
+    {"id": "N", "kind": "switch", "x": 0.42, "y": 0.62},
+    {"id": "C", "kind": "track", "x": 0.58, "y": 0.56},
+    {"id": "S", "kind": "switch", "x": 0.72, "y": 0.42},
+    {"id": "L", "kind": "goal", "x": 0.92, "y": 0.18},
+    {"id": "K", "kind": "switch", "x": 0.82, "y": 0.66},
+    {"id": "B", "kind": "goal", "x": 0.95, "y": 0.50},
+    {"id": "R", "kind": "goal", "x": 0.94, "y": 0.90}
+  ],
+  "edges": [
+    {"id": "AG", "a": "A", "b": "G"},
+    {"id": "GM", "a": "G", "b": "M"},
+    {"id": "DM", "a": "D", "b": "M"},
+    {"id": "MN", "a": "M", "b": "N"},
+    {"id": "FH", "a": "F", "b": "H"},
+    {"id": "HN", "a": "H", "b": "N"},
+    {"id": "NC", "a": "N", "b": "C"},
+    {"id": "CS", "a": "C", "b": "S"},
+    {"id": "SL", "a": "S", "b": "L"},
+    {"id": "SK", "a": "S", "b": "K"},
+    {"id": "KB", "a": "K", "b": "B"},
+    {"id": "KR", "a": "K", "b": "R"}
+  ],
+  "switches": [
+    {"nodeId": "M", "trunkEdge": "MN", "branchAEdge": "GM", "branchBEdge": "DM", "selectedBranch": "B"},
+    {"nodeId": "N", "trunkEdge": "NC", "branchAEdge": "MN", "branchBEdge": "HN", "selectedBranch": "B"},
+    {"nodeId": "S", "trunkEdge": "CS", "branchAEdge": "SL", "branchBEdge": "SK", "selectedBranch": "B"},
+    {"nodeId": "K", "trunkEdge": "SK", "branchAEdge": "KB", "branchBEdge": "KR", "selectedBranch": "A"}
+  ],
+  "signals": [
+    {"nodeId": "G", "initial": "red"},
+    {"nodeId": "H", "initial": "red"}
+  ],
+  "trains": [
+    {"id": "red_1", "startNode": "A", "goalNode": "R", "symbol": "circle", "style": "coral"},
+    {"id": "blue_1", "startNode": "D", "goalNode": "B", "symbol": "triangle", "style": "azure"},
+    {"id": "lime_1", "startNode": "F", "goalNode": "L", "symbol": "square", "style": "lime"}
+  ],
+  "tutorialSteps": [
+    {"tr": "Her dakika tek kontrol, üç tren.", "en": "One control a minute, three trains."}
+  ],
+  "solution": ["wait", "switch:N", "signal:G", "switch:M", "signal:H", "switch:N", "switch:K", "switch:S"]
+}

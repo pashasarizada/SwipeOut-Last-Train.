@@ -8,6 +8,7 @@ import 'package:swipeout_last_train/game/domain/city.dart';
 import 'package:swipeout_last_train/game/domain/control_action.dart';
 import 'package:swipeout_last_train/game/domain/level_definition.dart';
 import 'package:swipeout_last_train/game/domain/pulse_result.dart';
+import 'package:swipeout_last_train/game/domain/signal_aspect.dart';
 import 'package:swipeout_last_train/game/engine/level_validator.dart';
 import 'package:swipeout_last_train/game/engine/pulse_engine.dart';
 import 'package:swipeout_last_train/game/engine/pulse_solver.dart';
@@ -186,5 +187,12 @@ void main() {
     final level = levels.firstWhere((l) => l.id == 'PAR-04');
     expect(level.trains, hasLength(3));
     expect(level.solution.every((a) => a != null), isTrue);
+  });
+
+  test('PAR-05: three trains, both signals start red', () {
+    final level = levels.firstWhere((l) => l.id == 'PAR-05');
+    expect(level.trains, hasLength(3));
+    expect(level.initialSignals.values.toSet(), {SignalAspect.red});
+    expect((level.parPulses, level.maxPulses), (8, 9));
   });
 }
