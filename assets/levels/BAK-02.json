@@ -1,0 +1,46 @@
+{
+  "id": "BAK-02",
+  "city": "baku",
+  "number": 2,
+  "tutorial": false,
+  "title": {"tr": "28 May", "en": "28 May"},
+  "maxPulses": 7,
+  "parPulses": 5,
+  "maxChangesPerPulse": 1,
+  "nodes": [
+    {"id": "A", "kind": "depot", "x": 0.08, "y": 0.22},
+    {"id": "D", "kind": "depot", "x": 0.08, "y": 0.88},
+    {"id": "E", "kind": "track", "x": 0.18, "y": 0.66},
+    {"id": "M", "kind": "switch", "x": 0.30, "y": 0.45},
+    {"id": "S", "kind": "switch", "x": 0.54, "y": 0.45},
+    {"id": "Z", "kind": "terminal", "x": 0.54, "y": 0.80},
+    {"id": "T", "kind": "switch", "x": 0.76, "y": 0.45},
+    {"id": "R", "kind": "goal", "x": 0.92, "y": 0.20},
+    {"id": "B", "kind": "goal", "x": 0.92, "y": 0.72}
+  ],
+  "edges": [
+    {"id": "AM", "a": "A", "b": "M"},
+    {"id": "DE", "a": "D", "b": "E"},
+    {"id": "EM", "a": "E", "b": "M"},
+    {"id": "MS", "a": "M", "b": "S"},
+    {"id": "ST", "a": "S", "b": "T"},
+    {"id": "SZ", "a": "S", "b": "Z"},
+    {"id": "TR", "a": "T", "b": "R"},
+    {"id": "TB", "a": "T", "b": "B"}
+  ],
+  "switches": [
+    {"nodeId": "M", "trunkEdge": "MS", "branchAEdge": "AM", "branchBEdge": "EM", "selectedBranch": "A"},
+    {"nodeId": "S", "trunkEdge": "MS", "branchAEdge": "ST", "branchBEdge": "SZ", "selectedBranch": "B"},
+    {"nodeId": "T", "trunkEdge": "ST", "branchAEdge": "TR", "branchBEdge": "TB", "selectedBranch": "B"}
+  ],
+  "signals": [],
+  "trains": [
+    {"id": "red_1", "startNode": "A", "goalNode": "R", "symbol": "circle", "style": "coral"},
+    {"id": "blue_1", "startNode": "D", "goalNode": "B", "symbol": "triangle", "style": "azure"}
+  ],
+  "tutorialSteps": [
+    {"tr": "İki hat aynı raydan geçer.", "en": "Two lines share one track."},
+    {"tr": "Yan hatta giren tren orada kalır.", "en": "A train on the siding stays there."}
+  ],
+  "solution": ["switch:T", "switch:S", "switch:M", "wait", "switch:T"]
+}

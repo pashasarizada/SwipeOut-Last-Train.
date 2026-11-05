@@ -108,4 +108,15 @@ void main() {
     }
     fail('waiting never blocks the line');
   });
+
+  test('BAK-02: a train sent onto the siding can never be delivered', () {
+    final level = levels.firstWhere((l) => l.id == 'BAK-02');
+    final engine = PulseEngine(level);
+    var state = level.initialState;
+    for (var i = 0; i < 3; i++) {
+      state = (engine.simulatePulse(state, null) as PulseApplied).state;
+    }
+    expect(state.trainById('red_1')!.nodeId, 'Z');
+    expect(const PulseSolver().solve(level, from: state), isA<Unsolvable>());
+  });
 }
