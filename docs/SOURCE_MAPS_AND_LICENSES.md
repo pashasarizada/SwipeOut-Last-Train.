@@ -29,6 +29,13 @@ OSM verisi kullanılırsa ODbL atıf ve "share-alike" yükümlülükleri ayrıca
 | `intl` | BSD-3-Clause | Yerelleştirme biçimleri |
 | `flutter_animate` | BSD-3-Clause | UI süsleme animasyonları (D-020) |
 | `animations` | BSD-3-Clause | Ekran geçişleri (D-020) |
-| Material Icons | Apache-2.0 | Arayüz ikonları |
+| Material Icons | Apache-2.0 | Yalnız geçici; oyun UI kitiyle kendi ikonlarımıza geçilecek (D-021) |
+| `shared_preferences` (planlı) | BSD-3-Clause | İlerleme + Metro Passport (D-026) |
+| Fontlar (planlı, OFL) | SIL Open Font License 1.1 | Gömülü; aday: Unbounded/Bebas Neue, Share Tech Mono/DotGothic16, Inter/Manrope (D-025) |
 
 Ses ve görsel asset'ler: yalnız kendi üretimimiz veya lisansı belgelenmiş kaynaklar; resmî metro anonsları kullanılmaz.
+
+## Görsel kaynak kuralları (V2.2)
+- Şehir desenleri, silüetler, tren sprite'ları, damgalar ve ikonlar **bizim çizimimiz** (vektör / `CustomPainter`).
+- Fotoğraf yalnız kendi çekimimiz veya CC0/CC-BY lisanslıysa; her biri bu tabloya kaynak + lisans + atıf ile eklenir.
+- Yasak: EGO / Bakı Metropoliteni / RATP / TfL (roundel, "UNDERGROUND", Johnston fontu) / Moskova Metrosu "M" logoları; resmî hat renk düzenleri; resmî anons kayıtları; Eyfel Kulesi'nin gece ışık gösterisi (telifli).

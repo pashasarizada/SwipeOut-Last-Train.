@@ -7,6 +7,7 @@
 
 ## Her oturumun başında okuma sırası
 0. `docs/GAME_DESIGN_V2.md` — **bağlayıcı ürün tanımı (V2.1, NIGHT PULSE)**; eski belgelerle çelişirse bu geçerli
+0b. `docs/UI_UX_GUIDELINES.md` — **bağlayıcı görsel/etkileşim kuralları**: Material/Flutter görünümü yok, emoji yok, şehir temaları, Metro Passport
 1. `CLAUDE.md` (bu dosya)
 2. `GAME_DESIGN.md` (V2 özeti)
 3. `TASKS.md`
@@ -29,6 +30,13 @@ Sonra en yüksek öncelikli **tek küçük görevi** seç, gerekiyorsa önce tes
 - Varsayılan `final class`; varyantlar `sealed class`. Dosya başına tek sorumluluk, ~200 satırı geçen dosya bölünür.
 - İzinli paketler: `flutter_localizations`, `intl`, `flutter_animate`, `animations`, dev: `flutter_lints`, `fake_async`. Flame yok (D-019). Yeni paket = `docs/DECISIONS.md`'ye gerekçe.
 - Tahta animasyonları yalnız `AnimationController` + `CustomPainter`; iş mantığı animasyondan bağımsız saf Dart.
+
+## UI kuralları (özet — tamamı `docs/UI_UX_GUIDELINES.md`)
+- Oyuncuya görünen ekranlarda `AppBar`, `ListTile`, `Filled/Outlined/TextButton`, `Chip`, varsayılan bottom sheet/dialog/snackbar, ripple, sistem fontu **kullanılmaz**; oyun UI kiti (`GameButton`, `AdvanceLever`, `DepartureBoard`, `ControlTicket`, `SignalBackButton`…) kullanılır.
+- **Emoji yok.** Trenler, ikonlar, damgalar kendi çizimimiz.
+- Her şehir ekranı kendi `CityTheme`'ini (palet, desen, silüet, ortam, selamlama) gösterir.
+- Resmî metro logoları, hat renk düzenleri, resmî fontlar/anonslar ve Eyfel gece ışık gösterisi yasak.
+- Her yeni ekran iOS simülatörde ekran görüntüsüyle doğrulanır.
 
 ## Güvenlik sınırları
 - `main`'e doğrudan commit/merge yok; her iş `claude/<konu>` branch'i. Force push yok.

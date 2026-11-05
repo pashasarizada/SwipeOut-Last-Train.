@@ -16,16 +16,27 @@
 - [x] **V11 Izgara kodunu sil** (S, ←V10) — Kabul: `GridPos`/swipe/İstanbul grep boş.
 - [x] **V12 Doğrulama** (S) — Kabul: check + web + iOS sim build, PROGRESS gerçek çıktılarla.
 
+## P0 — V2-UX: oyun hissi, şehir temaları, Metro Passport (plan `docs/superpowers/plans/2026-11-05-v2-ux-oyun-hissi-ve-passport.md`)
+- [ ] **U1 Uygulama kabuğu** (S) — Kabul: görünen ad "Last Train", karanlık açılış, kendi ikonumuz (Flutter logosu yok).
+- [ ] **U2 Fontlar + CityTheme + UI kuralı testi** (M, ←U1; font indirme kullanıcı onayı) — Kabul: TR/AZ/FR/Kiril glifleri çizilir; yasak widget/emoji testi var.
+- [ ] **U3 Oyun UI kiti** (M, ←U2) — Kabul: GameButton, AdvanceLever, DepartureBoard, SplitFlap, ControlTicket, SignalBackButton, Announcement, TrackLoader; ripple yok, ≥ 44 pt.
+- [ ] **U4 Tren vagonu sprite'ı** (S, ←U2) — Kabul: yönüne dönen vagon, farlar, sembol; emoji yok.
+- [ ] **U5 Şehir sanatı ×5** (L, ←U2) — Kabul: her şehir kendi desen + silüet + ortam efekti; Reduced Motion'da efekt yok.
+- [ ] **U6 İlerleme + yarım bölüm** (M) — Kabul: kapat-aç testi; bozuk kayıt çökertmez.
+- [ ] **U7 Metro Passport** (M, ←U5, U6) — Kabul: 6/6 şehir damgası, Moskova altın, 5 damga Night Dispatcher; eksik şehir erken damga almaz.
+- [ ] **U8 Ekranların yeniden tasarımı** (L, ←U3…U7) — Kabul: tünel → peron → biletler → hat haritası → oyun → split-flap; `ui_rules_test` yeşil.
+- [ ] **U9 Çarpışma juice + haptik dili** (S, ←U8) — Kabul: geri sıçrama + sarsıntı, durum değişmez.
+- [ ] **U10 Doğrulama** (S) — Kabul: tüm ekranların simülatör görüntüleri PROGRESS'te.
+
 ## P1 — V2-B (Ankara + Bakü kabuğu)
 - [ ] ANK-03…06 (M) — Kabul: her biri validator + replay, iki tren eş zamanlı.
 - [ ] Bakü 6 bölüm (L) — Kabul: ortak ray darboğazı, aynı haritanın renk değişikliği değil.
-- [ ] Şehir haritası + 6 bölüm noktası, sırayla açılma (M).
-- [ ] İlerleme + tam pulse sonrası durum kaydı (`shared_preferences`) (M) — Kabul: kapat-aç testi.
+- [ ] Bölümlerin sırayla açılması (S, ←U6).
 - [ ] Ayarlar: ses, titreşim, Reduced Motion, High Contrast, dil (M).
 - [ ] Sonraki pulse "hayalet tren" önizlemesi (S).
 
 ## P2 — V2-C/D
 - [ ] Paris 6 (sinyal UI'ı ilk kez) · Londra 6 (halka) · Moskova 6 (çift halka) (L her biri).
-- [ ] Şehir bitirme damgası, Night Dispatcher rozeti (Rive değerlendirmesi).
+- [ ] Pasaport/rozet için Rive animasyonları değerlendirmesi (U7 sonrası).
 - [ ] Ses efektleri (özgün sentetik), haptik paternleri.
 - [ ] Yayın hazırlığı (`docs/RELEASE_CHECKLIST.md`).

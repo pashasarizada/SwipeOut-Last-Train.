@@ -33,3 +33,12 @@ Belirsiz noktalarda alınan en sade, sürdürülebilir kararlar. Format: **D-NNN
 - **D-017 — Her seviye JSON'unda kayıtlı `solution` zorunlu; validator replay eder.** Çözücü durum sınırına takılırsa (Moskova) güvence budur; sınır hata sayılmaz.
 - **D-018 — Tren yalnız `depot` düğümünde başlar.** Başlangıçta "gelen kenar" belirsizliği olmasın.
 - **D-020 — UI süsleme: `flutter_animate` + `animations`.** Kullanıcı seçimi (05.11.2026). Düğme/çip/yıldız/sayfa girişleri `flutter_animate`, ekran geçişleri `animations`; tahta yalnız yerleşik `AnimationController` + `CustomPainter`.
+
+## V2.2 — Oyun hissi ve Metro Passport (kullanıcı yönergesi, 05.11.2026)
+
+- **D-021 — Oyuncuya görünen hiçbir yerde Material/Flutter varsayılan görünümü yok.** AppBar, ListTile, varsayılan düğmeler, Chip, bottom sheet/dialog/snackbar, ripple, sistem fontu ve Flutter ikonu/açılışı yerine oyun UI kiti (`UI_UX_GUIDELINES.md` §1). Bir test bu kuralı zorlar.
+- **D-022 — Emoji yok; trenler kendi çizdiğimiz vagon sprite'ı.** Emoji platforma göre farklı görünür ve ucuz durur; sprite yönüne döner, far ışığı ve livre taşır.
+- **D-023 — Her şehir kendi teması (`CityTheme` + `CityArt`).** Palet, yerel desen, silüet, ortam efekti, selamlama, damga. Görseller bizim çizimimiz; fotoğraf yalnız lisansı kayıtlıysa.
+- **D-024 — Metro Passport.** Şehir tamamlanınca damga; Moskova altın damga; beş damga → Night Dispatcher. İlerleme kaydına (`shared_preferences`) dayanır, kozmetik, offline.
+- **D-025 — Fontlar OFL ve uygulamaya gömülü.** TR + AZ (ə) + FR + Kiril glif kapsamı testle doğrulanır; çalışma anında font indirme yok (offline kuralı).
+- **D-026 — Yeni paket: `shared_preferences`** (ilerleme + pasaport). Küçük, resmî Flutter eklentisi; BSD-3.

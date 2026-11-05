@@ -14,10 +14,32 @@ Koyu gece zemini, yüksek kontrastlı özgün raylar, yuvarlatılmış düğüml
 
 Tren stilleri (tüm şehirlerde aynı, sembolle birlikte): `coral` ● · `azure` ▲ · `lime` ■ · `amber` ◆.
 
+## Şehir sanatı (`CityTheme` + `CityArt`)
+
+Her şehir tek bir `CityArt` arayüzünü uygular (OCP: yeni şehir = yeni sınıf, mevcut kod değişmez):
+`paintPattern(Canvas, Size)` (zemin deseni, %6–10 opaklık) · `paintSkyline(Canvas, Size, double parallax)` (stilize silüet) · `ambient` (ortam efekti: toz / dalga / yağmur / kar) · `stamp` (pasaport damgası çizimi).
+
+| Şehir | Desen | Silüet | Ortam efekti | Damga |
+|---|---|---|---|---|
+| Ankara | Hitit güneş kursu esinli halkalar, Selçuklu yıldızı | Kale surları, kolonad ritmi, kule çizgisi | sarı ışıkta toz zerreleri | kırmızı-altın yuvarlak, güneş kursu halkası |
+| Bakü | buta, halı geometrisi | alev kuleleri, Kız Kalesi | Hazar dalga yansıması | turkuaz-kumtaşı, buta çerçeve |
+| Paris | Art Nouveau kıvrımlar, balkon ızgarası | Eyfel gündüz çizgisi, mansart çatılar | amber lamba parlaması | amber-krem, kıvrımlı Art Nouveau çerçeve |
+| Londra | tuğla kemer, demir işçiliği | saat kulesi, köprü kuleleri | ince yağmur, ıslak yansıma | bordo-sarı, saat kadranı motifi |
+| Moskova | Hohloma ornament, mozaik geometri | soğan kubbeler, basamaklı kuleler | kar (kapatılabilir) | **ALTIN**, çift halka + kar kristali, kabartma |
+
+Silüetler ve desenler bizim çizimimizdir; resmî logo, hat rengi düzeni, resmî font ve Eyfel gece ışık gösterisi **kullanılmaz** (bkz. `UI_UX_GUIDELINES.md` §6).
+
+## Tren sprite'ı (`TrainSprite`)
+- Üstten bakış metro vagonu: yuvarlak burun, pencere şeridi, tren stili renginde livre şeridi, burunda sembol (● ▲ ■ ◆), iki ön far + önüne düşen ışık konisi.
+- Gittiği kenarın açısına döner; pulse boyunca hafif salınım; beklerken farlar kısık.
+- Boyut: tahta ölçeğine göre 28–40 pt uzunluk; renk körlüğü için sembol her zaman görünür.
+- **Emoji kullanılmaz.**
+
 ## Bileşenler
 - `NetworkPainter` — kenarlar (yuvarlak uçlu çizgi), makasın aktif kolu parlak / pasif kolu soluk, bekleyen kontrol önizlemesi, sinyal ışığı, hedef halkası + sembol, terminal çizgi sonu, pulse ışık dalgası.
-- `TrainLayer` — trenler `before → after` arasında tween; teslimde halka parlar, ✓ eklenir (sembol kalır).
-- UI süsleme `flutter_animate` (düğme/çip/yıldız/kart girişleri, çarpışma sallanması), ekran geçişleri `animations`.
+- `TrainLayer` → `TrainSprite` — trenler `before → after` arasında tween; teslimde halka parlar, ✓ eklenir (sembol kalır).
+- Oyun UI kiti: `GameButton`, `AdvanceLever`, `DepartureBoard` (split-flap), `ControlTicket`, `SignalBackButton`, `PlatformAnnouncement`, `TrackLoader`, `PassportStamp`.
+- UI süsleme `flutter_animate`, ekran geçişleri `animations`; Material varsayılan bileşenleri oyuncuya görünmez.
 
 ## Animasyon süreleri (`lib/game/presentation/theme/motion.dart`)
 
@@ -31,6 +53,10 @@ Tren stilleri (tüm şehirlerde aynı, sembolle birlikte): `coral` ● · `azure
 | Çarpışma flaşı | 300 ms |
 | Bölüm bitişi | 700 ms |
 | Ekran açılışı | 450 ms |
+| Split-flap harf dönüşü | 120 ms / harf |
+| GameButton basma / yaylanma | 80 ms / 160 ms |
+| Pasaport damgası | 220 ms basma + 400 ms mürekkep |
+| Tünel açılışı | ≤ 2000 ms (dokununca atlanır) |
 
 Animasyon sürerken komut alınmaz. `Reduced Motion` (Faz V2-B) süreleri kısaltır.
 

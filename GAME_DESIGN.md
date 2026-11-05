@@ -19,3 +19,9 @@
 
 ## Şehirler
 Ankara ★ → Bakü ★★ → Paris ★★★ (sinyal) → Londra ★★★★ (halka) → Moskova ★★★★★ (çift halka). Her şehir 6 bölüm; ilk hedef 6 Ankara + 6 Bakü. Haritalar gerçek şehirlerden **esinlenen kurgusal** çizimlerdir.
+
+## Metro Passport (V2.2 eki)
+Oyuncunun bir **Metro Passport**'u var. Bir şehrin tüm bölümlerini bitirince o şehrin damgası basılır (Ankara, Bakü, Paris, Londra); **Moskova'yı bitirene özel altın damga**. Beş damga → "Night Dispatcher" rütbesi. Oyuncu yalnız bölüm geçmez, dünyadaki metro sistemlerini **keşfettiğini** hisseder. Kozmetiktir, offline, hesap yok.
+
+## Görsel his (V2.2 eki)
+Bu bir uygulama değil, gece yarısı metrosu: liste/varsayılan düğme/emoji yok; bilet kartları, kalkış panosu, pulse kolu, kendi çizdiğimiz tren vagonları; her şehir kendi paleti, yerel deseni, silüeti ve selamlamasıyla. Kurallar: [`docs/UI_UX_GUIDELINES.md`](docs/UI_UX_GUIDELINES.md).
