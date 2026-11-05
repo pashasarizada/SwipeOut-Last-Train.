@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'game/ui/theme/app_theme.dart';
+import 'game/presentation/theme/app_theme.dart';
 import 'l10n/generated/app_localizations.dart';
 
 class SwipeOutApp extends StatelessWidget {
