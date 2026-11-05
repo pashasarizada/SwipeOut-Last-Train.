@@ -160,4 +160,12 @@ void main() {
     expect(baku.map((l) => l.number), [1, 2, 3, 4, 5, 6]);
     expect((baku.last.parPulses, baku.last.maxPulses), (8, 8));
   });
+
+  test('PAR-01: Paris opens with crossing routes through one transfer', () {
+    final level = levels.firstWhere((l) => l.id == 'PAR-01');
+    expect(
+      (level.city, level.parPulses, level.initialSignals.isEmpty),
+      (CityId.paris, 6, true),
+    );
+  });
 }
