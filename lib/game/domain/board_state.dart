@@ -34,6 +34,9 @@ final class BoardState {
     return null;
   }
 
+  /// Current branch of the switch at [pos]; unset switches default to `a`.
+  SwitchBranch branchAt(GridPos pos) => switches[pos] ?? SwitchBranch.a;
+
   bool get allDelivered => trains.every((t) => t.delivered);
 
   BoardState withTrain(Train updated) => BoardState(

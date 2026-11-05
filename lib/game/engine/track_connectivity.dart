@@ -13,9 +13,7 @@ final class TrackConnectivity {
   Set<Direction> openPorts(GridPos pos, BoardState state) =>
       switch (level.cellAt(pos)) {
         TrackCell(:final ports) || StationCell(:final ports) => ports,
-        final SwitchCell cell => cell.portsFor(
-          state.switches[pos] ?? SwitchBranch.a,
-        ),
+        final SwitchCell cell => cell.portsFor(state.branchAt(pos)),
         EmptyCell() || BlockedCell() => const {},
       };
 }
