@@ -1,5 +1,41 @@
 # PROGRESS
 
+## 2026-11-06 — branch `claude/v2-ux`
+
+**Bağlam:** Kullanıcı "Flutter uygulaması gibi görünmesin, gerçek metro havası, şehir temaları, Metro Passport" istedi. Plan: `docs/superpowers/plans/2026-11-05-v2-ux-oyun-hissi-ve-passport.md`; bağlayıcı kurallar `docs/UI_UX_GUIDELINES.md`.
+
+**Tamamlanan işler (U1–U10):**
+- Kabuk: "Last Train" adı, karanlık açılış, kullanıcının logosundan ikon/açılış (`scripts/build_branding.sh`).
+- Gömülü OFL fontlar (Unbounded, IBM Plex Mono, Inter; TR/AZ/FR/Kiril glif testi), `CityTheme` ×5, `ui_rules_test` (yasak Material widget + emoji).
+- Oyun UI kiti: GameButton, AdvanceLever, DepartureBoard, SplitFlapText, ControlTicket, SignalBackButton, PlatformAnnouncement, TrackLoader, GameScaffold.
+- Çizilmiş metro vagonu sprite'ı (yönüne döner, farlar, sembol).
+- Şehir sanatı: Ankara, Bakü, Paris, Londra, Moskova (desen + silüet + ortam efekti; Reduced Motion'da durur).
+- Yerel ilerleme + yarım bölüm kaydı (`shared_preferences`, bozuk kayıt çökertmez).
+- Metro Passport: şehir damgaları, Moskova altın damga, Night Dispatcher; eksik içerikli şehir erken damga almaz.
+- Ekranlar: tünel girişi → ana ekran → şehir biletleri → hat haritası (bölüm kilitleri) → oyun platformu → split-flap sonuç panosu → pasaport.
+- Çarpışma juice: trenler temas noktasına sokulup geri döner, tahta sarsılır; haptik dili (teslim 2× hafif, çarpışma ağır).
+- Düzeltme: GameButton gölge animasyonu negatif blur üretip sayfa geçişlerinde `_dependents.isEmpty` zincirine yol açıyordu; gölge artık sabit.
+
+**Çalıştırılan komutlar ve gerçek sonuçları:**
+- `scripts/check.sh` → format 0 değişiklik · `flutter analyze`: No issues found! · `flutter test`: +177 All tests passed!
+- `dart run tool/solve_levels.dart` → ANK-01 issues=0 optimal=2 par=2 · ANK-02 issues=0 optimal=3 par=3
+- `flutter build web --release` → ✓ Built build/web
+- `flutter build ios --simulator --debug` → ✓ Built Runner.app
+- iOS Simülatör (iPhone 16e): tüm akış elle oynandı (ANK-01/02 kazanıldı, geri dönüşler, pasaport); hata yok.
+
+**Simülatör görüntüleri** (`docs/images/v2-ux/`): 01-home · 02-city-ankara · 03-city-baku · 04-city-paris · 05-line-map · 06-platform · 07-line-cleared · 08-passport-cover · 09-passport-ankara
+
+**Bilinen eksikler / blokerler:**
+- Ankara'da 2 bölüm var; çarpışma efekti gerçek bölümde görülmedi (widget testleri kapsar).
+- Londra/Moskova biletleri ve tünel girişi ekran görüntüsüne alınmadı.
+- Fiziksel cihaz ve Android'de test edilmedi.
+- `claude/v2-ux` henüz push edilmedi.
+
+**Sıradaki küçük görev:** V2-B → ANK-03 "İki Vagon".
+
+**Kullanıcıdan gereken onaylar:** `claude/v2-ux` branch'ini push etmek.
+
+---
 ## 2026-11-05 (2) — branch `claude/v2-night-pulse`
 
 **Bağlam:** Kullanıcı V2.1 tasarım belgesini ekledi (NIGHT PULSE, graf, Paris). Plan: `docs/superpowers/plans/2026-11-05-v2-night-pulse-cekirdek.md`. Animasyon kararı: `flutter_animate` + `animations` (D-020). Flutter 3.32.8'de kalındı, Flame yok (D-019).

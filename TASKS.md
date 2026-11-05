@@ -16,22 +16,22 @@
 - [x] **V11 Izgara kodunu sil** (S, ←V10) — Kabul: `GridPos`/swipe/İstanbul grep boş.
 - [x] **V12 Doğrulama** (S) — Kabul: check + web + iOS sim build, PROGRESS gerçek çıktılarla.
 
-## P0 — V2-UX: oyun hissi, şehir temaları, Metro Passport (plan `docs/superpowers/plans/2026-11-05-v2-ux-oyun-hissi-ve-passport.md`)
-- [ ] **U1 Uygulama kabuğu** (S) — Kabul: görünen ad "Last Train", karanlık açılış, kendi ikonumuz (Flutter logosu yok).
-- [ ] **U2 Fontlar + CityTheme + UI kuralı testi** (M, ←U1; font indirme kullanıcı onayı) — Kabul: TR/AZ/FR/Kiril glifleri çizilir; yasak widget/emoji testi var.
-- [ ] **U3 Oyun UI kiti** (M, ←U2) — Kabul: GameButton, AdvanceLever, DepartureBoard, SplitFlap, ControlTicket, SignalBackButton, Announcement, TrackLoader; ripple yok, ≥ 44 pt.
-- [ ] **U4 Tren vagonu sprite'ı** (S, ←U2) — Kabul: yönüne dönen vagon, farlar, sembol; emoji yok.
-- [ ] **U5 Şehir sanatı ×5** (L, ←U2) — Kabul: her şehir kendi desen + silüet + ortam efekti; Reduced Motion'da efekt yok.
-- [ ] **U6 İlerleme + yarım bölüm** (M) — Kabul: kapat-aç testi; bozuk kayıt çökertmez.
-- [ ] **U7 Metro Passport** (M, ←U5, U6) — Kabul: 6/6 şehir damgası, Moskova altın, 5 damga Night Dispatcher; eksik şehir erken damga almaz.
-- [ ] **U8 Ekranların yeniden tasarımı** (L, ←U3…U7) — Kabul: tünel → peron → biletler → hat haritası → oyun → split-flap; `ui_rules_test` yeşil.
-- [ ] **U9 Çarpışma juice + haptik dili** (S, ←U8) — Kabul: geri sıçrama + sarsıntı, durum değişmez.
-- [ ] **U10 Doğrulama** (S) — Kabul: tüm ekranların simülatör görüntüleri PROGRESS'te.
+## P0 — V2-UX: oyun hissi, şehir temaları, Metro Passport (plan `docs/superpowers/plans/2026-11-05-v2-ux-oyun-hissi-ve-passport.md`) — tamamlandı 06.11.2026
+- [x] **U1 Uygulama kabuğu** (S) — Kabul: görünen ad "Last Train", karanlık açılış, kendi ikonumuz (Flutter logosu yok).
+- [x] **U2 Fontlar + CityTheme + UI kuralı testi** (M, ←U1; font indirme kullanıcı onayı) — Kabul: TR/AZ/FR/Kiril glifleri çizilir; yasak widget/emoji testi var.
+- [x] **U3 Oyun UI kiti** (M, ←U2) — Kabul: GameButton, AdvanceLever, DepartureBoard, SplitFlap, ControlTicket, SignalBackButton, Announcement, TrackLoader; ripple yok, ≥ 44 pt.
+- [x] **U4 Tren vagonu sprite'ı** (S, ←U2) — Kabul: yönüne dönen vagon, farlar, sembol; emoji yok.
+- [x] **U5 Şehir sanatı ×5** (L, ←U2) — Kabul: her şehir kendi desen + silüet + ortam efekti; Reduced Motion'da efekt yok.
+- [x] **U6 İlerleme + yarım bölüm** (M) — Kabul: kapat-aç testi; bozuk kayıt çökertmez.
+- [x] **U7 Metro Passport** (M, ←U5, U6) — Kabul: 6/6 şehir damgası, Moskova altın, 5 damga Night Dispatcher; eksik şehir erken damga almaz.
+- [x] **U8 Ekranların yeniden tasarımı** (L, ←U3…U7) — Kabul: tünel → peron → biletler → hat haritası → oyun → split-flap; `ui_rules_test` yeşil.
+- [x] **U9 Çarpışma juice + haptik dili** (S, ←U8) — Kabul: geri sıçrama + sarsıntı, durum değişmez.
+- [x] **U10 Doğrulama** (S) — Kabul: tüm ekranların simülatör görüntüleri PROGRESS'te.
 
 ## P1 — V2-B (Ankara + Bakü kabuğu)
 - [ ] ANK-03…06 (M) — Kabul: her biri validator + replay, iki tren eş zamanlı.
 - [ ] Bakü 6 bölüm (L) — Kabul: ortak ray darboğazı, aynı haritanın renk değişikliği değil.
-- [ ] Bölümlerin sırayla açılması (S, ←U6).
+- [x] Bölümlerin sırayla açılması (S, ←U6) — U8'de yapıldı.
 - [ ] Ayarlar: ses, titreşim, Reduced Motion, High Contrast, dil (M).
 - [ ] Sonraki pulse "hayalet tren" önizlemesi (S).
 
