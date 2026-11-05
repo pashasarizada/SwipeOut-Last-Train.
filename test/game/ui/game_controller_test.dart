@@ -109,6 +109,16 @@ void main() {
     });
   });
 
+  test('a switch toggle moves no train, so input stays unlocked', () {
+    _withController(switchLevel(), (_, c, __) {
+      c.tapCell(const GridPos(2, 2));
+
+      expect(c.isBusy, isFalse);
+      c.swipe(Direction.east);
+      expect(c.moveCount, 2);
+    });
+  });
+
   test('finishing the level emits delivery and completion with stars', () {
     _withController(lineLevel(), (async, c, events) {
       for (var i = 0; i < 4; i++) {

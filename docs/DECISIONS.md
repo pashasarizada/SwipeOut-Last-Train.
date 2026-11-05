@@ -15,4 +15,4 @@ Belirsiz noktalarda alınan en sade, sürdürülebilir kararlar. Format: **D-NNN
 - **D-011 — Codec yalnız JSON yapısını, validator oyun kurallarını denetler (SRP).** Codec hatası `LevelFormatException`, kural ihlali `LevelIssue` listesi.
 - **D-012 — Tek teslim edilmemiş tren kaldığında otomatik seçilir.** Bölüm 1'de oyuncu ilk 30 saniyede doğrudan kaydırabilsin.
 - **D-013 — İpucu çözücüsü `compute` ile arka isolate'ta çalışır.** 7×7 / 4 trenli bölümlerde UI donmasın; sonuç gelene kadar tahta değiştiyse ipucu atılır. İpucu bir tren hamlesiyse o tren seçilir.
-- **D-014 — Undo/Restart da giriş kilidini başlatır.** Geri alma da animasyonla oynar; çakışan girdi önlenir.
+- **D-014 — Giriş kilidi yalnız bir tren yer değiştirdiğinde başlar.** Hamle, undo ve restart trenleri animasyonla taşır; makas değişimi şimdilik animasyonsuz olduğu için kilitlemez. Simülatörde kilit, Restart/makas sonrası hızlı dokunuşu yutuyordu.

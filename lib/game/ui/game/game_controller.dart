@@ -73,15 +73,17 @@ final class GameController extends ChangeNotifier {
   }
 
   void undo() {
-    if (isBusy || !_session.undo()) return;
-    _afterBoardChange();
+    if (isBusy) return;
+    final before = state;
+    if (_session.undo()) _afterBoardChange(before);
   }
 
   void restart() {
     if (isBusy || !canUndo) return;
+    final before = state;
     _session.restart();
     _selectedTrainId = null;
-    _afterBoardChange();
+    _afterBoardChange(before);
   }
 
   Future<void> requestHint() async {
@@ -100,6 +102,7 @@ final class GameController extends ChangeNotifier {
   }
 
   void _play(Move move) {
+    final before = state;
     final result = _session.play(move);
     switch (result) {
       case MoveRejected(:final reason):
@@ -108,17 +111,21 @@ final class GameController extends ChangeNotifier {
         if (deliveredTrainId != null) {
           _events.add(TrainDelivered(deliveredTrainId));
         }
-        _afterBoardChange();
+        _afterBoardChange(before);
         if (isSolved) _events.add(LevelCompleted(_result()));
     }
   }
 
-  void _afterBoardChange() {
+  void _afterBoardChange(BoardState before) {
     _hint = null;
     _syncSelection();
-    _startInputLock();
+    if (_trainsMoved(before, state)) _startInputLock();
     notifyListeners();
   }
+
+  /// Only train movement animates, so only it needs to block input.
+  static bool _trainsMoved(BoardState a, BoardState b) =>
+      !listEquals(a.trains, b.trains);
 
   void _startInputLock() {
     if (_inputLock == Duration.zero) return;

@@ -75,6 +75,19 @@ void main() {
     expect(find.text('Another train is in the way.'), findsNothing);
   });
 
+  testWidgets('entering a wrong-colour station explains why', (tester) async {
+    await _pumpGame(tester, switchLevel());
+
+    await _swipeTrain(tester, 'r1', const Offset(60, 0));
+    await _swipeTrain(tester, 'r1', const Offset(60, 0));
+    await _swipeTrain(tester, 'r1', const Offset(0, 60));
+    await _swipeTrain(tester, 'r1', const Offset(0, 60));
+
+    expect(find.text('Moves: 3'), findsOneWidget);
+    expect(find.text('Wrong station for this train.'), findsOneWidget);
+    await tester.pump(const Duration(seconds: 2));
+  });
+
   testWidgets('undo returns the train and the move count', (tester) async {
     await _pumpGame(tester, lineLevel());
     await _swipeTrain(tester, 'r1', const Offset(60, 0));
