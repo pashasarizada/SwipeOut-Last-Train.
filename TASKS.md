@@ -51,7 +51,8 @@
 - [ ] ControlTicket `tearLabel` zorunlu; `saveRun` hata yakalama (S).
 
 ## P2 — V2-C/D
-- [ ] Paris 6 (sinyal UI'ı ilk kez) · Londra 6 (halka) · Moskova 6 (çift halka) (L her biri).
+- [x] Paris 6 — PAR-01 çapraz rota · 02 ilk sinyal · 03 iki sinyal · 04 üç tren · 05 üç tren + iki kırmızı sinyal · 06 final, tüm kontroller (06.11.2026).
+- [ ] Londra 6 (halka) · Moskova 6 (çift halka) (L her biri).
 - [ ] Pasaport/rozet için Rive animasyonları değerlendirmesi (U7 sonrası).
 - [ ] Ses efektleri (özgün sentetik), haptik paternleri.
 - [ ] Yayın hazırlığı (`docs/RELEASE_CHECKLIST.md`).

@@ -195,4 +195,16 @@ void main() {
     expect(level.initialSignals.values.toSet(), {SignalAspect.red});
     expect((level.parPulses, level.maxPulses), (8, 9));
   });
+
+  test('Paris is complete: the finale uses every switch and signal', () {
+    final paris = levels.where((l) => l.city == CityId.paris).toList();
+    expect(paris.map((l) => l.number), [1, 2, 3, 4, 5, 6]);
+    final finale = paris.last;
+    final touched = {
+      for (final a in finale.solution)
+        if (a case ToggleSwitch(:final nodeId) || ToggleSignal(:final nodeId))
+          nodeId,
+    };
+    expect(touched, {...finale.switches.keys, ...finale.initialSignals.keys});
+  });
 }

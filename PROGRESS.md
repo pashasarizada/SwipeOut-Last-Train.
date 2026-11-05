@@ -21,7 +21,16 @@
 - `scripts/check.sh` → No issues found! · +202 All tests passed!
 - Simülatör: BAK-01 uçtan uca oynandı (ana ekran Bakü temasına geçti); BAK-02…06 tahtaları render edilip okunurluk kontrol edildi, **elle oynanmadı**.
 
-**Sıradaki küçük görev:** PAR-01 "Gece Aktarması" (Paris, 2 tren, iki giriş kolu, ortak aktarma; sinyal PAR-02'de).
+**Paris (aynı gece):**
+- PAR-01 "Gece Aktarması" (par 6) · PAR-02 "Kırmızı Sinyal" — ilk sinyal (par 6) · PAR-03 "Châtelet Kavşağı" — iki sinyal (par 7) · PAR-04 "République Önceliği" — ilk üç tren, her dakika bir kontrol (par 10) · PAR-05 "Üç Son Sefer" — iki kırmızı sinyal (par 8, max 9) · PAR-06 "Paris Gece Finali" — tüm makas ve sinyaller (par 10).
+- Sinyal UX düzeltmesi: ışık artık direğin ucunda (bekleyen trenin altında kaybolmuyordu), bekleyen bilette sinyal ikonu.
+- Yeni test: her bölüm 375×667 + yazı ×1.3'te düğümler ≥ 44 pt (D-029). Anons satırı tahtanın üstüne bindirildi.
+- `scripts/check.sh` → No issues found! · +234 All tests passed! · 18 bölümün hepsi optimal = par.
+- Simülatör: Paris bileti/haritası açıldı, PAR-01 uçtan uca çözüldü, PAR-02'de sinyal kırmızı → tren bekledi → yeşil → devam etti; PAR-03…06 elle oynanmadı (çözücü + replay testleri kapsar).
+
+**BLOCKED / bilinen:** 320×568'de tahta ~180 pt; 44 pt hedefi orada tutmuyor (taşma yok). Kompakt düzen TASKS P1'de.
+
+**Sıradaki küçük görev:** LON-01 (Londra, ilk halka).
 
 ---
 

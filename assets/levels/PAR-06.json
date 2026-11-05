@@ -1,0 +1,54 @@
+{
+  "id": "PAR-06",
+  "city": "paris",
+  "number": 6,
+  "tutorial": false,
+  "title": {"tr": "Paris Gece Finali", "en": "Paris Night Finale"},
+  "maxPulses": 11,
+  "parPulses": 10,
+  "maxChangesPerPulse": 1,
+  "nodes": [
+    {"id": "A", "kind": "depot", "x": 0.05, "y": 0.12},
+    {"id": "G", "kind": "signal", "x": 0.16, "y": 0.30},
+    {"id": "D", "kind": "depot", "x": 0.05, "y": 0.54},
+    {"id": "M", "kind": "switch", "x": 0.28, "y": 0.44},
+    {"id": "F", "kind": "depot", "x": 0.12, "y": 0.92},
+    {"id": "N", "kind": "switch", "x": 0.40, "y": 0.66},
+    {"id": "X", "kind": "signal", "x": 0.56, "y": 0.60},
+    {"id": "S", "kind": "switch", "x": 0.72, "y": 0.46},
+    {"id": "L", "kind": "goal", "x": 0.92, "y": 0.16},
+    {"id": "K", "kind": "switch", "x": 0.80, "y": 0.72},
+    {"id": "B", "kind": "goal", "x": 0.95, "y": 0.52},
+    {"id": "R", "kind": "goal", "x": 0.94, "y": 0.92}
+  ],
+  "edges": [
+    {"id": "AG", "a": "A", "b": "G"},
+    {"id": "GM", "a": "G", "b": "M"},
+    {"id": "DM", "a": "D", "b": "M"},
+    {"id": "MN", "a": "M", "b": "N"},
+    {"id": "FN", "a": "F", "b": "N"},
+    {"id": "NX", "a": "N", "b": "X"},
+    {"id": "XS", "a": "X", "b": "S"},
+    {"id": "SL", "a": "S", "b": "L"},
+    {"id": "SK", "a": "S", "b": "K"},
+    {"id": "KB", "a": "K", "b": "B"},
+    {"id": "KR", "a": "K", "b": "R"}
+  ],
+  "switches": [
+    {"nodeId": "M", "trunkEdge": "MN", "branchAEdge": "GM", "branchBEdge": "DM", "selectedBranch": "A"},
+    {"nodeId": "N", "trunkEdge": "NX", "branchAEdge": "MN", "branchBEdge": "FN", "selectedBranch": "A"},
+    {"nodeId": "S", "trunkEdge": "XS", "branchAEdge": "SL", "branchBEdge": "SK", "selectedBranch": "A"},
+    {"nodeId": "K", "trunkEdge": "SK", "branchAEdge": "KB", "branchBEdge": "KR", "selectedBranch": "A"}
+  ],
+  "signals": [
+    {"nodeId": "G", "initial": "red"},
+    {"nodeId": "X", "initial": "red"}
+  ],
+  "trains": [
+    {"id": "red_1", "startNode": "A", "goalNode": "B", "symbol": "circle", "style": "coral"},
+    {"id": "blue_1", "startNode": "D", "goalNode": "R", "symbol": "triangle", "style": "azure"},
+    {"id": "lime_1", "startNode": "F", "goalNode": "L", "symbol": "square", "style": "lime"}
+  ],
+  "tutorialSteps": [],
+  "solution": ["switch:M", "switch:N", "switch:M", "signal:X", "signal:G", "switch:N", "wait", "switch:S", "switch:K", "switch:K"]
+}
