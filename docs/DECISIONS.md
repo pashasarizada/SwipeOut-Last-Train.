@@ -13,3 +13,6 @@ Belirsiz noktalarda alınan en sade, sürdürülebilir kararlar. Format: **D-NNN
 - **D-009 — Harita dışına doğru hamle `noEntry` sayılır.** Ayrı bir "sınır dışı" sebebi UI'da farklı bir mesaj gerektirmiyor (KISS); geçerli seviyelerde validator zaten dışarı bakan portu reddeder.
 - **D-010 — Validator, yapısal sorun varsa çözücüyü çalıştırmaz.** Bozuk bir seviyede `unsolvable` gürültüsü asıl hatayı gizlemesin.
 - **D-011 — Codec yalnız JSON yapısını, validator oyun kurallarını denetler (SRP).** Codec hatası `LevelFormatException`, kural ihlali `LevelIssue` listesi.
+- **D-012 — Tek teslim edilmemiş tren kaldığında otomatik seçilir.** Bölüm 1'de oyuncu ilk 30 saniyede doğrudan kaydırabilsin.
+- **D-013 — İpucu çözücüsü `compute` ile arka isolate'ta çalışır.** 7×7 / 4 trenli bölümlerde UI donmasın; sonuç gelene kadar tahta değiştiyse ipucu atılır. İpucu bir tren hamlesiyse o tren seçilir.
+- **D-014 — Undo/Restart da giriş kilidini başlatır.** Geri alma da animasyonla oynar; çakışan girdi önlenir.
