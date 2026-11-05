@@ -48,7 +48,9 @@ class _GameButtonState extends State<GameButton> {
   bool get _enabled => widget.onPressed != null;
 
   void _setDown(bool down) {
-    if (_enabled && _down != down) setState(() => _down = down);
+    // Pressing needs an enabled button; letting go must always work, or a
+    // button disabled mid-press would stay pressed in.
+    if ((_enabled || !down) && _down != down) setState(() => _down = down);
   }
 
   void _fire() {

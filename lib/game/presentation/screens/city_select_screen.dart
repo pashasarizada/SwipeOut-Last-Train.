@@ -14,8 +14,21 @@ import '../widgets/game_texts.dart';
 import 'city_map_screen.dart';
 
 /// City tickets in a carousel, each in its own city's colours and art.
-final class CitySelectScreen extends StatelessWidget {
+final class CitySelectScreen extends StatefulWidget {
   const CitySelectScreen({super.key});
+
+  @override
+  State<CitySelectScreen> createState() => _CitySelectScreenState();
+}
+
+class _CitySelectScreenState extends State<CitySelectScreen> {
+  final PageController _pages = PageController(viewportFraction: 0.84);
+
+  @override
+  void dispose() {
+    _pages.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +54,7 @@ final class CitySelectScreen extends StatelessWidget {
             ),
             Expanded(
               child: PageView(
-                controller: PageController(viewportFraction: 0.84),
+                controller: _pages,
                 children: [
                   for (final city in CityId.values) _CityTicket(city: city),
                 ],

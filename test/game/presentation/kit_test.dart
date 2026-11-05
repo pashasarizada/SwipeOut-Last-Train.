@@ -107,6 +107,37 @@ void main() {
     });
   });
 
+  testWidgets('a button disabled mid-press springs back up when released', (
+    tester,
+  ) async {
+    var enabled = true;
+    late StateSetter setOuter;
+    await _pump(
+      tester,
+      StatefulBuilder(
+        builder: (context, setState) {
+          setOuter = setState;
+          return GameButton(label: 'GO', onPressed: enabled ? () {} : null);
+        },
+      ),
+    );
+    double faceOffset() => tester.getTopLeft(find.byKey(GameButton.faceKey)).dy;
+    final rest = faceOffset();
+
+    final gesture = await tester.startGesture(
+      tester.getCenter(find.byType(GameButton)),
+    );
+    await tester.pumpAndSettle();
+    expect(faceOffset(), greaterThan(rest));
+
+    setOuter(() => enabled = false);
+    await tester.pump();
+    await gesture.up();
+    setOuter(() => enabled = true);
+    await tester.pumpAndSettle();
+    expect(faceOffset(), rest);
+  });
+
   group('SplitFlapText', () {
     testWidgets('flips into the final text', (tester) async {
       await _pump(tester, const SplitFlapText('HAT TEMİZ'));
