@@ -6,7 +6,7 @@ import 'package:swipeout_last_train/game/domain/node.dart';
 import 'package:swipeout_last_train/game/presentation/board/board_layout.dart';
 import 'package:swipeout_last_train/game/presentation/board/board_view.dart';
 import 'package:swipeout_last_train/game/presentation/board/network_painter.dart';
-import 'package:swipeout_last_train/game/presentation/board/train_token.dart';
+import 'package:swipeout_last_train/game/presentation/board/train_sprite.dart';
 import 'package:swipeout_last_train/game/presentation/game/pulse_controller.dart';
 
 import '../../support/graph_builders.dart';
@@ -73,13 +73,13 @@ void main() {
     c.advance();
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 200));
-    final midway = tester.getCenter(find.byType(TrainToken));
+    final midway = tester.getCenter(find.byType(TrainSprite));
     expect(midway.dx, greaterThan(a.dx));
     expect(midway.dx, lessThan(b.dx));
     expect(c.isAnimating, isTrue);
 
     await tester.pumpAndSettle();
-    expect(tester.getCenter(find.byType(TrainToken)), b);
+    expect(tester.getCenter(find.byType(TrainSprite)), b);
     expect(c.isAnimating, isFalse);
   });
 
@@ -118,6 +118,6 @@ void main() {
     await _pump(tester, _sixteen());
 
     expect(tester.takeException(), isNull);
-    expect(find.byType(TrainToken), findsOneWidget);
+    expect(find.byType(TrainSprite), findsOneWidget);
   });
 }

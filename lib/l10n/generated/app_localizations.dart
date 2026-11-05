@@ -185,7 +185,7 @@ abstract class AppLocalizations {
   /// No description provided for @trainsDelivered.
   ///
   /// In en, this message translates to:
-  /// **'🚆 {done}/{total}'**
+  /// **'{done}/{total}'**
   String trainsDelivered(int done, int total);
 
   /// No description provided for @controlsLeft.

@@ -24,7 +24,7 @@
       }
     }
   },
-  "trainsDelivered": "🚆 {done}/{total}",
+  "trainsDelivered": "{done}/{total}",
   "@trainsDelivered": {
     "placeholders": {
       "done": {

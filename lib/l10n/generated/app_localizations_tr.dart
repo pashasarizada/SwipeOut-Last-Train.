@@ -55,7 +55,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String trainsDelivered(int done, int total) {
-    return '🚆 $done/$total';
+    return '$done/$total';
   }
 
   @override

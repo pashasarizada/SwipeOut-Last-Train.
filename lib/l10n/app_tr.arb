@@ -14,7 +14,7 @@
   "cityLondon": "LONDRA",
   "cityMoscow": "MOSKOVA",
   "pulseCounter": "{current}/{max} PULSE",
-  "trainsDelivered": "🚆 {done}/{total}",
+  "trainsDelivered": "{done}/{total}",
   "controlsLeft": "Kontrol: {left}/1",
   "advance": "▶  1 DAKİKA İLERLET",
   "cancel": "İptal",

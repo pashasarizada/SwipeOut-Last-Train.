@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../l10n/generated/app_localizations.dart';
+import '../board/train_sprite.dart';
 import '../game/pulse_controller.dart';
 import '../theme/app_colors.dart';
 import 'game_texts.dart';
@@ -37,12 +38,27 @@ final class PulseHud extends StatelessWidget {
                         letterSpacing: 1.4,
                       ),
                     ),
-                    Text(
-                      '${l.pulseCounter(controller.pulses, controller.maxPulses)}'
-                      ' · ${l.trainsDelivered(delivered, trains.length)}',
-                      style: text.titleMedium?.copyWith(
-                        color: AppColors.accentTurquoise,
-                      ),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            '${l.pulseCounter(controller.pulses, controller.maxPulses)} · ',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: text.titleMedium?.copyWith(
+                              color: AppColors.accentTurquoise,
+                            ),
+                          ),
+                        ),
+                        const TrainGlyph(),
+                        const SizedBox(width: 6),
+                        Text(
+                          l.trainsDelivered(delivered, trains.length),
+                          style: text.titleMedium?.copyWith(
+                            color: AppColors.accentTurquoise,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

@@ -90,7 +90,8 @@ void main() {
   ) async {
     final level = ank01();
     await _pumpGame(tester, level);
-    expect(find.text('0/5 PULSE · 🚆 0/1'), findsOneWidget);
+    expect(find.text('0/5 PULSE · '), findsOneWidget);
+    expect(find.text('0/1'), findsOneWidget);
 
     await _advance(tester);
     await _tapNode(tester, level, 'B');
@@ -114,10 +115,10 @@ void main() {
     await tester.tap(find.textContaining('ADVANCE 1 MINUTE'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 200));
-    expect(find.textContaining('· 🚆 0/1'), findsOneWidget);
+    expect(find.text('0/1'), findsOneWidget);
 
     await tester.pumpAndSettle();
-    expect(find.textContaining('· 🚆 1/1'), findsOneWidget);
+    expect(find.text('1/1'), findsOneWidget);
   });
 
   testWidgets('a rejected pulse explains itself and costs no pulse', (
