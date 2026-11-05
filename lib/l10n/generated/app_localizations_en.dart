@@ -15,20 +15,59 @@ class AppLocalizationsEn extends AppLocalizations {
   String get brandLastTrain => 'LAST TRAIN';
 
   @override
-  String get play => 'Play';
+  String get homeHeadline => 'THE LAST SERVICE IS LEAVING';
 
   @override
-  String get cityIstanbul => 'ISTANBUL';
+  String get continueGame => 'CONTINUE';
 
   @override
-  String levelLabel(String number) {
-    return 'LEVEL $number';
+  String get chooseCity => 'CHOOSE CITY';
+
+  @override
+  String get fictionalNotice =>
+      'Fictional metro puzzles inspired by real cities.';
+
+  @override
+  String get comingSoon => 'Coming soon';
+
+  @override
+  String get nightmareNetwork => 'NIGHTMARE NETWORK';
+
+  @override
+  String get cityAnkara => 'ANKARA';
+
+  @override
+  String get cityBaku => 'BAKU';
+
+  @override
+  String get cityParis => 'PARIS';
+
+  @override
+  String get cityLondon => 'LONDON';
+
+  @override
+  String get cityMoscow => 'MOSCOW';
+
+  @override
+  String pulseCounter(int current, int max) {
+    return '$current/$max PULSE';
   }
 
   @override
-  String moves(int count) {
-    return 'Moves: $count';
+  String trainsDelivered(int done, int total) {
+    return '🚆 $done/$total';
   }
+
+  @override
+  String controlsLeft(int left) {
+    return 'Control: $left/1';
+  }
+
+  @override
+  String get advance => '▶  ADVANCE 1 MINUTE';
+
+  @override
+  String get cancel => 'Cancel';
 
   @override
   String get undo => 'Undo';
@@ -37,44 +76,47 @@ class AppLocalizationsEn extends AppLocalizations {
   String get restart => 'Restart';
 
   @override
-  String get hint => 'Hint';
+  String pendingSwitch(String node) {
+    return 'Switch $node';
+  }
 
   @override
-  String get levelComplete => 'Line cleared!';
+  String pendingSignal(String node) {
+    return 'Signal $node';
+  }
+
+  @override
+  String get levelComplete => 'LINE CLEARED';
+
+  @override
+  String pulsesUsed(int count) {
+    return '$count pulses';
+  }
+
+  @override
+  String get levelLost => 'No minutes left';
+
+  @override
+  String get playAgain => 'Play again';
 
   @override
   String get next => 'Next';
 
   @override
-  String get replay => 'Replay';
+  String get backToCity => 'Back to city';
 
   @override
-  String get tutorialSelectSwipe =>
-      'Tap the train, then swipe to move it one square.';
+  String get failCollision => 'Two trains met at the same stop.';
 
   @override
-  String get tutorialSwitch =>
-      'Tap the switch to change its route. Each tap is a move.';
+  String get failHeadOn => 'Head-on! Two trains on one track.';
 
   @override
-  String get tutorialOrder =>
-      'Trains can\'t pass each other. Choose who goes first.';
+  String get failBlocked => 'A train ran into a waiting one.';
 
   @override
-  String get blockedWrongStation => 'Wrong station for this train.';
+  String get failWrongGoal => 'Wrong line: that stop belongs to another train.';
 
   @override
-  String get blockedOccupied => 'Another train is in the way.';
-
-  @override
-  String get blockedNoTrack => 'No track in that direction.';
-
-  @override
-  String get blockedSwitchOccupied => 'A train is on the switch.';
-
-  @override
-  String get selectTrainFirst => 'Tap a train first.';
-
-  @override
-  String get hintUnavailable => 'No hint available right now.';
+  String get failOutOfPulses => 'No minutes left.';
 }

@@ -15,20 +15,59 @@ class AppLocalizationsTr extends AppLocalizations {
   String get brandLastTrain => 'LAST TRAIN';
 
   @override
-  String get play => 'Oyna';
+  String get homeHeadline => 'SON SEFER BAŞLIYOR';
 
   @override
-  String get cityIstanbul => 'İSTANBUL';
+  String get continueGame => 'DEVAM ET';
 
   @override
-  String levelLabel(String number) {
-    return 'BÖLÜM $number';
+  String get chooseCity => 'ŞEHİR SEÇ';
+
+  @override
+  String get fictionalNotice =>
+      'Gerçek şehirlerden esinlenen kurgusal metro bulmacaları.';
+
+  @override
+  String get comingSoon => 'Yakında';
+
+  @override
+  String get nightmareNetwork => 'NIGHTMARE NETWORK';
+
+  @override
+  String get cityAnkara => 'ANKARA';
+
+  @override
+  String get cityBaku => 'BAKÜ';
+
+  @override
+  String get cityParis => 'PARİS';
+
+  @override
+  String get cityLondon => 'LONDRA';
+
+  @override
+  String get cityMoscow => 'MOSKOVA';
+
+  @override
+  String pulseCounter(int current, int max) {
+    return '$current/$max PULSE';
   }
 
   @override
-  String moves(int count) {
-    return 'Hamle: $count';
+  String trainsDelivered(int done, int total) {
+    return '🚆 $done/$total';
   }
+
+  @override
+  String controlsLeft(int left) {
+    return 'Kontrol: $left/1';
+  }
+
+  @override
+  String get advance => '▶  1 DAKİKA İLERLET';
+
+  @override
+  String get cancel => 'İptal';
 
   @override
   String get undo => 'Geri Al';
@@ -37,44 +76,47 @@ class AppLocalizationsTr extends AppLocalizations {
   String get restart => 'Baştan';
 
   @override
-  String get hint => 'İpucu';
+  String pendingSwitch(String node) {
+    return 'Makas $node';
+  }
 
   @override
-  String get levelComplete => 'Hat temiz!';
+  String pendingSignal(String node) {
+    return 'Sinyal $node';
+  }
+
+  @override
+  String get levelComplete => 'HAT TEMİZ';
+
+  @override
+  String pulsesUsed(int count) {
+    return '$count pulse';
+  }
+
+  @override
+  String get levelLost => 'Dakika kalmadı';
+
+  @override
+  String get playAgain => 'Tekrar Oyna';
 
   @override
   String get next => 'Sonraki';
 
   @override
-  String get replay => 'Tekrar';
+  String get backToCity => 'Şehre Dön';
 
   @override
-  String get tutorialSelectSwipe =>
-      'Trene dokun, sonra kaydırarak bir kare ilerlet.';
+  String get failCollision => 'İki tren aynı durakta karşılaştı.';
 
   @override
-  String get tutorialSwitch =>
-      'Yönü değiştirmek için makasa dokun. Her dokunuş bir hamle.';
+  String get failHeadOn => 'Kafa kafaya! İki tren aynı rayda.';
 
   @override
-  String get tutorialOrder =>
-      'Trenler birbirinin içinden geçemez. Önce kim gidecek, seç.';
+  String get failBlocked => 'Bir tren bekleyen trene çarptı.';
 
   @override
-  String get blockedWrongStation => 'Bu tren için yanlış istasyon.';
+  String get failWrongGoal => 'Yanlış hat: o durak başka trenin.';
 
   @override
-  String get blockedOccupied => 'Yolda başka bir tren var.';
-
-  @override
-  String get blockedNoTrack => 'O yönde ray yok.';
-
-  @override
-  String get blockedSwitchOccupied => 'Makasın üstünde tren var.';
-
-  @override
-  String get selectTrainFirst => 'Önce bir trene dokun.';
-
-  @override
-  String get hintUnavailable => 'Şu an ipucu yok.';
+  String get failOutOfPulses => 'Dakika kalmadı.';
 }

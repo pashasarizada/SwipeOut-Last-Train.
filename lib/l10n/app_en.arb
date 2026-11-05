@@ -2,37 +2,83 @@
   "@@locale": "en",
   "appTitle": "SwipeOut: Last Train",
   "brandLastTrain": "LAST TRAIN",
-  "play": "Play",
-  "cityIstanbul": "ISTANBUL",
-  "levelLabel": "LEVEL {number}",
-  "@levelLabel": {
+  "homeHeadline": "THE LAST SERVICE IS LEAVING",
+  "continueGame": "CONTINUE",
+  "chooseCity": "CHOOSE CITY",
+  "fictionalNotice": "Fictional metro puzzles inspired by real cities.",
+  "comingSoon": "Coming soon",
+  "nightmareNetwork": "NIGHTMARE NETWORK",
+  "cityAnkara": "ANKARA",
+  "cityBaku": "BAKU",
+  "cityParis": "PARIS",
+  "cityLondon": "LONDON",
+  "cityMoscow": "MOSCOW",
+  "pulseCounter": "{current}/{max} PULSE",
+  "@pulseCounter": {
     "placeholders": {
-      "number": {
+      "current": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "trainsDelivered": "🚆 {done}/{total}",
+  "@trainsDelivered": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "controlsLeft": "Control: {left}/1",
+  "@controlsLeft": {
+    "placeholders": {
+      "left": {
+        "type": "int"
+      }
+    }
+  },
+  "advance": "▶  ADVANCE 1 MINUTE",
+  "cancel": "Cancel",
+  "undo": "Undo",
+  "restart": "Restart",
+  "pendingSwitch": "Switch {node}",
+  "@pendingSwitch": {
+    "placeholders": {
+      "node": {
         "type": "String"
       }
     }
   },
-  "moves": "Moves: {count}",
-  "@moves": {
+  "pendingSignal": "Signal {node}",
+  "@pendingSignal": {
+    "placeholders": {
+      "node": {
+        "type": "String"
+      }
+    }
+  },
+  "levelComplete": "LINE CLEARED",
+  "pulsesUsed": "{count} pulses",
+  "@pulsesUsed": {
     "placeholders": {
       "count": {
         "type": "int"
       }
     }
   },
-  "undo": "Undo",
-  "restart": "Restart",
-  "hint": "Hint",
-  "levelComplete": "Line cleared!",
+  "levelLost": "No minutes left",
+  "playAgain": "Play again",
   "next": "Next",
-  "replay": "Replay",
-  "tutorialSelectSwipe": "Tap the train, then swipe to move it one square.",
-  "tutorialSwitch": "Tap the switch to change its route. Each tap is a move.",
-  "tutorialOrder": "Trains can't pass each other. Choose who goes first.",
-  "blockedWrongStation": "Wrong station for this train.",
-  "blockedOccupied": "Another train is in the way.",
-  "blockedNoTrack": "No track in that direction.",
-  "blockedSwitchOccupied": "A train is on the switch.",
-  "selectTrainFirst": "Tap a train first.",
-  "hintUnavailable": "No hint available right now."
+  "backToCity": "Back to city",
+  "failCollision": "Two trains met at the same stop.",
+  "failHeadOn": "Head-on! Two trains on one track.",
+  "failBlocked": "A train ran into a waiting one.",
+  "failWrongGoal": "Wrong line: that stop belongs to another train.",
+  "failOutOfPulses": "No minutes left."
 }

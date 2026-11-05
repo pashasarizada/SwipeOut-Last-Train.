@@ -110,29 +110,101 @@ abstract class AppLocalizations {
   /// **'LAST TRAIN'**
   String get brandLastTrain;
 
-  /// No description provided for @play.
+  /// No description provided for @homeHeadline.
   ///
   /// In en, this message translates to:
-  /// **'Play'**
-  String get play;
+  /// **'THE LAST SERVICE IS LEAVING'**
+  String get homeHeadline;
 
-  /// No description provided for @cityIstanbul.
+  /// No description provided for @continueGame.
   ///
   /// In en, this message translates to:
-  /// **'ISTANBUL'**
-  String get cityIstanbul;
+  /// **'CONTINUE'**
+  String get continueGame;
 
-  /// No description provided for @levelLabel.
+  /// No description provided for @chooseCity.
   ///
   /// In en, this message translates to:
-  /// **'LEVEL {number}'**
-  String levelLabel(String number);
+  /// **'CHOOSE CITY'**
+  String get chooseCity;
 
-  /// No description provided for @moves.
+  /// No description provided for @fictionalNotice.
   ///
   /// In en, this message translates to:
-  /// **'Moves: {count}'**
-  String moves(int count);
+  /// **'Fictional metro puzzles inspired by real cities.'**
+  String get fictionalNotice;
+
+  /// No description provided for @comingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon'**
+  String get comingSoon;
+
+  /// No description provided for @nightmareNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'NIGHTMARE NETWORK'**
+  String get nightmareNetwork;
+
+  /// No description provided for @cityAnkara.
+  ///
+  /// In en, this message translates to:
+  /// **'ANKARA'**
+  String get cityAnkara;
+
+  /// No description provided for @cityBaku.
+  ///
+  /// In en, this message translates to:
+  /// **'BAKU'**
+  String get cityBaku;
+
+  /// No description provided for @cityParis.
+  ///
+  /// In en, this message translates to:
+  /// **'PARIS'**
+  String get cityParis;
+
+  /// No description provided for @cityLondon.
+  ///
+  /// In en, this message translates to:
+  /// **'LONDON'**
+  String get cityLondon;
+
+  /// No description provided for @cityMoscow.
+  ///
+  /// In en, this message translates to:
+  /// **'MOSCOW'**
+  String get cityMoscow;
+
+  /// No description provided for @pulseCounter.
+  ///
+  /// In en, this message translates to:
+  /// **'{current}/{max} PULSE'**
+  String pulseCounter(int current, int max);
+
+  /// No description provided for @trainsDelivered.
+  ///
+  /// In en, this message translates to:
+  /// **'🚆 {done}/{total}'**
+  String trainsDelivered(int done, int total);
+
+  /// No description provided for @controlsLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Control: {left}/1'**
+  String controlsLeft(int left);
+
+  /// No description provided for @advance.
+  ///
+  /// In en, this message translates to:
+  /// **'▶  ADVANCE 1 MINUTE'**
+  String get advance;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
 
   /// No description provided for @undo.
   ///
@@ -146,17 +218,41 @@ abstract class AppLocalizations {
   /// **'Restart'**
   String get restart;
 
-  /// No description provided for @hint.
+  /// No description provided for @pendingSwitch.
   ///
   /// In en, this message translates to:
-  /// **'Hint'**
-  String get hint;
+  /// **'Switch {node}'**
+  String pendingSwitch(String node);
+
+  /// No description provided for @pendingSignal.
+  ///
+  /// In en, this message translates to:
+  /// **'Signal {node}'**
+  String pendingSignal(String node);
 
   /// No description provided for @levelComplete.
   ///
   /// In en, this message translates to:
-  /// **'Line cleared!'**
+  /// **'LINE CLEARED'**
   String get levelComplete;
+
+  /// No description provided for @pulsesUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} pulses'**
+  String pulsesUsed(int count);
+
+  /// No description provided for @levelLost.
+  ///
+  /// In en, this message translates to:
+  /// **'No minutes left'**
+  String get levelLost;
+
+  /// No description provided for @playAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Play again'**
+  String get playAgain;
 
   /// No description provided for @next.
   ///
@@ -164,65 +260,41 @@ abstract class AppLocalizations {
   /// **'Next'**
   String get next;
 
-  /// No description provided for @replay.
+  /// No description provided for @backToCity.
   ///
   /// In en, this message translates to:
-  /// **'Replay'**
-  String get replay;
+  /// **'Back to city'**
+  String get backToCity;
 
-  /// No description provided for @tutorialSelectSwipe.
+  /// No description provided for @failCollision.
   ///
   /// In en, this message translates to:
-  /// **'Tap the train, then swipe to move it one square.'**
-  String get tutorialSelectSwipe;
+  /// **'Two trains met at the same stop.'**
+  String get failCollision;
 
-  /// No description provided for @tutorialSwitch.
+  /// No description provided for @failHeadOn.
   ///
   /// In en, this message translates to:
-  /// **'Tap the switch to change its route. Each tap is a move.'**
-  String get tutorialSwitch;
+  /// **'Head-on! Two trains on one track.'**
+  String get failHeadOn;
 
-  /// No description provided for @tutorialOrder.
+  /// No description provided for @failBlocked.
   ///
   /// In en, this message translates to:
-  /// **'Trains can\'t pass each other. Choose who goes first.'**
-  String get tutorialOrder;
+  /// **'A train ran into a waiting one.'**
+  String get failBlocked;
 
-  /// No description provided for @blockedWrongStation.
+  /// No description provided for @failWrongGoal.
   ///
   /// In en, this message translates to:
-  /// **'Wrong station for this train.'**
-  String get blockedWrongStation;
+  /// **'Wrong line: that stop belongs to another train.'**
+  String get failWrongGoal;
 
-  /// No description provided for @blockedOccupied.
+  /// No description provided for @failOutOfPulses.
   ///
   /// In en, this message translates to:
-  /// **'Another train is in the way.'**
-  String get blockedOccupied;
-
-  /// No description provided for @blockedNoTrack.
-  ///
-  /// In en, this message translates to:
-  /// **'No track in that direction.'**
-  String get blockedNoTrack;
-
-  /// No description provided for @blockedSwitchOccupied.
-  ///
-  /// In en, this message translates to:
-  /// **'A train is on the switch.'**
-  String get blockedSwitchOccupied;
-
-  /// No description provided for @selectTrainFirst.
-  ///
-  /// In en, this message translates to:
-  /// **'Tap a train first.'**
-  String get selectTrainFirst;
-
-  /// No description provided for @hintUnavailable.
-  ///
-  /// In en, this message translates to:
-  /// **'No hint available right now.'**
-  String get hintUnavailable;
+  /// **'No minutes left.'**
+  String get failOutOfPulses;
 }
 
 class _AppLocalizationsDelegate

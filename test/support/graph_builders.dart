@@ -34,6 +34,8 @@ TrainDef trainDef(
 LevelDefinition buildLevel({
   String id = 'TEST-01',
   int number = 1,
+  LocalizedText title = const LocalizedText(tr: 'Test', en: 'Test'),
+  List<LocalizedText> tutorialSteps = const [],
   required List<Node> nodes,
   required List<String> edges,
   List<SwitchDef> switches = const [],
@@ -48,7 +50,8 @@ LevelDefinition buildLevel({
   id: id,
   city: CityId.ankara,
   number: number,
-  title: const LocalizedText(tr: 'Test', en: 'Test'),
+  title: title,
+  tutorialSteps: tutorialSteps,
   maxPulses: maxPulses,
   parPulses: parPulses,
   tutorial: tutorial,
@@ -71,6 +74,17 @@ TrainState at(String id, String nodeId, [String? incoming]) =>
 /// ANK-01 "İlk Sefer" from the design doc §8.
 LevelDefinition ank01() => buildLevel(
   id: 'ANK-01',
+  title: const LocalizedText(tr: 'İlk Sefer', en: 'First Departure'),
+  tutorialSteps: const [
+    LocalizedText(
+      tr: 'Trenler her dakikada bir durak ilerler.',
+      en: 'Trains move one stop each minute.',
+    ),
+    LocalizedText(
+      tr: 'Makası doğru raya çevir.',
+      en: 'Switch to the correct track.',
+    ),
+  ],
   nodes: [
     node('A', NodeKind.depot, 0.13, 0.50),
     node('B', NodeKind.junction, 0.48, 0.50),
@@ -98,6 +112,17 @@ LevelDefinition ank01() => buildLevel(
 LevelDefinition ank02() => buildLevel(
   id: 'ANK-02',
   number: 2,
+  title: const LocalizedText(tr: 'Kızılay Yönü', en: 'Towards Kızılay'),
+  tutorialSteps: const [
+    LocalizedText(
+      tr: 'Tren kapalı koldan gelirse bekler.',
+      en: 'A train on a closed branch waits.',
+    ),
+    LocalizedText(
+      tr: 'Makası treninin geldiği yöne çevir.',
+      en: 'Turn the switch towards your train.',
+    ),
+  ],
   nodes: [
     node('A', NodeKind.depot, 0.12, 0.30),
     node('B', NodeKind.junction, 0.45, 0.50),
