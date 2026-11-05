@@ -299,4 +299,19 @@ void main() {
     expect(level.solution, contains(const ToggleSignal('G')));
     expect(level.trains.firstWhere((t) => t.id == 'red_1').goalNode, 'L');
   });
+
+  test('MOS-04: all four trains pass the central lock', () {
+    final level = levels.firstWhere((l) => l.id == 'MOS-04');
+    expect(level.trains, hasLength(4));
+    final engine = PulseEngine(level);
+    var state = level.initialState;
+    final throughCentre = <String>{};
+    for (final action in level.solution) {
+      state = (engine.simulatePulse(state, action) as PulseApplied).state;
+      for (final t in state.trains) {
+        if (t.nodeId == 'P') throughCentre.add(t.id);
+      }
+    }
+    expect(throughCentre, hasLength(4));
+  });
 }
