@@ -36,8 +36,8 @@
     {"id": "blue_1", "startNode": "D", "goalNode": "B", "symbol": "triangle", "style": "azure"}
   ],
   "tutorialSteps": [
-    {"tr": "Tek hat, iki yön: trenler karşı karşıya.", "en": "One track, two directions: the trains face each other."},
-    {"tr": "Biri hattı boşaltmadan diğeri giremez.", "en": "One must clear the line before the other enters."}
+    {"tr": "Tek hat, iki yön.", "en": "One track, two directions."},
+    {"tr": "Önce biri hattı boşaltsın.", "en": "Let one train clear the line first."}
   ],
   "solution": ["switch:L", "switch:W", "wait", "switch:W", "switch:L"]
 }
