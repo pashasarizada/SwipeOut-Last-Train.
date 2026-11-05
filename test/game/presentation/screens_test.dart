@@ -298,6 +298,12 @@ void main() {
       find.text('Trenler her dakikada bir durak ilerler.'),
       findsOneWidget,
     );
+    expect(find.textContaining('0/1 TREN'), findsOneWidget);
+  });
+
+  testWidgets('the board says what its counters count', (tester) async {
+    await _app(tester, home: PulseGameScreen(level: ank01()));
+    expect(find.textContaining('0/5 PULSE · 0/1 TRAINS'), findsOneWidget);
   });
 
   for (final scale in [1.0, 1.3]) {

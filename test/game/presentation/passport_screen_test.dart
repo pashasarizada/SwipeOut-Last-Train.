@@ -96,4 +96,26 @@ void main() {
       expect(find.text('Stamp earned!'), findsNothing);
     },
   );
+
+  testWidgets('the stamp date follows the player\'s language', (tester) async {
+    for (final (locale, date) in [
+      (const Locale('en'), 'Stamped 11/5/2026'),
+      (const Locale('tr'), '05.11.2026'),
+    ]) {
+      await tester.pumpWidget(
+        SwipeOutApp(
+          locale: locale,
+          home: MotionSettings(
+            reduced: true,
+            child: PassportScreen(
+              passport: _passport(),
+              highlight: CityId.ankara,
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+      expect(find.textContaining(date), findsOneWidget, reason: '$locale');
+    }
+  });
 }

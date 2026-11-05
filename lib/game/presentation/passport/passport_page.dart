@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../l10n/generated/app_localizations.dart';
 import '../../domain/passport.dart';
@@ -14,9 +15,6 @@ final class PassportPage extends StatelessWidget {
 
   final CityStamp stamp;
   final bool highlight;
-
-  static String _date(DateTime d) =>
-      '${d.day.toString().padLeft(2, '0')}.${d.month.toString().padLeft(2, '0')}.${d.year}';
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +63,11 @@ final class PassportPage extends StatelessWidget {
               ),
             if (earnedOn != null)
               Text(
-                l.stampedOn(_date(earnedOn.toLocal())),
+                l.stampedOn(
+                  DateFormat.yMd(
+                    Localizations.localeOf(context).toLanguageTag(),
+                  ).format(earnedOn.toLocal()),
+                ),
                 style: const TextStyle(color: AppColors.textSecondary),
               ),
             Text(

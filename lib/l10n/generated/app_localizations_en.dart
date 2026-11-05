@@ -52,7 +52,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String trainsDelivered(int done, int total) {
-    return '$done/$total';
+    return '$done/$total TRAINS';
   }
 
   @override

@@ -23,7 +23,7 @@
       }
     }
   },
-  "trainsDelivered": "{done}/{total}",
+  "trainsDelivered": "{done}/{total} TRAINS",
   "@trainsDelivered": {
     "placeholders": {
       "done": {
