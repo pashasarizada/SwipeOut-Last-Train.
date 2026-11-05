@@ -11,3 +11,5 @@ Belirsiz noktalarda alınan en sade, sürdürülebilir kararlar. Format: **D-NNN
 - **D-007 — `dart format` yalnız `lib test tool` dizinlerinde çalışır.** Platform klasörleri ve `build/` gereksiz yere taranmaz.
 - **D-008 — Teslim edilen tren hücreyi boşaltır.** Tahtadan kalkar; aynı renkteki bir istasyon birden çok treni kabul eder. Teslim geri alınamaz bir engel yaratmaz, çözücü durumu küçülür.
 - **D-009 — Harita dışına doğru hamle `noEntry` sayılır.** Ayrı bir "sınır dışı" sebebi UI'da farklı bir mesaj gerektirmiyor (KISS); geçerli seviyelerde validator zaten dışarı bakan portu reddeder.
+- **D-010 — Validator, yapısal sorun varsa çözücüyü çalıştırmaz.** Bozuk bir seviyede `unsolvable` gürültüsü asıl hatayı gizlemesin.
+- **D-011 — Codec yalnız JSON yapısını, validator oyun kurallarını denetler (SRP).** Codec hatası `LevelFormatException`, kural ihlali `LevelIssue` listesi.
