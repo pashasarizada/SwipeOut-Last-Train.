@@ -1,0 +1,67 @@
+{
+  "id": "MOS-03",
+  "city": "moscow",
+  "number": 3,
+  "tutorial": false,
+  "title": {"tr": "Dış Halka", "en": "Outer Ring"},
+  "maxPulses": 13,
+  "parPulses": 11,
+  "maxChangesPerPulse": 1,
+  "nodes": [
+    {"id": "A", "kind": "depot", "x": 0.04, "y": 0.10},
+    {"id": "E", "kind": "switch", "x": 0.14, "y": 0.30},
+    {"id": "F", "kind": "depot", "x": 0.40, "y": 0.02},
+    {"id": "V", "kind": "switch", "x": 0.40, "y": 0.22},
+    {"id": "K", "kind": "switch", "x": 0.40, "y": 0.58},
+    {"id": "X", "kind": "switch", "x": 0.18, "y": 0.66},
+    {"id": "R", "kind": "goal", "x": 0.10, "y": 0.90},
+    {"id": "G", "kind": "signal", "x": 0.52, "y": 0.80},
+    {"id": "J", "kind": "switch", "x": 0.64, "y": 0.62},
+    {"id": "D", "kind": "depot", "x": 0.70, "y": 0.06},
+    {"id": "Y", "kind": "switch", "x": 0.64, "y": 0.28},
+    {"id": "Z", "kind": "switch", "x": 0.88, "y": 0.36},
+    {"id": "B", "kind": "goal", "x": 0.98, "y": 0.14},
+    {"id": "W", "kind": "switch", "x": 0.86, "y": 0.70},
+    {"id": "L", "kind": "goal", "x": 0.94, "y": 0.94}
+  ],
+  "edges": [
+    {"id": "AE", "a": "A", "b": "E"},
+    {"id": "EV", "a": "E", "b": "V"},
+    {"id": "FV", "a": "F", "b": "V"},
+    {"id": "VK", "a": "V", "b": "K"},
+    {"id": "KX", "a": "K", "b": "X"},
+    {"id": "XE", "a": "X", "b": "E"},
+    {"id": "XR", "a": "X", "b": "R"},
+    {"id": "KG", "a": "K", "b": "G"},
+    {"id": "GJ", "a": "G", "b": "J"},
+    {"id": "JY", "a": "J", "b": "Y"},
+    {"id": "DY", "a": "D", "b": "Y"},
+    {"id": "YZ", "a": "Y", "b": "Z"},
+    {"id": "ZB", "a": "Z", "b": "B"},
+    {"id": "ZW", "a": "Z", "b": "W"},
+    {"id": "WJ", "a": "W", "b": "J"},
+    {"id": "WL", "a": "W", "b": "L"}
+  ],
+  "switches": [
+    {"nodeId": "E", "trunkEdge": "EV", "branchAEdge": "XE", "branchBEdge": "AE", "selectedBranch": "B"},
+    {"nodeId": "V", "trunkEdge": "VK", "branchAEdge": "EV", "branchBEdge": "FV", "selectedBranch": "A"},
+    {"nodeId": "K", "trunkEdge": "VK", "branchAEdge": "KX", "branchBEdge": "KG", "selectedBranch": "A"},
+    {"nodeId": "X", "trunkEdge": "KX", "branchAEdge": "XE", "branchBEdge": "XR", "selectedBranch": "A"},
+    {"nodeId": "J", "trunkEdge": "JY", "branchAEdge": "WJ", "branchBEdge": "GJ", "selectedBranch": "A"},
+    {"nodeId": "Y", "trunkEdge": "YZ", "branchAEdge": "JY", "branchBEdge": "DY", "selectedBranch": "A"},
+    {"nodeId": "Z", "trunkEdge": "YZ", "branchAEdge": "ZW", "branchBEdge": "ZB", "selectedBranch": "A"},
+    {"nodeId": "W", "trunkEdge": "ZW", "branchAEdge": "WJ", "branchBEdge": "WL", "selectedBranch": "A"}
+  ],
+  "signals": [
+    {"nodeId": "G", "initial": "red"}
+  ],
+  "trains": [
+    {"id": "red_1", "startNode": "A", "goalNode": "L", "symbol": "circle", "style": "coral"},
+    {"id": "blue_1", "startNode": "D", "goalNode": "B", "symbol": "triangle", "style": "azure"},
+    {"id": "lime_1", "startNode": "F", "goalNode": "R", "symbol": "square", "style": "lime"}
+  ],
+  "tutorialSteps": [
+    {"tr": "Köprüdeki sinyal geçişi sıraya koyar.", "en": "The bridge signal sets the crossing order."}
+  ],
+  "solution": ["switch:J", "switch:V", "switch:X", "switch:K", "switch:V", "switch:Y", "signal:G", "switch:Y", "switch:J", "switch:W", "switch:Z"]
+}

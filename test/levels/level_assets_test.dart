@@ -292,4 +292,11 @@ void main() {
     expect(lime, contains('J'));
     expect(red, isNot(contains('J')));
   });
+
+  test('MOS-03: the bridge signal must open for red to cross', () {
+    final level = levels.firstWhere((l) => l.id == 'MOS-03');
+    expect(level.initialSignals, {'G': SignalAspect.red});
+    expect(level.solution, contains(const ToggleSignal('G')));
+    expect(level.trains.firstWhere((t) => t.id == 'red_1').goalNode, 'L');
+  });
 }
