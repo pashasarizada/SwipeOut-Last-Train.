@@ -5,6 +5,7 @@ import 'package:swipeout_last_train/game/domain/level_definition.dart';
 import 'package:swipeout_last_train/game/domain/node.dart';
 import 'package:swipeout_last_train/game/presentation/board/board_layout.dart';
 import 'package:swipeout_last_train/game/presentation/board/board_view.dart';
+import 'package:swipeout_last_train/game/presentation/board/network_painter.dart';
 import 'package:swipeout_last_train/game/presentation/board/train_token.dart';
 import 'package:swipeout_last_train/game/presentation/game/pulse_controller.dart';
 
@@ -80,6 +81,33 @@ void main() {
     await tester.pumpAndSettle();
     expect(tester.getCenter(find.byType(TrainToken)), b);
     expect(c.isAnimating, isFalse);
+  });
+
+  testWidgets('the goal shows its check mark only after the train arrives', (
+    tester,
+  ) async {
+    final level = ank01();
+    final c = await _pump(tester, level);
+    NetworkPainter painter() =>
+        tester
+                .widget<CustomPaint>(
+                  find.byWidgetPredicate(
+                    (w) => w is CustomPaint && w.painter is NetworkPainter,
+                  ),
+                )
+                .painter!
+            as NetworkPainter;
+
+    c.advance();
+    await tester.pumpAndSettle();
+    c.tapNode('B');
+    c.advance();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 200));
+    expect(painter().arrivals.trainById('red_1')!.delivered, isFalse);
+
+    await tester.pumpAndSettle();
+    expect(painter().arrivals.trainById('red_1')!.delivered, isTrue);
   });
 
   testWidgets('a 16-node board fits a 320×568 screen', (tester) async {

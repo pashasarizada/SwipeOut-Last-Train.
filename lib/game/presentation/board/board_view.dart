@@ -102,6 +102,9 @@ class _BoardViewState extends State<BoardView>
                     painter: NetworkPainter(
                       level: _controller.level,
                       state: _controller.state,
+                      arrivals: _pulse.isAnimating
+                          ? _controller.animationStart
+                          : _controller.state,
                       layout: layout,
                       pending: _controller.pending,
                       wave: _pulse.isAnimating ? 1 - _wave.value : 0,

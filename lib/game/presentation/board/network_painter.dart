@@ -16,14 +16,18 @@ final class NetworkPainter extends CustomPainter {
     required this.level,
     required this.state,
     required this.layout,
+    GameState? arrivals,
     this.pending,
     this.wave = 0,
     this.flashNode,
     this.flash = 0,
-  });
+  }) : arrivals = arrivals ?? state;
 
   final LevelDefinition level;
   final GameState state;
+
+  /// Deliveries to mark with ✓ — the pre-pulse state while trains still move.
+  final GameState arrivals;
   final BoardLayout layout;
   final ControlAction? pending;
 
@@ -96,6 +100,12 @@ final class NetworkPainter extends CustomPainter {
       case NodeKind.junction:
         final selected = pending == ToggleSwitch(node.id);
         canvas.drawCircle(c, 11, Paint()..color = AppColors.accentAmber);
+        // Outer ring stays visible when a train stands on the switch.
+        canvas.drawCircle(
+          c,
+          21,
+          _stroke(AppColors.accentAmber.withValues(alpha: 0.7), 2),
+        );
         if (selected) {
           canvas.drawCircle(c, 19, _stroke(AppColors.accentTurquoise, 3));
         }
@@ -169,6 +179,7 @@ final class NetworkPainter extends CustomPainter {
   @override
   bool shouldRepaint(NetworkPainter old) =>
       old.state != state ||
+      old.arrivals != arrivals ||
       old.pending != pending ||
       old.wave != wave ||
       old.flash != flash ||
