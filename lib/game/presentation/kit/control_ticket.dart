@@ -12,6 +12,7 @@ final class ControlTicket extends StatelessWidget {
     required this.label,
     required this.onTear,
     this.tearLabel = 'Cancel',
+    this.icon = GameIconKind.route,
   });
 
   static const Key tearKey = ValueKey('control-ticket-tear');
@@ -20,6 +21,9 @@ final class ControlTicket extends StatelessWidget {
   final String label;
   final VoidCallback onTear;
   final String tearLabel;
+
+  /// What is pending: a switch (route) or a signal.
+  final GameIconKind icon;
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +41,7 @@ final class ControlTicket extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const GameIcon(
-                GameIconKind.route,
-                size: 18,
-                color: AppColors.accentAmber,
-              ),
+              GameIcon(icon, size: 18, color: AppColors.accentAmber),
               const SizedBox(width: 8),
               Text(
                 label,

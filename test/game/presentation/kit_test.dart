@@ -7,6 +7,7 @@ import 'package:swipeout_last_train/game/presentation/kit/advance_lever.dart';
 import 'package:swipeout_last_train/game/presentation/kit/control_ticket.dart';
 import 'package:swipeout_last_train/game/presentation/kit/departure_board.dart';
 import 'package:swipeout_last_train/game/presentation/kit/game_button.dart';
+import 'package:swipeout_last_train/game/presentation/kit/game_icon.dart';
 import 'package:swipeout_last_train/game/presentation/kit/game_scaffold.dart';
 import 'package:swipeout_last_train/game/presentation/kit/motion_settings.dart';
 import 'package:swipeout_last_train/game/presentation/kit/platform_announcement.dart';
@@ -140,6 +141,23 @@ void main() {
       await tester.tap(cross);
       await tester.pumpAndSettle();
       expect(torn, 2);
+    });
+
+    testWidgets('a signal ticket shows the signal icon, a switch the route', (
+      tester,
+    ) async {
+      await _pump(
+        tester,
+        ControlTicket(
+          label: 'Sinyal G',
+          icon: GameIconKind.signal,
+          onTear: () {},
+        ),
+      );
+      expect(
+        tester.widgetList<GameIcon>(find.byType(GameIcon)).map((i) => i.kind),
+        contains(GameIconKind.signal),
+      );
     });
   });
 

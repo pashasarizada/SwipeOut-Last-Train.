@@ -2,6 +2,8 @@ import 'package:flutter/painting.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:swipeout_last_train/game/domain/norm_point.dart';
 import 'package:swipeout_last_train/game/presentation/board/board_layout.dart';
+import 'package:swipeout_last_train/game/presentation/board/network_painter.dart';
+import 'package:swipeout_last_train/game/presentation/board/train_layer.dart';
 
 import '../../support/graph_builders.dart';
 
@@ -25,5 +27,12 @@ void main() {
 
     expect(layout.nodeAt(b + const Offset(20, 0), nodes), 'B');
     expect(layout.nodeAt(b + const Offset(0, 60), nodes), isNull);
+  });
+
+  test('a signal lamp stands clear of a train waiting on its node', () {
+    expect(
+      NetworkPainter.signalLampOffset.distance,
+      greaterThan(TrainLayer.carLength / 2 + 8),
+    );
   });
 }

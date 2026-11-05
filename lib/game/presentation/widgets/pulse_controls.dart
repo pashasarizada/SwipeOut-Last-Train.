@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../../l10n/generated/app_localizations.dart';
+import '../../domain/control_action.dart';
 import '../game/pulse_controller.dart';
 import '../kit/advance_lever.dart';
 import '../kit/control_ticket.dart';
 import '../kit/game_button.dart';
+import '../kit/game_icon.dart';
 import '../theme/app_colors.dart';
 import 'game_texts.dart';
 
@@ -37,6 +39,9 @@ final class PulseControls extends StatelessWidget {
                           key: ValueKey(pending),
                           label: l.pendingLabel(pending),
                           tearLabel: l.cancel,
+                          icon: pending is ToggleSignal
+                              ? GameIconKind.signal
+                              : GameIconKind.route,
                           onTear: controller.cancelPending,
                         ),
                       ),

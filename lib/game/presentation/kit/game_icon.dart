@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 
 /// Our own drawn icons — the game never shows Material Icons
 /// (docs/UI_UX_GUIDELINES.md §1).
-enum GameIconKind { lock, star, starOutline, cross, route, horn, check }
+enum GameIconKind { lock, star, starOutline, cross, route, signal, horn, check }
 
 /// A small drawn icon, [size] pt square.
 final class GameIcon extends StatelessWidget {
@@ -93,6 +93,22 @@ final class GameIcon extends StatelessWidget {
         canvas.drawLine(p(0, 0.02), p(-0.3, -0.34), line);
         canvas.drawLine(p(0, 0.02), p(0.3, -0.34), line);
         canvas.drawCircle(p(0, 0.02), s * 0.1, fill);
+      case GameIconKind.signal:
+        // A signal head on its post: two lamps, the top one lit.
+        canvas.drawLine(p(0, 0.18), p(0, 0.46), line);
+        canvas.drawRRect(
+          RRect.fromRectAndRadius(
+            Rect.fromCenter(
+              center: p(0, -0.12),
+              width: s * 0.42,
+              height: s * 0.66,
+            ),
+            Radius.circular(s * 0.14),
+          ),
+          line..strokeWidth = s * 0.09,
+        );
+        canvas.drawCircle(p(0, -0.27), s * 0.1, fill);
+        canvas.drawCircle(p(0, 0.03), s * 0.08, line);
       case GameIconKind.horn:
         // A station loudspeaker with two sound waves.
         final cone = Path()

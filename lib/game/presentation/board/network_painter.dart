@@ -112,16 +112,7 @@ final class NetworkPainter extends CustomPainter {
           canvas.drawCircle(c, 19, _stroke(AppColors.accentTurquoise, 3));
         }
       case NodeKind.signal:
-        final green = state.signals[node.id] == SignalAspect.green;
-        final selected = pending == ToggleSignal(node.id);
-        canvas.drawCircle(
-          c,
-          10,
-          Paint()..color = green ? AppColors.signalGreen : AppColors.danger,
-        );
-        if (selected) {
-          canvas.drawCircle(c, 18, _stroke(AppColors.accentTurquoise, 3));
-        }
+        _paintSignal(canvas, node, c);
       case NodeKind.goal:
         _paintGoal(canvas, node, c);
       case NodeKind.terminal:
@@ -129,6 +120,35 @@ final class NetworkPainter extends CustomPainter {
           Rect.fromCircle(center: c, radius: 7),
           Paint()..color = AppColors.trackInactive,
         );
+    }
+  }
+
+  /// Where a signal's lamp head sits relative to its node: on a short
+  /// post, clear of a train standing on the node, so its aspect stays
+  /// readable while it holds that train.
+  static const Offset signalLampOffset = Offset(22, -26);
+
+  void _paintSignal(Canvas canvas, Node node, Offset c) {
+    final green = state.signals[node.id] == SignalAspect.green;
+    final lit = green ? AppColors.signalGreen : AppColors.danger;
+    final head = c + signalLampOffset;
+    canvas.drawCircle(c, 8, Paint()..color = lit);
+    canvas.drawLine(c, head, _stroke(AppColors.trackInactive, 3));
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromCenter(center: head, width: 18, height: 26),
+        const Radius.circular(7),
+      ),
+      Paint()..color = AppColors.background,
+    );
+    canvas.drawCircle(head + const Offset(0, -6), 5, Paint()..color = lit);
+    canvas.drawCircle(
+      head + const Offset(0, 6),
+      4,
+      _stroke(AppColors.trackInactive, 1.5),
+    );
+    if (pending == ToggleSignal(node.id)) {
+      canvas.drawCircle(c, 18, _stroke(AppColors.accentTurquoise, 3));
     }
   }
 

@@ -36,6 +36,9 @@ final class TrainLayer extends StatefulWidget {
   /// the middle (a head-on swap on one edge).
   final String? bumpNode;
 
+  /// A drawn car's length in pt.
+  static const double carLength = 34;
+
   /// How far towards the conflict a bumped train lurches.
   static const double bumpReach = 0.35;
 
@@ -44,7 +47,7 @@ final class TrainLayer extends StatefulWidget {
 }
 
 class _TrainLayerState extends State<TrainLayer> {
-  static const double _length = 34;
+  static const double _length = TrainLayer.carLength;
   static const double _idleLights = 0.4;
   static const Interval _shrink = Interval(0.75, 1);
 
