@@ -23,10 +23,9 @@ final class PrefsProgressRepository implements ProgressRepository {
 
   @override
   Future<Progress> load() async {
-    final raw = prefs.getString(key);
-    if (raw == null) return const Progress();
     try {
-      return _decode(jsonDecode(raw));
+      final raw = prefs.getString(key);
+      return raw == null ? const Progress() : _decode(jsonDecode(raw));
     } on Object {
       return const Progress();
     }
@@ -54,42 +53,55 @@ final class PrefsProgressRepository implements ProgressRepository {
     },
   };
 
+  /// Each record, the run and each stamp decode on their own: a bad one
+  /// is skipped, so it can never take the rest of the progress with it.
   static Progress _decode(Object? json) {
     const r = JsonReader(key);
     final root = r.object(json, 'progress');
-    final records = r.object(
-      root['records'] ?? const <String, Object?>{},
-      'records',
-    );
-    final run = root['run'] == null ? null : r.object(root['run'], 'run');
-    final stamps = r.object(
-      root['stamps'] ?? const <String, Object?>{},
-      'stamps',
-    );
+    final records = _orEmpty(() => r.object(root['records'], 'records'));
+    final stamps = _orEmpty(() => r.object(root['stamps'], 'stamps'));
     return Progress(
       records: {
         for (final MapEntry(key: id, :value) in records.entries)
-          id: _record(r, id, r.object(value, 'record')),
+          if (_tryOrNull(() => _record(r, id, r.object(value, 'record')))
+              case final record?)
+            id: record,
       },
-      run: run == null
-          ? null
-          : SavedRun(
-              levelId: r.field<String>(run, 'levelId'),
-              actions: [
-                for (final step in r.field<List<Object?>>(run, 'actions'))
-                  ActionCodec.decode(
-                    step is String ? step : r.fail('bad step'),
-                    levelId: key,
-                  ),
-              ],
-            ),
+      run: _tryOrNull(() => _run(r, r.object(root['run'], 'run'))),
       stampDates: {
         for (final MapEntry(key: city, :value) in stamps.entries)
-          r.byName(CityId.values, city, 'city'): DateTime.parse(
-            value is String ? value : r.fail('bad date'),
-          ),
+          if (_tryOrNull(
+                () => (
+                  r.byName(CityId.values, city, 'city'),
+                  DateTime.parse(value is String ? value : r.fail('bad date')),
+                ),
+              )
+              case (final id, final date)?)
+            id: date,
       },
     );
+  }
+
+  static SavedRun _run(JsonReader r, Map<String, Object?> run) => SavedRun(
+    levelId: r.field<String>(run, 'levelId'),
+    actions: [
+      for (final step in r.field<List<Object?>>(run, 'actions'))
+        ActionCodec.decode(
+          step is String ? step : r.fail('bad step'),
+          levelId: key,
+        ),
+    ],
+  );
+
+  static Map<String, Object?> _orEmpty(Map<String, Object?> Function() read) =>
+      _tryOrNull(read) ?? const {};
+
+  static T? _tryOrNull<T>(T Function() read) {
+    try {
+      return read();
+    } on Object {
+      return null;
+    }
   }
 
   static LevelRecord _record(

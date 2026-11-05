@@ -63,4 +63,26 @@ void main() {
       expect(loaded.records, isEmpty, reason: bad);
     }
   });
+
+  test('one bad entry is skipped; the rest of the progress survives', () async {
+    final repo = await _repo({
+      PrefsProgressRepository.key:
+          '{"records": {"ANK-01": {"bestPulses": 2, "rating": "gold"},'
+          ' "ANK-02": {"bestPulses": "two"}},'
+          ' "run": {"levelId": "ANK-03", "actions": ["teleport:Z"]},'
+          ' "stamps": {"ankara": "2026-11-05T00:00:00.000Z",'
+          ' "atlantis": "2026-11-05T00:00:00.000Z"}}',
+    });
+    final loaded = await repo.load();
+
+    expect(loaded.records.keys, ['ANK-01']);
+    expect(loaded.records['ANK-01']!.rating, StarRating.gold);
+    expect(loaded.run, isNull);
+    expect(loaded.stampDates.keys, [CityId.ankara]);
+  });
+
+  test('a non-text value under the key loads as empty progress', () async {
+    final repo = await _repo({PrefsProgressRepository.key: 42});
+    expect((await repo.load()).records, isEmpty);
+  });
 }
