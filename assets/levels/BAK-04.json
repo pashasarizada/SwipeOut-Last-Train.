@@ -1,0 +1,46 @@
+{
+  "id": "BAK-04",
+  "city": "baku",
+  "number": 4,
+  "tutorial": false,
+  "title": {"tr": "Kırmızı mı Yeşil mi?", "en": "Red or Green?"},
+  "maxPulses": 8,
+  "parPulses": 6,
+  "maxChangesPerPulse": 1,
+  "nodes": [
+    {"id": "A", "kind": "depot", "x": 0.06, "y": 0.24},
+    {"id": "H", "kind": "switch", "x": 0.26, "y": 0.30},
+    {"id": "Z", "kind": "terminal", "x": 0.20, "y": 0.06},
+    {"id": "D", "kind": "depot", "x": 0.06, "y": 0.86},
+    {"id": "E", "kind": "track", "x": 0.26, "y": 0.70},
+    {"id": "M", "kind": "switch", "x": 0.46, "y": 0.50},
+    {"id": "S", "kind": "switch", "x": 0.70, "y": 0.50},
+    {"id": "R", "kind": "goal", "x": 0.92, "y": 0.26},
+    {"id": "B", "kind": "goal", "x": 0.92, "y": 0.74}
+  ],
+  "edges": [
+    {"id": "AH", "a": "A", "b": "H"},
+    {"id": "HZ", "a": "H", "b": "Z"},
+    {"id": "HM", "a": "H", "b": "M"},
+    {"id": "DE", "a": "D", "b": "E"},
+    {"id": "EM", "a": "E", "b": "M"},
+    {"id": "MS", "a": "M", "b": "S"},
+    {"id": "SR", "a": "S", "b": "R"},
+    {"id": "SB", "a": "S", "b": "B"}
+  ],
+  "switches": [
+    {"nodeId": "H", "trunkEdge": "HM", "branchAEdge": "AH", "branchBEdge": "HZ", "selectedBranch": "A"},
+    {"nodeId": "M", "trunkEdge": "MS", "branchAEdge": "HM", "branchBEdge": "EM", "selectedBranch": "A"},
+    {"nodeId": "S", "trunkEdge": "MS", "branchAEdge": "SR", "branchBEdge": "SB", "selectedBranch": "A"}
+  ],
+  "signals": [],
+  "trains": [
+    {"id": "red_1", "startNode": "A", "goalNode": "R", "symbol": "circle", "style": "coral"},
+    {"id": "blue_1", "startNode": "D", "goalNode": "B", "symbol": "triangle", "style": "azure"}
+  ],
+  "tutorialSteps": [
+    {"tr": "İki tren aynı dakikada kavşağa varır.", "en": "Both trains reach the junction together."},
+    {"tr": "Bir treni makasta beklet.", "en": "Hold one train at a switch."}
+  ],
+  "solution": ["switch:H", "switch:M", "switch:H", "switch:S", "switch:M", "switch:S"]
+}

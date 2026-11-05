@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:swipeout_last_train/game/data/level_index.dart';
 import 'package:swipeout_last_train/game/data/level_json_codec.dart';
 import 'package:swipeout_last_train/game/domain/city.dart';
+import 'package:swipeout_last_train/game/domain/control_action.dart';
 import 'package:swipeout_last_train/game/domain/level_definition.dart';
 import 'package:swipeout_last_train/game/domain/pulse_result.dart';
 import 'package:swipeout_last_train/game/engine/level_validator.dart';
@@ -129,4 +130,16 @@ void main() {
     expect(session.trains.every((t) => t.delivered), isTrue);
     expect(level.parPulses, 4);
   });
+
+  test(
+    'BAK-04: both trains reach the junction together unless one is held',
+    () {
+      final level = levels.firstWhere((l) => l.id == 'BAK-04');
+      final engine = PulseEngine(level);
+      final first = engine.simulatePulse(level.initialState, null);
+      final second = engine.simulatePulse((first as PulseApplied).state, null);
+      expect((second as PulseFailed).reason, PulseFailure.collision);
+      expect(level.solution.whereType<ToggleSwitch>(), hasLength(6));
+    },
+  );
 }
