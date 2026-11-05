@@ -1,31 +1,38 @@
 # PROGRESS
 
-## 2026-11-05 — branch `claude/bootstrap-swipeout`
+## 2026-11-05 (2) — branch `claude/v2-night-pulse`
 
-**Ortam:** macOS (Darwin 25.6), Flutter 3.32.8 stable, Dart 3.8.1, Xcode 26.4.1. `gh` CLI kurulu değil. Remote `origin` = `https://github.com/pashasarizada/SwipeOut-Last-Train..git` (oturum başında boş repo).
+**Bağlam:** Kullanıcı V2.1 tasarım belgesini ekledi (NIGHT PULSE, graf, Paris). Plan: `docs/superpowers/plans/2026-11-05-v2-night-pulse-cekirdek.md`. Animasyon kararı: `flutter_animate` + `animations` (D-020). Flutter 3.32.8'de kalındı, Flame yok (D-019).
 
-**Tamamlanan işler (Faz 0 + Faz 1, T1–T12):**
-- Flutter iskeleti (ios/android/web), portrait kilidi, TR/EN gen-l10n, lint ayarları, `scripts/check.sh`, `scripts/bootstrap.sh`.
-- Saf Dart domain + engine: ray port kuralları, makas, teslim, sınırsız undo/restart, deterministik BFS çözücü (`maxStates` sınırlı), seviye doğrulayıcı.
-- JSON seviye formatı + codec + `docs/LEVEL_FORMAT.md`; çözücüyle doğrulanmış Bölüm 1–3 (optimum 4 / 5 / 8); `tool/solve_levels.dart`.
-- UI: ana ekran, bölüm listesi, oyun ekranı (HUD, öğretici, CustomPainter tahta, animasyonlu trenler, Undo/Restart/Hint), sonuç sayfası (yıldızlar).
-- İpucu arka isolate'ta (`compute`) çalışır.
-- Simülatör bulgusu üzerine düzeltme: giriş kilidi yalnız tren hareket ettiğinde (D-014).
+**Tamamlanan işler (V1–V12):**
+- Izgara/swipe mekaniği ve İstanbul bölümleri tamamen kaldırıldı.
+- Saf Dart graf modeli; `PulseEngine.simulatePulse` (tek kontrol + tüm trenler aynı anda; çarpışma, kafa kafaya, duran trene giriş, yanlış hedef → atomik iptal); makas pasif kol bekleme; kırmızı/yeşil sinyal.
+- `GameSession` (undo makas/sinyal dahil, maxPulses kayıp), `PulseSolver` (BFS, üretimde hedef testi, durum sınırı).
+- V2 JSON formatı + `ActionCodec` + `LevelValidator` (yapısal kurallar, kayıtlı çözüm replay'i, çözücü optimumu); `docs/LEVEL_FORMAT.md`.
+- ANK-01 "İlk Sefer" (par 2) ve ANK-02 "Kızılay Yönü" (par 3), çözücüyle doğrulandı.
+- `PulseController`, `NetworkPainter` + `TrainLayer` (400 ms eş zamanlı tween, ışık dalgası, çarpışma flaşı, arka plana geçince sona sarma).
+- Ekranlar: ana menü, şehir seçimi (5 şehir, 4'ü "Yakında", OpenContainer), şehir bölümleri, oyun ekranı (HUD, bekleyen kontrol çipi, `▶ 1 DAKİKA İLERLET`, Geri Al/Baştan, geri düğmesi), sonuç sayfaları.
+- Dokümanlar: `GAME_DESIGN_V2.md`, `ART_DIRECTION.md`, `SOURCE_MAPS_AND_LICENSES.md`, `DECISIONS.md` (V2 çatışmaları, D-015…D-020), `ARCHITECTURE.md`, `CLAUDE.md`, `TASKS.md`.
 
 **Çalıştırılan komutlar ve gerçek sonuçları:**
-- `scripts/check.sh` → format: 63 dosya, 0 değişiklik · `flutter analyze`: No issues found! · `flutter test`: +99 All tests passed!
-- `dart run tool/solve_levels.dart` → 3 bölüm, `issues=0`, çıkış kodu 0.
-- `flutter build web --release` → ✓ Built build/web (iOS build değildir).
-- `flutter build ios --simulator --debug` → ✓ Built Runner.app.
-- iOS Simülatör (iPhone 16e, iOS 26.4) elle: ana ekran → bölüm listesi → Bölüm 1 uçtan uca (3 yıldız) → Next → Bölüm 2; ipucu halkası, ret mesajları, makas port kuralı gözlendi.
+- `scripts/check.sh` → format 69 dosya / 0 değişiklik · `flutter analyze`: No issues found! · `flutter test`: +109 All tests passed!
+- `dart run tool/solve_levels.dart` → ANK-01 issues=0 optimal=2 par=2 · ANK-02 issues=0 optimal=3 par=3 · çıkış 0
+- `flutter build web --release` → ✓ Built build/web
+- `flutter build ios --simulator --debug` → ✓ Built Runner.app
+- iOS Simülatör (iPhone 16e, iOS 26.4) elle: home → şehir → Ankara → ANK-01 uçtan uca → Next → ANK-02; iki görsel hata bulunup düzeltildi.
 
-**Bilinen hatalar / blokerler:**
-- İlerleme/yıldızlar henüz kaydedilmiyor; uygulama kapanınca yarım seviye geri yüklenmiyor (Faz 2, P1).
-- Fiziksel iPhone'da ve Android'de test edilmedi.
-- Bundle id'ler geçici: iOS `com.example.swipeoutLastTrain`, Android `com.example.swipeout_last_train`.
+**Bilinen eksikler / blokerler:**
+- İlerleme ve yarım pulse kaydı yok (V2-B, P1). "Devam Et" şimdilik ANK-01'i açar.
+- Undo/Restart animasyonsuz (trenler zıplar).
+- Fiziksel cihaz ve Android'de test edilmedi. Bundle id'ler geçici.
+- Bu oturumda GitHub'a push yapılmadı.
 
-**Sıradaki küçük görev:** Faz 2 planı — önce `shared_preferences` ile ilerleme/yıldız kalıcılığı (P1), sonra bölüm 4–12.
+**Sıradaki küçük görev:** V2-B planı → ANK-03 "İki Vagon" (iki tren eş zamanlı).
 
-**Kullanıcıdan gereken onaylar:**
-- `claude/bootstrap-swipeout` branch'ini GitHub'a push etmek; PR'ı web arayüzünden açmak (veya `brew install gh`).
-- Cloud/gece görevi için `docs/AUTOMATION_SETUP.md` adımları.
+**Kullanıcıdan gereken onaylar:** `claude/bootstrap-swipeout` ve `claude/v2-night-pulse` branch'lerini push etmek; PR'ı web arayüzünden açmak.
+
+---
+
+## 2026-11-05 (1) — branch `claude/bootstrap-swipeout`
+
+Izgara + swipe prototipi (V1 planı, artık yerini aldı). Ortam: Flutter 3.32.8, Dart 3.8.1, Xcode 26.4.1, `gh` yok, remote boş repo. Ayrıntı git geçmişinde.
