@@ -53,7 +53,7 @@
 ## P2 — V2-C/D
 - [x] Paris 6 — PAR-01 çapraz rota · 02 ilk sinyal · 03 iki sinyal · 04 üç tren · 05 üç tren + iki kırmızı sinyal · 06 final, tüm kontroller (06.11.2026).
 - [x] Londra 6 — LON-01 halka girişi · 02 üç tren tek halka · 03 tam tur · 04 paralel koridorlar · 05 halka kapısında sinyal · 06 final, par = max (06.11.2026).
-- [ ] Moskova 6 (çift halka) (L).
+- [x] Moskova 6 — MOS-01 köprülü çift halka · 02 iç halka · 03 köprüde sinyal · 04 ilk dört tren, merkez kilidi · 05 dört tren + sinyal, par = max · 06 SON TREN: 19 düğüm, 4 tren, 10 makasın hepsi (06.11.2026). **30/30 bölüm.**
 - [ ] Pasaport/rozet için Rive animasyonları değerlendirmesi (U7 sonrası).
 - [ ] Ses efektleri (özgün sentetik), haptik paternleri.
 - [ ] Yayın hazırlığı (`docs/RELEASE_CHECKLIST.md`).

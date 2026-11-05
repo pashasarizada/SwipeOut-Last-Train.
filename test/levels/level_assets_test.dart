@@ -321,4 +321,24 @@ void main() {
     expect(level.initialSignals, {'G': SignalAspect.red});
     expect(level.parPulses, level.maxPulses);
   });
+
+  test('MOS-06 LAST TRAIN: four trains, two rings, every switch matters', () {
+    final level = levels.firstWhere((l) => l.id == 'MOS-06');
+    expect(level.trains, hasLength(4));
+    final touched = {
+      for (final a in level.solution)
+        if (a case ToggleSwitch(:final nodeId)) nodeId,
+    };
+    expect(touched, level.switches.keys.toSet());
+  });
+
+  test('all thirty levels are in, six per city', () {
+    for (final city in CityId.values) {
+      expect(
+        levels.where((l) => l.city == city),
+        hasLength(6),
+        reason: '$city',
+      );
+    }
+  });
 }

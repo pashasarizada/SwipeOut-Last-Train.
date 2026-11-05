@@ -34,7 +34,14 @@
 
 **GitHub push (çözüldü):** LON-01…05 push'ları bir süre `remote: fatal error in commit_refs` ile reddedildi (GitHub tarafı, durum sayfası yeşil, `git fsck` temiz). Force push yapılmadı; LON-06 ile birlikte hepsi `72201d6`'ya kadar normal push edildi.
 
-**Sıradaki küçük görev:** MOS-01 (Moskova, çift halka).
+**Moskova (aynı gece) — oyunun 30 bölümü tamamlandı:**
+- MOS-01 "Soğuk Başlangıç" — iki halka, tek yönlü köprü (par 9) · MOS-02 "İç Halka" (par 11) · MOS-03 "Dış Halka" — köprüde kırmızı sinyal (par 11) · MOS-04 "Merkez Kilidi" — ilk dört tren (par 12) · MOS-05 "Son Sinyal" — par = max = 12 · MOS-06 "SON TREN" — 19 düğüm, 4 tren, iki halka, 10 makasın hepsi (par 13, max 14).
+- MOS-06 için çözücü 200 bin durum sınırına takılıyor (D-017: hata değil); optimum 13, geçici bir deneyde 4 milyon sınırla BFS ile bulundu, kayıtlı çözüm her test koşusunda replay ediliyor.
+- `dart run tool/solve_levels.dart` → 30 bölüm, issues=0 (MOS-06 hariç hepsi optimal = par).
+- `scripts/check.sh` → No issues found! · +271 All tests passed (her bölüm 375×667 + ×1.3 yazıda 44 pt düzen testi dahil).
+- Londra ve Moskova bölümleri simülatörde elle oynanmadı; tahtalar render edilip okunurluk kontrol edildi.
+
+**Sıradaki küçük görev:** Bölümlerin insan tarafından oynanması (zorluk eğrisi), 320×568 kompakt düzen, ayarlar ekranı.
 
 ---
 
