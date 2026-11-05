@@ -10,6 +10,7 @@ import 'package:swipeout_last_train/game/domain/progress.dart';
 import 'package:swipeout_last_train/game/presentation/board/board_layout.dart';
 import 'package:swipeout_last_train/game/presentation/board/board_view.dart';
 import 'package:swipeout_last_train/game/presentation/game/progress_store.dart';
+import 'package:swipeout_last_train/game/presentation/kit/motion_settings.dart';
 import 'package:swipeout_last_train/game/presentation/screens/city_map_screen.dart';
 import 'package:swipeout_last_train/game/presentation/screens/home_screen.dart';
 import 'package:swipeout_last_train/game/presentation/screens/pulse_game_screen.dart';
@@ -226,6 +227,54 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.textContaining('0/10 PULSE'), findsOneWidget);
+  });
+
+  testWidgets('a jammed run is not kept for CONTINUE', (tester) async {
+    final store = await _app(
+      tester,
+      home: PulseGameScreen(level: jamLevel()),
+      catalog: {
+        CityId.ankara: [jamLevel()],
+      },
+    );
+    await _advance(tester);
+    expect(find.text('THE LINE IS JAMMED'), findsOneWidget);
+    expect(store.progress.run, isNull);
+  });
+
+  testWidgets('leaving during the final pulse opens no result board', (
+    tester,
+  ) async {
+    // Real animation timing: Reduced Motion through MotionSettings only.
+    final store = ProgressStore(
+      catalog: {
+        CityId.ankara: [ank01(), ank02()],
+      },
+      repository: MemoryProgressRepository(const Progress()),
+      progress: const Progress(),
+    );
+    await tester.pumpWidget(
+      MotionSettings(
+        reduced: true,
+        child: SwipeOutApp(
+          store: store,
+          home: const CityMapScreen(city: CityId.ankara),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await _openLevelFromMap(tester, 'ANK-01', 'First Departure');
+    await _advance(tester);
+    await _tapNode(tester, ank01(), 'B');
+
+    await tester.tap(find.textContaining('ADVANCE 1 MINUTE'));
+    await tester.pump(const Duration(milliseconds: 50));
+    await tester.tap(find.bySemanticsLabel('Back'));
+    await tester.pumpAndSettle();
+
+    expect(tester.takeException(), isNull);
+    expect(find.byType(OutcomeBoard), findsNothing);
+    expect(find.byType(CityMapScreen), findsOneWidget);
   });
 
   testWidgets('Turkish labels', (tester) async {

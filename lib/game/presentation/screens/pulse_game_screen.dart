@@ -68,25 +68,31 @@ class _PulseGameScreenState extends State<PulseGameScreen> {
     _store = GameScope.of(context);
   }
 
-  /// Persist the half-played run whenever its history changes.
+  /// Persist the half-played run whenever its history changes. A lost run
+  /// is not worth continuing, so it clears the slot (undo saves it again).
   void _saveRun() {
     final history = _controller.history;
     if (_controller.isSolved || listEquals(history, _saved)) return;
     _saved = history;
-    _store?.saveRun(widget.level.id, history);
+    _store?.saveRun(widget.level.id, _controller.isLost ? const [] : history);
   }
+
+  /// Result boards open only while this platform is the screen in front:
+  /// a player who left during the last pulse is not followed by one.
+  bool get _inFront => mounted && (ModalRoute.of(context)?.isCurrent ?? false);
 
   Future<void> _onEvent(GameEvent event) async {
     switch (event) {
       case PulseRejected(:final reason):
+        if (!mounted) return;
         _showMessage(AppLocalizations.of(context).failureMessage(reason));
       case LevelWon(:final result):
         final fresh = await _store?.recordWin(result) ?? const [];
-        if (mounted) {
+        if (_inFront) {
           _showWin(result, newStamp: fresh.contains(widget.level.city));
         }
       case LevelLost(:final jammed):
-        _showLoss(jammed: jammed);
+        if (_inFront) _showLoss(jammed: jammed);
       case PulseCommitted():
         break;
     }

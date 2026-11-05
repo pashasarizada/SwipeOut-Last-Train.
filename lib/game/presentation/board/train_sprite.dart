@@ -179,7 +179,7 @@ final class _CarPainter extends CustomPainter {
       old.length != length;
 }
 
-/// Small side-view metro car for counters and labels (replaces 🚆).
+/// Small side-view metro car for counters and labels (no emoji).
 final class TrainGlyph extends StatelessWidget {
   const TrainGlyph({
     super.key,

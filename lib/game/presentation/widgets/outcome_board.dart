@@ -6,6 +6,7 @@ import '../../domain/level_result.dart';
 import '../../domain/star_rating.dart';
 import '../kit/game_button.dart';
 import '../kit/game_fonts.dart';
+import '../kit/game_icon.dart';
 import '../kit/split_flap_text.dart';
 import '../theme/app_colors.dart';
 import '../theme/motion.dart';
@@ -126,8 +127,8 @@ class _Stars extends StatelessWidget {
     mainAxisSize: MainAxisSize.min,
     children: [
       for (var i = 0; i < StarRating.gold.stars; i++)
-        Icon(
-              i < rating.stars ? Icons.star : Icons.star_border,
+        GameIcon(
+              i < rating.stars ? GameIconKind.star : GameIconKind.starOutline,
               color: AppColors.accentAmber,
               size: 44,
             )

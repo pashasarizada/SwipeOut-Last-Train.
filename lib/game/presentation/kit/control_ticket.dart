@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
 import 'game_fonts.dart';
+import 'game_icon.dart';
 
 /// The pending control shown as a punched ticket. Swipe it left or tap the
 /// cross to tear it up (cancel).
@@ -36,8 +37,8 @@ final class ControlTicket extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(
-                Icons.alt_route,
+              const GameIcon(
+                GameIconKind.route,
                 size: 18,
                 color: AppColors.accentAmber,
               ),
@@ -61,10 +62,12 @@ final class ControlTicket extends StatelessWidget {
                   onTap: onTear,
                   child: const SizedBox.square(
                     dimension: 48,
-                    child: Icon(
-                      Icons.close,
-                      size: 18,
-                      color: AppColors.textSecondary,
+                    child: Center(
+                      child: GameIcon(
+                        GameIconKind.cross,
+                        size: 18,
+                        color: AppColors.textSecondary,
+                      ),
                     ),
                   ),
                 ),

@@ -19,7 +19,8 @@ final class PulseController extends ChangeNotifier {
     : _session = GameSession(level);
 
   /// Rebuilds a half-played level by replaying its committed controls. A
-  /// run that no longer replays (the level changed) starts fresh.
+  /// run that no longer replays (the level changed), or that already ended
+  /// in a win or a loss, starts fresh.
   factory PulseController.restore({
     required LevelDefinition level,
     required List<ControlAction?> actions,
@@ -32,6 +33,10 @@ final class PulseController extends ChangeNotifier {
         return controller;
       }
       controller._history.add(action);
+    }
+    if (controller.isSolved || controller.isLost) {
+      controller._session.restart();
+      controller._history.clear();
     }
     return controller;
   }

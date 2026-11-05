@@ -13,6 +13,7 @@ import '../game/progress_store.dart';
 import '../kit/departure_board.dart';
 import '../kit/game_button.dart';
 import '../kit/game_fonts.dart';
+import '../kit/game_icon.dart';
 import '../kit/game_scaffold.dart';
 import '../kit/signal_back_button.dart';
 import '../theme/app_colors.dart';
@@ -180,8 +181,8 @@ final class _StationDot extends StatelessWidget {
                             : AppColors.textPrimary,
                       ),
                     )
-                  : const Icon(
-                      Icons.lock,
+                  : const GameIcon(
+                      GameIconKind.lock,
                       size: 16,
                       color: AppColors.trackInactive,
                     ),

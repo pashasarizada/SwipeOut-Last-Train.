@@ -42,4 +42,17 @@ void main() {
     expect(c.pulses, 0);
     expect(c.history, isEmpty);
   });
+
+  test('a saved run that already ended starts the level fresh', () {
+    for (final (level, actions) in [
+      (jamLevel(), const <ControlAction?>[null]),
+      (ank01(), const <ControlAction?>[null, ToggleSwitch('B')]),
+    ]) {
+      final c = PulseController.restore(level: level, actions: actions);
+      addTearDown(c.dispose);
+      expect(c.pulses, 0, reason: level.id);
+      expect(c.isLost || c.isSolved, isFalse, reason: level.id);
+      expect(c.history, isEmpty, reason: level.id);
+    }
+  });
 }

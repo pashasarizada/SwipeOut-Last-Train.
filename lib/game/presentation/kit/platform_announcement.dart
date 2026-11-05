@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/motion.dart';
+import 'game_icon.dart';
 import 'motion_settings.dart';
 
 /// A station announcement strip that slides down from above; used for
@@ -31,7 +32,7 @@ final class PlatformAnnouncement extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.campaign, size: 18, color: AppColors.danger),
+          const GameIcon(GameIconKind.horn, size: 18, color: AppColors.danger),
           const SizedBox(width: 8),
           Flexible(
             child: Text(

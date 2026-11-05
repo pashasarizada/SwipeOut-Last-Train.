@@ -6,6 +6,8 @@ import '../../domain/level_definition.dart';
 import '../../domain/node.dart';
 import '../../domain/signal_aspect.dart';
 import '../../domain/train_def.dart';
+import '../kit/game_fonts.dart';
+import '../kit/game_icon.dart';
 import '../theme/app_colors.dart';
 import 'board_layout.dart';
 
@@ -26,7 +28,7 @@ final class NetworkPainter extends CustomPainter {
   final LevelDefinition level;
   final GameState state;
 
-  /// Deliveries to mark with ✓ — the pre-pulse state while trains still move.
+  /// Deliveries to mark with a check — the pre-pulse state while trains still move.
   final GameState arrivals;
   final BoardLayout layout;
   final ControlAction? pending;
@@ -138,7 +140,7 @@ final class NetworkPainter extends CustomPainter {
     return null;
   }
 
-  /// Whether goal [nodeId] shows its ✓ — only once the train has arrived.
+  /// Whether goal [nodeId] shows its check mark — only once the train has arrived.
   bool goalChecked(String nodeId) {
     final owner = _ownerOf(nodeId);
     return owner != null && (arrivals.trainById(owner.id)?.delivered ?? false);
@@ -151,7 +153,12 @@ final class NetworkPainter extends CustomPainter {
     canvas.drawCircle(c, 18, _stroke(color, 4));
     _label(canvas, c, owner?.symbol.glyph ?? '', color, 16);
     if (goalChecked(node.id)) {
-      _label(canvas, c + const Offset(16, -16), '✓', AppColors.signalGreen, 14);
+      GameIcon.paint(
+        canvas,
+        GameIconKind.check,
+        Rect.fromCircle(center: c + const Offset(16, -16), radius: 8),
+        AppColors.signalGreen,
+      );
     }
   }
 
@@ -166,6 +173,7 @@ final class NetworkPainter extends CustomPainter {
       text: TextSpan(
         text: text,
         style: TextStyle(
+          fontFamily: GameFonts.body,
           color: color,
           fontSize: size,
           fontWeight: FontWeight.w800,

@@ -19,6 +19,9 @@ const _forbidden = [
   'SnackBar',
   'CircularProgressIndicator',
   'InkWell(',
+  // Icons are drawn by us (GameIcon), never Material Icons.
+  'Icons.',
+  'Icon(',
 ];
 
 final _emoji = RegExp('[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]', unicode: true);
@@ -27,6 +30,9 @@ const _playerFacing = [
   'lib/game/presentation/screens',
   'lib/game/presentation/widgets',
   'lib/game/presentation/passport',
+  'lib/game/presentation/kit',
+  'lib/game/presentation/board',
+  'lib/game/presentation/city',
 ];
 
 void main() {
