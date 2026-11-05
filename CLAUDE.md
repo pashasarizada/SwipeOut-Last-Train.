@@ -15,7 +15,7 @@
 5. `docs/DECISIONS.md`
 6. `git log -5 --oneline`
 
-Sonra en yüksek öncelikli **tek küçük görevi** seç, gerekiyorsa önce testini yaz, kodla, `scripts/check.sh` çalıştır, `TASKS.md` ve `PROGRESS.md`'yi güncelle, odaklı bir commit at.
+Sonra en yüksek öncelikli **tek küçük görevi** seç, gerekiyorsa önce testini yaz, kodla, `scripts/check.sh` çalıştır, `TASKS.md` ve `PROGRESS.md`'yi güncelle, odaklı bir commit at ve `main`'e push et.
 
 ## Komutlar
 - Kalite kapısı: `scripts/check.sh` (format → analyze → test)
@@ -39,7 +39,7 @@ Sonra en yüksek öncelikli **tek küçük görevi** seç, gerekiyorsa önce tes
 - Her yeni ekran iOS simülatörde ekran görüntüsüyle doğrulanır.
 
 ## Güvenlik sınırları
-- `main`'e doğrudan commit/merge yok; her iş `claude/<konu>` branch'i. Force push yok.
+- Tek branch: `main` (D-028). Her küçük iş odaklı bir commit; `scripts/check.sh` geçmeden commit yok. Commit sonrası doğrudan `git push origin main` (kullanıcı kalıcı onay verdi). Force push, history yeniden yazma, branch silme yok.
 - Gizli anahtar/token commit'leme veya stdout'a yazma yok.
 - Store'a sürüm gönderme, ödeme, abonelik, API anahtarı üretme, veri silme — kullanıcı onayı olmadan asla.
 - Firebase, sunucu, reklam, analytics, ağ isteği yok (MVP).

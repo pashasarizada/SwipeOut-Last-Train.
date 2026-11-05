@@ -43,3 +43,7 @@ Belirsiz noktalarda alınan en sade, sürdürülebilir kararlar. Format: **D-NNN
 - **D-025 — Fontlar OFL ve uygulamaya gömülü.** TR + AZ (ə) + FR + Kiril glif kapsamı testle doğrulanır; çalışma anında font indirme yok (offline kuralı).
 - **D-026 — Yeni paket: `shared_preferences`** (ilerleme + pasaport). Küçük, resmî Flutter eklentisi; BSD-3.
 - **D-027 — Fontlar: Unbounded (başlık), IBM Plex Mono SemiBold (pano), Inter (gövde).** Share Tech Mono elendi: ğ, ş, İ ve ə gliflerini içermiyor (cmap testi). Kapsam `test/game/presentation/fonts_test.dart` ile sürekli doğrulanır.
+
+## Çalışma düzeni (kullanıcı kararı, 06.11.2026)
+
+- **D-028 — Tek branch: `main`, her commit doğrudan push.** Zincir hâlindeki `claude/*` branch'leri (bootstrap → v2-night-pulse → v2-ux → v2-b) en güncel hâliyle (`claude/v2-b`) `main`'e alındı. Gerekçe: tek kişi + AI geliştirmede PR zinciri takibi zorlaştırıyordu; güvenlik ağı artık her commit öncesi zorunlu `scripts/check.sh` (format + analyze + test) ve force push yasağı. Eski `claude/*` branch'leri silinmedi, arşiv olarak duruyor.
