@@ -28,7 +28,12 @@ LevelDefinition _lineWith({
 
 void main() {
   test('tutorial fixtures are valid', () {
-    for (final level in [lineLevel(), switchLevel(), queueLevel()]) {
+    for (final level in [
+      lineLevel(),
+      switchLevel(),
+      queueLevel(),
+      bigLevel7x7(),
+    ]) {
       expect(const LevelValidator().validate(level), isEmpty, reason: level.id);
     }
   });

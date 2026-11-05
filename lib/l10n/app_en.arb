@@ -1,15 +1,24 @@
 {
   "@@locale": "en",
   "appTitle": "SwipeOut: Last Train",
+  "brandLastTrain": "LAST TRAIN",
   "play": "Play",
   "cityIstanbul": "ISTANBUL",
   "levelLabel": "LEVEL {number}",
   "@levelLabel": {
-    "placeholders": { "number": { "type": "String" } }
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
   },
   "moves": "Moves: {count}",
   "@moves": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "undo": "Undo",
   "restart": "Restart",

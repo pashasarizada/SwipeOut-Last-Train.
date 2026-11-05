@@ -26,6 +26,7 @@ Train train(String id, TrainColor color, int x, int y) =>
 
 LevelDefinition buildLevel({
   String id = 'test',
+  int number = 1,
   int width = 5,
   int height = 5,
   required Map<GridPos, Cell> cells,
@@ -34,7 +35,7 @@ LevelDefinition buildLevel({
   int optimalMoves = 0,
 }) => LevelDefinition(
   id: id,
-  number: 1,
+  number: number,
   width: width,
   height: height,
   cells: cells,
@@ -79,6 +80,7 @@ Map<GridPos, Cell> _junctionCells({
 /// Level 2 shape: one switch, initially routed to the wrong (blue) station.
 LevelDefinition switchLevel() => buildLevel(
   id: 'switch',
+  number: 2,
   cells: _junctionCells(
     eastStation: TrainColor.red,
     southStation: TrainColor.blue,
@@ -91,6 +93,7 @@ LevelDefinition switchLevel() => buildLevel(
 /// Level 3 shape: blue train blocks red; blue must clear the line first.
 LevelDefinition queueLevel() => buildLevel(
   id: 'queue',
+  number: 3,
   cells: _junctionCells(
     eastStation: TrainColor.blue,
     southStation: TrainColor.red,
@@ -101,4 +104,30 @@ LevelDefinition queueLevel() => buildLevel(
   ],
   switches: {const GridPos(2, 2): SwitchBranch.a},
   optimalMoves: 8,
+);
+
+/// 7x7 board for small-screen layout tests: blue must clear the main line.
+LevelDefinition bigLevel7x7() => buildLevel(
+  id: 'big',
+  number: 4,
+  width: 7,
+  height: 7,
+  cells: {
+    const GridPos(0, 3): track('E'),
+    const GridPos(1, 3): track('WE'),
+    const GridPos(2, 3): track('WE'),
+    const GridPos(3, 3): _junction,
+    const GridPos(4, 3): track('WE'),
+    const GridPos(5, 3): track('WE'),
+    const GridPos(6, 3): station(TrainColor.blue, 'W'),
+    const GridPos(3, 4): track('NS'),
+    const GridPos(3, 5): track('NS'),
+    const GridPos(3, 6): station(TrainColor.red, 'N'),
+  },
+  trains: [
+    train('r1', TrainColor.red, 0, 3),
+    train('b1', TrainColor.blue, 1, 3),
+  ],
+  switches: {const GridPos(3, 3): SwitchBranch.a},
+  optimalMoves: 12,
 );

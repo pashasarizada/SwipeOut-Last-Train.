@@ -1,6 +1,7 @@
 {
   "@@locale": "tr",
   "appTitle": "SwipeOut: Last Train",
+  "brandLastTrain": "LAST TRAIN",
   "play": "Oyna",
   "cityIstanbul": "İSTANBUL",
   "levelLabel": "BÖLÜM {number}",

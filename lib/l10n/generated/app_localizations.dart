@@ -104,6 +104,12 @@ abstract class AppLocalizations {
   /// **'SwipeOut: Last Train'**
   String get appTitle;
 
+  /// No description provided for @brandLastTrain.
+  ///
+  /// In en, this message translates to:
+  /// **'LAST TRAIN'**
+  String get brandLastTrain;
+
   /// No description provided for @play.
   ///
   /// In en, this message translates to:

@@ -12,6 +12,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get appTitle => 'SwipeOut: Last Train';
 
   @override
+  String get brandLastTrain => 'LAST TRAIN';
+
+  @override
   String get play => 'Oyna';
 
   @override
