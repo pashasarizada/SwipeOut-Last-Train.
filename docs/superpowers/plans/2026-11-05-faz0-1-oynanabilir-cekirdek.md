@@ -1,5 +1,7 @@
 # SwipeOut: Last Train — Faz 0 + Faz 1 (Oynanabilir Çekirdek) Uygulama Planı
 
+> **DURUM: YERİNİ ALDI (05.11.2026).** Oyun mekaniği `docs/GAME_DESIGN_V2.md` (V2.1, NIGHT PULSE) ile değişti. Bu plan ızgara + swipe mekaniği içindir; tamamlandı ama yeni plan `2026-11-05-v2-night-pulse-cekirdek.md` geçerlidir.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Saf Dart oyun motoru, BFS çözücü, seviye doğrulayıcı ve 3 öğretici bölümle uçtan uca oynanabilir, TR/EN destekli bir Flutter iskeleti üretmek.

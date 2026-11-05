@@ -1,13 +1,15 @@
 # SWIPEOUT: LAST TRAIN — OYUN TASARIMI VE CLAUDE CODE UYGULAMA TALİMATI
 
-**Belge sürümü:** 2.0 — 05.11.2026  
+**Belge sürümü:** 2.1 — 05.11.2026 (İstanbul yerine Paris güncellemesi)  
 **Tür:** Offline, dikey ekran, tek parmakla oynanan sıra tabanlı metro bulmacası  
 **Hedef:** iOS + Android / Flutter  
 **Dil:** Kullanıcıyla ve geliştiriciyle Türkçe iletişim. Oyunda ilk sürüm Türkçe + İngilizce.  
 **Üretim koşulu:** 1 ana geliştirici + Claude Code; yaklaşık 20–30 günlük geliştirme penceresi.  
 **Çalışma deposu:** Bu oyun için ayrı/private GitHub repo. HeirLoam projesine dokunma.
 
-> **Claude Code için öncelik talimatı:** Bu belge, daha önce yazılmış `SwipeOut_Claude_Master_Prompt.md` veya `GAME_DESIGN.md` ile çelişirse **oynanış, şehirler, seviye kapsamı ve görseller bakımından BU V2 BELGESİ GEÇERLİDİR**. Eski belgedeki güvenlik, test, Türkçe iletişim ve PR kuralları korunur. Önce V2'yi `docs/GAME_DESIGN_V2.md` olarak repoya ekle. Ardından uygulama mimarisini bu kurallara göre güncelle. Yalnızca açıklama yazma: dosyaları ve çalışır kodu üret. Yapamadığın işlemi yapılmış gibi bildirme.
+**Şehir değişikliği (V2.1):** Önceki dokümanlarda yer alan İstanbul tamamen çıkarıldı; üçüncü şehir **Paris** oldu. `IST-*` seviye ID’leri yerine `PAR-*` kullanılacak. Beş şehir sırası sabit: Ankara → Bakü → Paris → Londra → Moskova. Eski `IST-*` JSON’ları, tema asset’leri ve referans URL’leri yeni üretime taşınmayacak.
+
+> **Claude Code için öncelik talimatı:** Bu belge, daha önce yazılmış `SwipeOut_Claude_Master_Prompt.md` veya `GAME_DESIGN.md` ile çelişirse **oynanış, şehirler, seviye kapsamı ve görseller bakımından BU V2.1 BELGESİ GEÇERLİDİR**. Eski belgedeki güvenlik, test, Türkçe iletişim ve PR kuralları korunur. Önce V2'yi `docs/GAME_DESIGN_V2.md` olarak repoya ekle. Ardından uygulama mimarisini bu kurallara göre güncelle. Yalnızca açıklama yazma: dosyaları ve çalışır kodu üret. Yapamadığın işlemi yapılmış gibi bildirme.
 
 ---
 
@@ -32,7 +34,7 @@ Gecenin son metro seferi. **Sistemde kalan bütün trenleri doğru son istasyona
 - 3D tren sürüşü, açık dünya, gerçek bilet/turnike, metro şirketinin resmî uygulaması, gerçek sefer takvimi YOK.
 - Oyuncu trenlerin hızını sürgüyle kontrol etmez; fizik simülasyonu YOK.
 - İstasyon sayısı şehir ağının tamamı kadar değil; her bölümde **6–16 düğümlü** küçük, okunur bir alt bulmaca.
-- Oyunun omurgası **beş şehir ve otuz doğrulanmış bulmaca**: Ankara → Bakü → İstanbul → Londra → Moskova. **Moskova açık ara en zor dünya.**
+- Oyunun omurgası **beş şehir ve otuz doğrulanmış bulmaca**: Ankara → Bakü → Paris → Londra → Moskova. **Moskova açık ara en zor dünya.**
 - Geliştirme riski nedeniyle önce **6 Ankara + 6 Bakü** bölümü sağlamlaştır; sonra diğer şehirleri aynı motor ve veri şemasıyla ekle. **30 bölüm ilk yayın için hedef, kalite bozulursa yapay biçimde şişirme.**
 - Uygulama sahte, resmî metro haritası gibi görünmeyecek. Açıklama: “Gerçek şehirlerden esinlenen kurgusal metro bulmacaları.”
 - İlk prototipte reklam, AdMob, IAP, Firebase, backend, canlı servis, multiplayer yok. Gelir modeli gerçek oyuncu testi sonrası kararlaştırılır.
@@ -64,7 +66,7 @@ Gecenin son metro seferi. **Sistemde kalan bütün trenleri doğru son istasyona
 [ŞEHİR SEÇİMİ — stilize dünya haritası / kartlar]
      ├── ANKARA ★☆☆☆☆
      ├── BAKÜ ★★☆☆☆
-     ├── İSTANBUL ★★★☆☆
+     ├── PARİS ★★★☆☆
      ├── LONDRA ★★★★☆
      └── MOSKOVA ★★★★★  "NIGHTMARE NETWORK"
            ↓
@@ -75,7 +77,7 @@ Gecenin son metro seferi. **Sistemde kalan bütün trenleri doğru son istasyona
 [ŞEHİR HARİTASINA DÖN / SONRAKİ BÖLÜM]
 ```
 
-**Şehir seçimi ilk öğreticiden sonra serbest** olsun; kullanıcı İstanbul'u veya Bakü'yü doğrudan açabilsin. Zorluk etiketini görsün. Moskova kilitli bir ödeme duvarı değil, isteğe bağlı **ağır meydan okuma** olsun. Her şehir içinde bölüm 1 açıktır; sonraki bölümler sırayla açılır. Böylece “oyuna girince şehrini seç” beklentisi karşılanır.
+**Şehir seçimi ilk öğreticiden sonra serbest** olsun; kullanıcı Paris'i veya Bakü'yü doğrudan açabilsin. Zorluk etiketini görsün. Moskova kilitli bir ödeme duvarı değil, isteğe bağlı **ağır meydan okuma** olsun. Her şehir içinde bölüm 1 açıktır; sonraki bölümler sırayla açılır. Böylece “oyuna girince şehrini seç” beklentisi karşılanır.
 
 **İlerleme hissi:** Her çözülen bölümde şehir haritasındaki küçük bir hat parçası aydınlanır. Şehrin 6 bölümü bitince **“SON SEFER TAMAMLANDI”** damgası kazanılır; beş şehri bitirene özel hareketli “Night Dispatcher” rozeti. Bu ödüller kozmetiktir.
 
@@ -135,7 +137,7 @@ Tren verileri:
 
 **Makas kuralı:** Switch'in üç kenarı `trunk`, `branchA`, `branchB` olarak seviyede sabittir. Aktif bağlantı yalnızca `trunk ↔ seçili branch` çiftidir. Tren trunk'tan geliyorsa seçili kola; aktif koldan geliyorsa trunk'a çıkabilir. Pasif koldan gelmişse makas yeniden yönlendirilene kadar **bekler**. Hiçbir tren teleport olmaz veya kapalı rayın içinden geçmez.
 
-**Sinyal kuralı:** Sinyal `signal` düğümündedir. Kırmızıysa **orada duran tren çıkamaz**, yeşilse diğer ray kuralları geçerlidir. Oyuncu o pulse'da sinyali değiştirmeyi seçebilir; switch'e ayrıca müdahale edemez. Sinyaller ilk Ankara/Bakü bölümlerinde görünmez; İstanbul'da açılır.
+**Sinyal kuralı:** Sinyal `signal` düğümündedir. Kırmızıysa **orada duran tren çıkamaz**, yeşilse diğer ray kuralları geçerlidir. Oyuncu o pulse'da sinyali değiştirmeyi seçebilir; switch'e ayrıca müdahale edemez. Sinyaller ilk Ankara/Bakü bölümlerinde görünmez; Paris'te açılır.
 
 **Limit:** `maxPulses` bulunan seviyelerde oyuncu bu sayıda geçerli pulse içinde bütün trenleri hedeflere ulaştırmalıdır. **Gerçek zamanlı geri sayım yoktur**; oyuncu metroda oyunu bırakabilir. Süre bitiminde oyunu durdur, `Geri Al` veya `Tekrar Oyna` sun. `Undo` son başarılı pulse'ın tüm durumunu (konumlar + gelen raylar + switch/signal durumları + teslimler + sayaç) geri yükler. Başarısız denemeler pulse harcamaz.
 
@@ -209,14 +211,15 @@ Oyuncunun **hangi treni önce geçirip hangisini sinyalle bekleteceğini** düş
 **Geometri:** 7–9 düğüm, 2 tren, 1–2 makas, **ortak ray/boğaz**.  
 **Öğrettiği:** Aynı dar boğaza iki treni aynı anda sokmama; hareket sırası.
 
-### 5.3 İstanbul / ★★★☆☆
+### 5.3 Paris / ★★★☆☆
 
-**Resmî metro ve raylı sistem haritaları:** https://metro.istanbul/YolcuHizmetleri/AgHaritalari  
-**İlham:** M1/M2/M4/M5/M7 gibi hatların çeşitli aktarma örüntüleri; iki yakalı şehir atmosferi. Deniz geçişi ve Marmaray yalnızca harita referansı ve atmosfer için; **gerçek hat olmayan yeni bir bağlantıyı gerçekmiş gibi çizme**.  
-**İkonografi:** Boğaz silüeti, su altından geçen parlak animasyonlu *kurgusal* tünel, mavi-turkuaz/vapur ışıkları.  
-**Geometri:** 9–11 düğüm, 2–3 tren, 2 makas, **ilk sinyal**.  
-**Öğrettiği:** Bir treni geçici bekletmek; iki hat arasında zamanlama.  
-**Özel görsel:** Rayların altında çizilen boğaz şeridi; yalnız dekorasyon, gerçek ulaştırma haritası değil.
+**Resmî RATP metro haritası:** https://www.ratp.fr/en/plan-metro  
+**Resmî RATP hat planları:** https://www.ratp.fr/en/plans  
+**İlham:** Paris metrosunun merkezde sıklaşan aktarmaları ve farklı hatların kesişimi. `Châtelet`, `République`, `Bastille` ve `Gare du Nord` gibi isimler yalnızca tematik referans olarak kullanılabilir; **oyundaki ray topolojisi resmî RATP planının kopyası olmayacak**. Özellikle aynı aktarma düğümüne farklı kollardan yaklaşan trenlerin zamanlamasına odaklan.  
+**İkonografi:** Seine Nehri'nin kıvrımı yalnızca arka plan grafiği, uzakta stilize gece silüeti, amber ışıklar, koyu indigo ve krem tonları. RATP işaretlerini, resmî Paris metro şemasının ayırt edici tipografisini/ikonlarını ve logolarını kopyalama.  
+**Geometri:** 9–11 düğüm, 2–3 tren, 2 makas, **ilk sinyal**; merkezi bir ortak aktarma düğümü ile alternatif iki giriş kolu. Halka mekanikleri **ilk kez Londra'da** öğretilir.  
+**Öğrettiği:** Bir treni sinyalle geçici bekletmek; paylaşılan aktarmayı çarpışmadan boşaltmak; iki hat arasında doğru pulse zamanlaması.  
+**Özel görsel:** Pulse sonrasında merkezi düğümün ışığının çevredeki hatlara yayılması; Seine çizgisi yalnızca dekorasyon, gerçek ulaşım planı değil.
 
 ### 5.4 Londra / ★★★★☆
 
@@ -240,7 +243,6 @@ Oyuncunun **hangi treni önce geçirip hangisini sinyalle bekleteceğini** düş
 
 ### Sonraki sürüm şehirleri (ilk 30 bölüme EKLEME)
 
-- **Paris:** https://www.ratp.fr/en/plan-metro — merkez ağırlıklı aktarma bulmacaları.
 - **Berlin:** https://www.bvg.de/en/connections/network-maps-and-routes — U/S-Bahn ayrımı ve çapraz bağlantılar.
 - **Tokyo:** https://www.tokyometro.jp/en/subwaymap/index.html — kodlanmış istasyonlar ve çoklu aktarmalar.
 
@@ -266,12 +268,12 @@ Her şehrin altı bölümü olacak. Bu tablo `assets/levels` veri dosyalarını 
 | BAK-04 | Bakü | Kırmızı mı Yeşil mi? | İki makas zamanlaması | 8–9 N / 2 T |
 | BAK-05 | Bakü | Kapanan Koridor | Beklemek ilerleme sağlar | 9 N / 2 T |
 | BAK-06 | Bakü | Son Bakı Seferi | İki tren, dar pulse limiti | 9 N / 2 T |
-| IST-01 | İstanbul | Boğazda Gece | 2 tren, 2 hat; görsel tünel | 9 N / 2 T |
-| IST-02 | İstanbul | Kırmızı Sinyal | İlk signal, treni beklet | 9 N / 2 T |
-| IST-03 | İstanbul | Yenikapı | Aynı aktarmaya farklı anlarda gel | 10 N / 2 T |
-| IST-04 | İstanbul | Geçiş Önceliği | 3 tren; sinyal + makas | 10 N / 3 T |
-| IST-05 | İstanbul | Üç Son Sefer | Tek pulse müdahalesiyle 3 tren | 11 N / 3 T |
-| IST-06 | İstanbul | İki Yaka Finali | Dar geçiş, gecikme ve senkron | 11 N / 3 T |
+| PAR-01 | Paris | Gece Aktarması | 2 tren, iki giriş kolu, ortak aktarma | 9 N / 2 T |
+| PAR-02 | Paris | Kırmızı Sinyal | İlk `signal`: bir treni beklet | 9 N / 2 T |
+| PAR-03 | Paris | Châtelet Kavşağı | Aynı düğüme farklı pulse'larda ulaş | 10 N / 2 T |
+| PAR-04 | Paris | République Önceliği | 3 tren; sinyal + makas eşgüdümü | 10 N / 3 T |
+| PAR-05 | Paris | Üç Son Sefer | Bir pulse'da yalnız bir kontrol değiştirerek 3 tren yönet | 11 N / 3 T |
+| PAR-06 | Paris | Paris Gece Finali | Merkez aktarmada gecikme ve eşzamanlı geçiş | 11 N / 3 T |
 | LON-01 | Londra | Ring Entrance | Halka rota fikrini öğret | 10 N / 2 T |
 | LON-02 | Londra | One More Loop | Fazladan tur zararlı olabilir | 11 N / 3 T |
 | LON-03 | Londra | Last Transfer | Halka + giriş/çıkış makası | 11 N / 3 T |
@@ -291,7 +293,7 @@ Her şehrin altı bölümü olacak. Bu tablo `assets/levels` veri dosyalarını 
 
 - Ankara: `pulse`, basit `switch`, `undo`, `maxPulses`.
 - Bakü: ortak ray kullanımı ve geçiş sırası; **yeni UI kontrolü yok**, zorluk mantıktan doğuyor.
-- İstanbul: yeni **signal** kontrolü.
+- Paris: yeni **signal** kontrolü; merkez aktarma düğümünde zamanlama.
 - Londra: yeni **loop/ring** harita geometrisi, aynı kurallar.
 - Moskova: **iki ring + çok sayıda eş zamanlı tren**; yeni kontrol öğretme, mevcut kuralları ustaca birleştir.
 
@@ -489,8 +491,8 @@ SolveResult solveLevel(LevelDefinition level, {int maxExploredStates})
 - 12 toplam seviye; en az bir insan tarafından her biri çözülmüş.
 - TR/EN yerelleştirme, gerekli ses/haptic, erişilebilirlik ayarları.
 
-### Gün 11–16 — İstanbul ve Londra
-- İstanbul 6: signal; Londra 6: loop. Şehir temaları.
+### Gün 11–16 — Paris ve Londra
+- Paris 6: signal ve merkezi aktarma; Londra 6: loop. Şehir temaları.
 - Level solver/validator sertleştirme; düzenli dış test.
 - Toplam 24 oynanabilir seviye hedefi. Kalitesiz düzey varsa sayıyı artırma.
 
@@ -504,7 +506,7 @@ SolveResult solveLevel(LevelDefinition level, {int maxExploredStates})
 - Gerçek geri dönüşleri düzeltme; mağaza incelemesi için zaman payı.
 - “30 bölüm yetişsin” diye kırık veya kolayca tekrar eden içerik yayınlama.
 
-**Gerçekçi risk:** Tek başına Claude'un kesintisiz kod yazdığı varsayımıyla 30 seviye + 5 şehir + cilalı grafik + mağaza onayını 20 günde **garanti edemezsin**. Asgari yayın adayı: Ankara + Bakü + İstanbul'dan **12–18 kusursuz bölüm**, özgün grafik, offline kayıt, stabil motor. Londra/Moskova içerikleri bu ana motor hazırsa veri olarak hızla eklenir ama mutlaka test edilir.
+**Gerçekçi risk:** Tek başına Claude'un kesintisiz kod yazdığı varsayımıyla 30 seviye + 5 şehir + cilalı grafik + mağaza onayını 20 günde **garanti edemezsin**. Asgari yayın adayı: Ankara + Bakü + Paris'ten **12–18 kusursuz bölüm**, özgün grafik, offline kayıt, stabil motor. Londra/Moskova içerikleri bu ana motor hazırsa veri olarak hızla eklenir ama mutlaka test edilir.
 
 ---
 
@@ -560,15 +562,14 @@ SolveResult solveLevel(LevelDefinition level, {int maxExploredStates})
 1. Ankara EGO raylı sistem haritası ve hatlar: https://www.ego.gov.tr/tr/sayfa/1075/rayli
 2. Bakü Metropoliteni resmî hat haritası (PDF): https://metro.gov.az/storage/files/file/6683/KQryEyShr7RYJFPIh5slWi55a8BeVmezYd4an3Yq.pdf
 3. Bakü Metropoliteni hatların işletimi (28 May/3 hat): https://metro.gov.az/en/page/xetlerimiz/umumi-melumat
-4. İstanbul Metro İstanbul ağ haritaları: https://metro.istanbul/YolcuHizmetleri/AgHaritalari
+4. Paris RATP resmî metro haritası ve planlar: https://www.ratp.fr/en/plan-metro ve https://www.ratp.fr/en/plans
 5. Londra Transport for London resmî Tube map (Mart 2026): https://content.tfl.gov.uk/standard-tube-map.pdf
 6. Londra TfL ticari map licensing: https://tfl.gov.uk/info-for/business-and-advertisers/map-licensing
 7. Moskova resmî metro + MCC + MCD haritası: https://transport.mos.ru/metro/map
-8. Paris RATP haritası: https://www.ratp.fr/en/plan-metro
-9. Berlin BVG ağı: https://www.bvg.de/en/connections/network-maps-and-routes
-10. Tokyo Metro PDF ve hatlar: https://www.tokyometro.jp/en/subwaymap/index.html
-11. OpenStreetMap telif/ODbL açıklaması: https://www.openstreetmap.org/copyright
-12. OSM lisans SSS, oyunlar: https://osmfoundation.org/wiki/Licence_and_Legal_FAQ
+8. Berlin BVG ağı: https://www.bvg.de/en/connections/network-maps-and-routes
+9. Tokyo Metro PDF ve hatlar: https://www.tokyometro.jp/en/subwaymap/index.html
+10. OpenStreetMap telif/ODbL açıklaması: https://www.openstreetmap.org/copyright
+11. OSM lisans SSS, oyunlar: https://osmfoundation.org/wiki/Licence_and_Legal_FAQ
 
 **Gerçek harita verisini kullanma kararı** verilirse kaynak başına izin/lisans incelemesi yap; lisans belirsizse sadece gerçek dünya bağlantı örüntülerinden ilham alarak **bağımsız kurgu** üret. Oyun içindeki harita “gerçek zamanlı/gerçek güzergâh bilgisi” diye sunulmayacak.
 
