@@ -1,0 +1,60 @@
+{
+  "id": "LON-04",
+  "city": "london",
+  "number": 4,
+  "tutorial": false,
+  "title": {"tr": "Paralel Hatlar", "en": "Parallel Lines"},
+  "maxPulses": 9,
+  "parPulses": 7,
+  "maxChangesPerPulse": 1,
+  "nodes": [
+    {"id": "A", "kind": "depot", "x": 0.05, "y": 0.15},
+    {"id": "D", "kind": "depot", "x": 0.04, "y": 0.72},
+    {"id": "E", "kind": "track", "x": 0.12, "y": 0.52},
+    {"id": "M", "kind": "switch", "x": 0.20, "y": 0.35},
+    {"id": "S", "kind": "switch", "x": 0.36, "y": 0.35},
+    {"id": "T", "kind": "track", "x": 0.52, "y": 0.15},
+    {"id": "J", "kind": "switch", "x": 0.52, "y": 0.55},
+    {"id": "F", "kind": "depot", "x": 0.36, "y": 0.80},
+    {"id": "N", "kind": "switch", "x": 0.66, "y": 0.36},
+    {"id": "K", "kind": "switch", "x": 0.80, "y": 0.52},
+    {"id": "R", "kind": "goal", "x": 0.95, "y": 0.30},
+    {"id": "Q", "kind": "switch", "x": 0.84, "y": 0.78},
+    {"id": "B", "kind": "goal", "x": 0.97, "y": 0.60},
+    {"id": "L", "kind": "goal", "x": 0.96, "y": 0.96}
+  ],
+  "edges": [
+    {"id": "AM", "a": "A", "b": "M"},
+    {"id": "DE", "a": "D", "b": "E"},
+    {"id": "EM", "a": "E", "b": "M"},
+    {"id": "MS", "a": "M", "b": "S"},
+    {"id": "ST", "a": "S", "b": "T"},
+    {"id": "SJ", "a": "S", "b": "J"},
+    {"id": "FJ", "a": "F", "b": "J"},
+    {"id": "TN", "a": "T", "b": "N"},
+    {"id": "JN", "a": "J", "b": "N"},
+    {"id": "NK", "a": "N", "b": "K"},
+    {"id": "KR", "a": "K", "b": "R"},
+    {"id": "KQ", "a": "K", "b": "Q"},
+    {"id": "QB", "a": "Q", "b": "B"},
+    {"id": "QL", "a": "Q", "b": "L"}
+  ],
+  "switches": [
+    {"nodeId": "M", "trunkEdge": "MS", "branchAEdge": "AM", "branchBEdge": "EM", "selectedBranch": "A"},
+    {"nodeId": "S", "trunkEdge": "MS", "branchAEdge": "ST", "branchBEdge": "SJ", "selectedBranch": "A"},
+    {"nodeId": "J", "trunkEdge": "JN", "branchAEdge": "SJ", "branchBEdge": "FJ", "selectedBranch": "A"},
+    {"nodeId": "N", "trunkEdge": "NK", "branchAEdge": "TN", "branchBEdge": "JN", "selectedBranch": "A"},
+    {"nodeId": "K", "trunkEdge": "NK", "branchAEdge": "KR", "branchBEdge": "KQ", "selectedBranch": "A"},
+    {"nodeId": "Q", "trunkEdge": "KQ", "branchAEdge": "QB", "branchBEdge": "QL", "selectedBranch": "A"}
+  ],
+  "signals": [],
+  "trains": [
+    {"id": "red_1", "startNode": "A", "goalNode": "L", "symbol": "circle", "style": "coral"},
+    {"id": "blue_1", "startNode": "D", "goalNode": "R", "symbol": "triangle", "style": "azure"},
+    {"id": "lime_1", "startNode": "F", "goalNode": "B", "symbol": "square", "style": "lime"}
+  ],
+  "tutorialSteps": [
+    {"tr": "İki koridor: hangisi boş?", "en": "Two corridors: which one is clear?"}
+  ],
+  "solution": ["switch:J", "switch:N", "switch:M", "switch:K", "switch:N", "switch:Q", "switch:K"]
+}

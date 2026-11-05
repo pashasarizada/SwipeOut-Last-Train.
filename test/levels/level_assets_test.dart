@@ -240,4 +240,16 @@ void main() {
     expect(path, containsAll(['Y', 'X', 'Z', 'W', 'E', 'V']));
     expect(state.trainById('blue_1')!.delivered, isTrue);
   });
+
+  test('LON-04: both corridors carry trains in the winning run', () {
+    final level = levels.firstWhere((l) => l.id == 'LON-04');
+    final engine = PulseEngine(level);
+    var state = level.initialState;
+    final seen = <String>{};
+    for (final action in level.solution) {
+      state = (engine.simulatePulse(state, action) as PulseApplied).state;
+      seen.addAll(state.trains.map((t) => t.nodeId));
+    }
+    expect(seen, containsAll(['T', 'J']));
+  });
 }
