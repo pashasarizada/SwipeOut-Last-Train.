@@ -9,6 +9,7 @@ import 'package:swipeout_last_train/game/domain/level_definition.dart';
 import 'package:swipeout_last_train/game/domain/pulse_result.dart';
 import 'package:swipeout_last_train/game/engine/level_validator.dart';
 import 'package:swipeout_last_train/game/engine/pulse_engine.dart';
+import 'package:swipeout_last_train/game/engine/pulse_solver.dart';
 
 Object? _read(String file) =>
     jsonDecode(File('${LevelIndex.assetDir}/$file').readAsStringSync());
@@ -70,5 +71,15 @@ void main() {
     final first = engine.simulatePulse(level.initialState, null);
     final second = engine.simulatePulse((first as PulseApplied).state, null);
     expect((second as PulseFailed).reason, PulseFailure.blockedByStanding);
+  });
+
+  test('ANK-05: the clock is tight, a wasted first minute loses', () {
+    final level = levels.firstWhere((l) => l.id == 'ANK-05');
+    expect((level.parPulses, level.maxPulses), (4, 4));
+    final waited = PulseEngine(level).simulatePulse(level.initialState, null);
+    expect(
+      const PulseSolver().solve(level, from: (waited as PulseApplied).state),
+      isA<Unsolvable>(),
+    );
   });
 }

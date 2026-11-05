@@ -1,0 +1,41 @@
+{
+  "id": "ANK-05",
+  "city": "ankara",
+  "number": 5,
+  "tutorial": false,
+  "title": {"tr": "Bir Dakika Daha", "en": "One More Minute"},
+  "maxPulses": 4,
+  "parPulses": 4,
+  "maxChangesPerPulse": 1,
+  "nodes": [
+    {"id": "A", "kind": "depot", "x": 0.08, "y": 0.18},
+    {"id": "U", "kind": "track", "x": 0.24, "y": 0.34},
+    {"id": "D", "kind": "depot", "x": 0.10, "y": 0.80},
+    {"id": "M", "kind": "switch", "x": 0.40, "y": 0.50},
+    {"id": "S", "kind": "switch", "x": 0.66, "y": 0.50},
+    {"id": "R", "kind": "goal", "x": 0.92, "y": 0.24},
+    {"id": "B", "kind": "goal", "x": 0.92, "y": 0.78}
+  ],
+  "edges": [
+    {"id": "AU", "a": "A", "b": "U"},
+    {"id": "UM", "a": "U", "b": "M"},
+    {"id": "DM", "a": "D", "b": "M"},
+    {"id": "MS", "a": "M", "b": "S"},
+    {"id": "SR", "a": "S", "b": "R"},
+    {"id": "SB", "a": "S", "b": "B"}
+  ],
+  "switches": [
+    {"nodeId": "M", "trunkEdge": "MS", "branchAEdge": "UM", "branchBEdge": "DM", "selectedBranch": "A"},
+    {"nodeId": "S", "trunkEdge": "MS", "branchAEdge": "SR", "branchBEdge": "SB", "selectedBranch": "A"}
+  ],
+  "signals": [],
+  "trains": [
+    {"id": "red_1", "startNode": "A", "goalNode": "R", "symbol": "circle", "style": "coral"},
+    {"id": "blue_1", "startNode": "D", "goalNode": "B", "symbol": "triangle", "style": "azure"}
+  ],
+  "tutorialSteps": [
+    {"tr": "Dakikalar sınırlı: saate göz at.", "en": "Minutes are limited: watch the clock."},
+    {"tr": "Bekleyen tren de dakika harcar.", "en": "A waiting train spends minutes too."}
+  ],
+  "solution": ["switch:M", "switch:S", "switch:M", "switch:S"]
+}

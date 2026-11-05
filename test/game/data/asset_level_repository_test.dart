@@ -42,7 +42,13 @@ void main() {
     final levels = await AssetLevelRepository(
       rootBundle,
     ).loadCity(CityId.ankara);
-    expect(levels.map((l) => l.id), ['ANK-01', 'ANK-02', 'ANK-03', 'ANK-04']);
+    expect(levels.map((l) => l.id), [
+      'ANK-01',
+      'ANK-02',
+      'ANK-03',
+      'ANK-04',
+      'ANK-05',
+    ]);
   });
 
   test('a city without levels yet is empty', () async {
