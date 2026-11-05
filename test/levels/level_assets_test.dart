@@ -252,4 +252,10 @@ void main() {
     }
     expect(seen, containsAll(['T', 'J']));
   });
+
+  test('LON-05: the red signal at the ring gate must be opened', () {
+    final level = levels.firstWhere((l) => l.id == 'LON-05');
+    expect(level.initialSignals, {'G': SignalAspect.red});
+    expect(level.solution, contains(const ToggleSignal('G')));
+  });
 }
