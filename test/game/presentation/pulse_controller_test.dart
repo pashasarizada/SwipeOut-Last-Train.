@@ -116,26 +116,19 @@ void main() {
     });
 
     test('a rejected pulse keeps the pending control', () async {
-      final level = buildLevel(
-        nodes: [
-          node('L', NodeKind.depot),
-          node('M', NodeKind.track),
-          node('R', NodeKind.depot),
-          node('G', NodeKind.goal),
-        ],
-        edges: const ['LM', 'MR'],
-        trains: [trainDef('a', 'L', 'G'), trainDef('b', 'R', 'G')],
-      );
-      final (c, events) = await _start(level);
+      final (c, events) = await _start(wrongWayLevel());
+      await _advanceAndSettle(c);
+      c.tapNode('K');
 
       c.advance();
       await pumpEventQueue();
 
-      final rejected = events.single as PulseRejected;
-      expect(rejected.reason, PulseFailure.collision);
-      expect(rejected.nodeId, 'M');
+      final rejected = events.whereType<PulseRejected>().single;
+      expect(rejected.reason, PulseFailure.wrongGoal);
+      expect(rejected.nodeId, 'G');
+      expect(c.pending, const ToggleSwitch('K'));
       expect(c.isAnimating, isFalse);
-      expect(c.pulses, 0);
+      expect(c.pulses, 1);
     });
   });
 
@@ -206,6 +199,26 @@ void main() {
         expect(c.pulses, 0);
       },
     );
+  });
+
+  test('reaching a jam ends the run once the pulse has played', () async {
+    final (c, events) = await _start(jamLevel());
+    expect(c.isLost, isFalse);
+
+    await _advanceAndSettle(c);
+
+    expect(c.isLost, isTrue);
+    expect(events.whereType<LevelLost>().single.jammed, isTrue);
+    c.undo();
+    expect(c.isLost, isFalse);
+  });
+
+  test('running out of pulses is not a jam', () async {
+    final (c, events) = await _start(ank01());
+    for (var i = 0; i < c.maxPulses; i++) {
+      await _advanceAndSettle(c);
+    }
+    expect(events.whereType<LevelLost>().single.jammed, isFalse);
   });
 
   test('calls after dispose are harmless', () async {

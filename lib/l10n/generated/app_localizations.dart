@@ -248,6 +248,12 @@ abstract class AppLocalizations {
   /// **'No minutes left'**
   String get levelLost;
 
+  /// No description provided for @levelJammed.
+  ///
+  /// In en, this message translates to:
+  /// **'The line is jammed'**
+  String get levelJammed;
+
   /// No description provided for @playAgain.
   ///
   /// In en, this message translates to:

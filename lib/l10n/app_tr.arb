@@ -25,6 +25,7 @@
   "levelComplete": "HAT TEMİZ",
   "pulsesUsed": "{count} pulse",
   "levelLost": "Dakika kalmadı",
+  "levelJammed": "Hat kilitlendi",
   "playAgain": "Tekrar Oyna",
   "next": "Sonraki",
   "backToCity": "Şehre Dön",

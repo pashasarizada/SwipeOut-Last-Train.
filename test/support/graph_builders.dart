@@ -146,3 +146,51 @@ LevelDefinition ank02() => buildLevel(
   tutorial: true,
   solution: const [ToggleSwitch('B'), null, null],
 );
+
+/// L(depot a) — M — N — R(depot b): the first pulse is fine, after it the
+/// trains face each other and every pulse is a head-on crash (a jam).
+LevelDefinition jamLevel() => buildLevel(
+  id: 'JAM-01',
+  nodes: [
+    node('L', NodeKind.depot, 0.1, 0.5),
+    node('M', NodeKind.track, 0.4, 0.5),
+    node('N', NodeKind.track, 0.6, 0.5),
+    node('R', NodeKind.depot, 0.9, 0.5),
+    node('G', NodeKind.goal, 0.1, 0.9),
+    node('H', NodeKind.goal, 0.9, 0.9),
+  ],
+  edges: const ['LM', 'MN', 'NR'],
+  trains: [trainDef('a', 'L', 'G'), trainDef('b', 'R', 'H')],
+);
+
+/// Switch J points the train at the wrong goal G; turning J sends it home
+/// to H. Switch K is unrelated, so choosing it still ends on the wrong line.
+LevelDefinition wrongWayLevel() => buildLevel(
+  id: 'WRONG-01',
+  nodes: [
+    node('A', NodeKind.depot, 0.1, 0.5),
+    node('J', NodeKind.junction, 0.4, 0.5),
+    node('G', NodeKind.goal, 0.8, 0.2),
+    node('H', NodeKind.goal, 0.8, 0.8),
+    node('K', NodeKind.junction, 0.4, 0.9),
+    node('T', NodeKind.terminal, 0.1, 0.9),
+    node('U', NodeKind.terminal, 0.6, 0.95),
+    node('V', NodeKind.terminal, 0.6, 0.75),
+  ],
+  edges: const ['AJ', 'JG', 'JH', 'KT', 'KU', 'KV'],
+  switches: [
+    const SwitchDef(
+      nodeId: 'J',
+      trunkEdge: 'AJ',
+      branchAEdge: 'JG',
+      branchBEdge: 'JH',
+    ),
+    const SwitchDef(
+      nodeId: 'K',
+      trunkEdge: 'KT',
+      branchAEdge: 'KU',
+      branchBEdge: 'KV',
+    ),
+  ],
+  trains: [trainDef('a', 'A', 'H')],
+);

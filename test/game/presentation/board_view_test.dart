@@ -104,10 +104,10 @@ void main() {
     c.advance();
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 200));
-    expect(painter().arrivals.trainById('red_1')!.delivered, isFalse);
+    expect(painter().goalChecked('C'), isFalse);
 
     await tester.pumpAndSettle();
-    expect(painter().arrivals.trainById('red_1')!.delivered, isTrue);
+    expect(painter().goalChecked('C'), isTrue);
   });
 
   testWidgets('a 16-node board fits a 320×568 screen', (tester) async {

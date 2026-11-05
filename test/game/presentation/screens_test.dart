@@ -3,12 +3,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:swipeout_last_train/app.dart';
 import 'package:swipeout_last_train/game/domain/city.dart';
 import 'package:swipeout_last_train/game/domain/level_definition.dart';
-import 'package:swipeout_last_train/game/domain/node.dart';
 import 'package:swipeout_last_train/game/presentation/board/board_layout.dart';
 import 'package:swipeout_last_train/game/presentation/board/board_view.dart';
 import 'package:swipeout_last_train/game/presentation/screens/city_levels_screen.dart';
 import 'package:swipeout_last_train/game/presentation/screens/home_screen.dart';
 import 'package:swipeout_last_train/game/presentation/screens/pulse_game_screen.dart';
+import 'package:swipeout_last_train/game/presentation/widgets/level_outcome_sheet.dart';
 
 import '../../support/fake_level_repository.dart';
 import '../../support/graph_builders.dart';
@@ -103,26 +103,53 @@ void main() {
     expect(find.byIcon(Icons.star), findsNothing);
   });
 
-  testWidgets('a collision explains itself and costs no pulse', (tester) async {
-    final level = buildLevel(
-      nodes: [
-        node('L', NodeKind.depot),
-        node('M', NodeKind.track),
-        node('R', NodeKind.depot),
-        node('G', NodeKind.goal),
-        node('H', NodeKind.goal),
-      ],
-      edges: const ['LM', 'MR'],
-      trains: [trainDef('a', 'L', 'G'), trainDef('b', 'R', 'H')],
-    );
+  testWidgets('the delivered counter waits for the train to arrive', (
+    tester,
+  ) async {
+    final level = ank01();
     await _pumpGame(tester, level);
+    await _advance(tester);
+    await _tapNode(tester, level, 'B');
+
+    await tester.tap(find.textContaining('ADVANCE 1 MINUTE'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 200));
+    expect(find.textContaining('· 🚆 0/1'), findsOneWidget);
+
+    await tester.pumpAndSettle();
+    expect(find.textContaining('· 🚆 1/1'), findsOneWidget);
+  });
+
+  testWidgets('a rejected pulse explains itself and costs no pulse', (
+    tester,
+  ) async {
+    await _pumpGame(tester, wrongWayLevel());
+    await _advance(tester);
 
     await tester.tap(find.textContaining('ADVANCE 1 MINUTE'));
     await tester.pump();
 
-    expect(find.text('Two trains met at the same stop.'), findsOneWidget);
-    expect(find.textContaining('0/10 PULSE'), findsOneWidget);
+    expect(
+      find.text('Wrong line: that stop belongs to another train.'),
+      findsOneWidget,
+    );
+    expect(find.textContaining('1/10 PULSE'), findsOneWidget);
     await tester.pumpAndSettle(const Duration(seconds: 3));
+  });
+
+  testWidgets('a jam shows the loss sheet with undo', (tester) async {
+    await _pumpGame(tester, jamLevel());
+    await _advance(tester);
+
+    expect(find.text('The line is jammed'), findsOneWidget);
+    await tester.tap(
+      find.descendant(
+        of: find.byType(LevelOutcomeSheet),
+        matching: find.text('Undo'),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.textContaining('0/10 PULSE'), findsOneWidget);
   });
 
   testWidgets('back from the game and from the result sheet', (tester) async {

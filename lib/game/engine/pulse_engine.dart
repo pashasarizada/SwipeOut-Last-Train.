@@ -19,6 +19,13 @@ final class PulseEngine {
   bool isOutOfPulses(GameState state) =>
       !isSolved(state) && state.pulse >= level.maxPulses;
 
+  /// No action can ever succeed again: every pulse from here fails and a
+  /// failed pulse changes nothing, so the run is lost (deadlock).
+  bool isStuck(GameState state) =>
+      !isSolved(state) &&
+      state.pulse < level.maxPulses &&
+      actions(state).every((a) => simulatePulse(state, a) is PulseFailed);
+
   /// `null` (wait) first, then switches and signals by node id — a fixed
   /// order keeps the solver deterministic.
   Iterable<ControlAction?> actions(GameState state) => [

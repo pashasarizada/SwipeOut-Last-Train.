@@ -42,6 +42,7 @@ final class PulseController extends ChangeNotifier {
   GameState get animationStart => _animatingFrom ?? state;
 
   bool get _acceptsInput => !_disposed && !isAnimating;
+
   bool get _canPlan => _acceptsInput && !isSolved && !isLost;
 
   /// Switch and signal nodes become the pending control; tapping the same
@@ -83,7 +84,7 @@ final class PulseController extends ChangeNotifier {
     if (_disposed || !isAnimating) return;
     _animatingFrom = null;
     if (isSolved) _emit(LevelWon(_result()));
-    if (isLost) _emit(const LevelLost());
+    if (isLost) _emit(LevelLost(jammed: !_session.isOutOfPulses));
     _notify();
   }
 

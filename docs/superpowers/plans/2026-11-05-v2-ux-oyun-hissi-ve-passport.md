@@ -107,7 +107,7 @@ final class TrackLoader extends StatefulWidget { const TrackLoader(); }
 final class GameScaffold extends StatelessWidget { const GameScaffold({required this.city, required this.body, this.header}); } // CityBackdrop + SafeArea
 final class MotionSettings extends InheritedWidget { final bool reduced; static bool reducedOf(BuildContext c); } // MediaQuery.disableAnimations varsayılanı
 ```
-- [ ] **Step 1: Failing testler** — `GameButton` basılıyken yüz 3 pt aşağıda (`Transform` ofseti), bırakınca `onPressed` 1 kez, haptik kanalına `HapticFeedback.selectionClick` (SystemChannels.platform mock'u ile); `onPressed: null` iken dokunma yok; `SplitFlapText('HAT TEMİZ')` `pumpAndSettle` sonrası tam metni gösterir ve `reduced` iken anında; `ControlTicket` yırtma (sola sürükleme ≥ 40 pt veya ✕) → `onTear`; `SignalBackButton` → `Navigator.maybePop`; widget ağacında `InkWell`/`Material` ripple yok; her kit bileşeni 44×44 pt'ten küçük değil.
+- [ ] **Step 1: Failing testler** — `GameButton` basılıyken yüz 3 pt aşağıda (`Transform` ofseti), bırakınca `onPressed` 1 kez, haptik kanalına `HapticFeedback.selectionClick` (SystemChannels.platform mock'u ile); `onPressed: null` iken dokunma yok; `SplitFlapText('HAT TEMİZ')` `pumpAndSettle` sonrası tam metni gösterir ve `reduced` iken anında; `ControlTicket` yırtma (sola sürükleme ≥ 40 pt veya ✕) → `onTear`, ✕ dokunma alanı ≥ 44 pt (V2 review I3); `SignalBackButton` → `Navigator.maybePop`; widget ağacında `InkWell`/`Material` ripple yok; her kit bileşeni 44×44 pt'ten küçük değil.
 - [ ] **Step 2–4:** FAIL → Implement → PASS
 - [ ] **Step 5: Commit** — `feat(ui): game UI kit replacing Material widgets`
 
@@ -203,7 +203,7 @@ Ekranlar `UI_UX_GUIDELINES.md` §2–§3'teki gibi:
 - **Şehir hat haritası:** 6 istasyon tek hat üzerinde; çözülen parçalar yanar; olmayan bölüm istasyonu "yakında" soluk; istasyona dokun → ön izleme kartı (ad, par, en iyi yıldız) + `GameButton` "BİN".
 - **Oyun peronu:** `DepartureBoard` HUD (şehir · saat `23:50 + pulse` · pulse · teslim · kontrol), şehir deseni zemin, `ControlTicket`, Geri Al/Baştan `GameButton(size: small)`, `AdvanceLever`; `PlatformAnnouncement` hata şeridi.
 - **Sonuç:** split-flap "HAT TEMİZ" / "DAKİKA KALMADI", yıldızlar damga gibi basılır; şehir bitince Passport damga sahnesine geçiş.
-- [ ] **Step 1: Failing testler** — tünel → ana peron → şehir biletleri → Ankara → hat haritası → ANK-01 → oyna → split-flap sonuç; Bakü bileti dokununca açılmaz; HUD saati 23:50 → 23:51; `ui_rules_test` skip'siz PASS; 320×568 TR/EN taşma yok; `DEVAM ET` kayıtlı yarım bölümü açar.
+- [ ] **Step 1: Failing testler** — (V2 review I3) 16 düğümlü seviye `PulseGameScreen` içinde 320×568, metin ölçeği 1.0 ve 1.3'te: ekrandaki en yakın iki düğüm arası ≥ 44 pt ve `meetsGuideline(androidTapTargetGuideline)` · (review M7) Android geri tuşu sonuç panosunu kapatmaz (`PopScope`) · (review M9) `DEVAM ET`'ten girilen bölümde "Şehre Dön" şehir hat haritasına gider · tünel → ana peron → şehir biletleri → Ankara → hat haritası → ANK-01 → oyna → split-flap sonuç; Bakü bileti dokununca açılmaz; HUD saati 23:50 → 23:51; `ui_rules_test` skip'siz PASS; 320×568 TR/EN taşma yok; `DEVAM ET` kayıtlı yarım bölümü açar.
 - [ ] **Step 2–4:** FAIL → Implement → PASS; iOS simülatörde her ekranın ekran görüntüsü `PROGRESS.md`'ye.
 - [ ] **Step 5: Commit** — `feat(screens): metro-themed game flow`
 

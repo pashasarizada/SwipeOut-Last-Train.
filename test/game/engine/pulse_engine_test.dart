@@ -309,4 +309,28 @@ void main() {
       },
     );
   });
+
+  group('stuck', () {
+    test('a state where every action fails is stuck, others are not', () {
+      final level = _stuckLevel();
+      final engine = PulseEngine(level);
+      final stuck = stateOf(level, [at('a', 'E', 'XE'), at('b', 'X', 'WX')]);
+
+      expect(engine.isStuck(stuck), isTrue);
+      expect(PulseEngine(ank01()).isStuck(ank01().initialState), isFalse);
+    });
+  });
 }
+
+/// W(depot) — X — E(terminal): a waits on E for ever, b can only run into it.
+LevelDefinition _stuckLevel() => buildLevel(
+  nodes: [
+    node('W', NodeKind.depot),
+    node('X', NodeKind.track),
+    node('E', NodeKind.terminal),
+    node('G', NodeKind.goal),
+    node('H', NodeKind.goal),
+  ],
+  edges: const ['WX', 'XE'],
+  trains: [trainDef('a', 'W', 'G'), trainDef('b', 'W', 'H')],
+);

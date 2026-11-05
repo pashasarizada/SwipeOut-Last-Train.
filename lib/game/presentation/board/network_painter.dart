@@ -130,18 +130,27 @@ final class NetworkPainter extends CustomPainter {
     }
   }
 
-  void _paintGoal(Canvas canvas, Node node, Offset c) {
-    TrainDef? owner;
+  /// The train that must reach goal [nodeId], if any.
+  TrainDef? _ownerOf(String nodeId) {
     for (final t in level.trains) {
-      if (t.goalNode == node.id) owner = t;
+      if (t.goalNode == nodeId) return t;
     }
+    return null;
+  }
+
+  /// Whether goal [nodeId] shows its ✓ — only once the train has arrived.
+  bool goalChecked(String nodeId) {
+    final owner = _ownerOf(nodeId);
+    return owner != null && (arrivals.trainById(owner.id)?.delivered ?? false);
+  }
+
+  void _paintGoal(Canvas canvas, Node node, Offset c) {
+    final owner = _ownerOf(node.id);
     final color = owner == null ? AppColors.track : colorForStyle(owner.style);
     canvas.drawCircle(c, 18, Paint()..color = AppColors.background);
     canvas.drawCircle(c, 18, _stroke(color, 4));
-    final done =
-        owner != null && (state.trainById(owner.id)?.delivered ?? false);
     _label(canvas, c, owner?.symbol.glyph ?? '', color, 16);
-    if (done) {
+    if (goalChecked(node.id)) {
       _label(canvas, c + const Offset(16, -16), '✓', AppColors.signalGreen, 14);
     }
   }

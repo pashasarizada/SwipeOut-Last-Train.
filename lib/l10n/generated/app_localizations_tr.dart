@@ -97,6 +97,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get levelLost => 'Dakika kalmadı';
 
   @override
+  String get levelJammed => 'Hat kilitlendi';
+
+  @override
   String get playAgain => 'Tekrar Oyna';
 
   @override

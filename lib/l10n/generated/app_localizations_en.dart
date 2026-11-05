@@ -97,6 +97,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get levelLost => 'No minutes left';
 
   @override
+  String get levelJammed => 'The line is jammed';
+
+  @override
   String get playAgain => 'Play again';
 
   @override

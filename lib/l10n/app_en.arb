@@ -73,6 +73,7 @@
     }
   },
   "levelLost": "No minutes left",
+  "levelJammed": "The line is jammed",
   "playAgain": "Play again",
   "next": "Next",
   "backToCity": "Back to city",

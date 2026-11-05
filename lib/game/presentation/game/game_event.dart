@@ -32,5 +32,8 @@ final class LevelWon extends GameEvent {
 }
 
 final class LevelLost extends GameEvent {
-  const LevelLost();
+  const LevelLost({required this.jammed});
+
+  /// True when no pulse can ever succeed again; false when out of pulses.
+  final bool jammed;
 }

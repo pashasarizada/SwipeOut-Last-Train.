@@ -20,7 +20,10 @@ final class GameSession {
   GameState get state => _state;
   int get pulses => _state.pulse;
   bool get isSolved => _engine.isSolved(_state);
-  bool get isLost => _engine.isOutOfPulses(_state);
+
+  /// Out of pulses, or deadlocked so that no pulse can succeed.
+  bool get isLost => _engine.isOutOfPulses(_state) || _engine.isStuck(_state);
+  bool get isOutOfPulses => _engine.isOutOfPulses(_state);
   bool get canUndo => _history.canUndo;
 
   PulseResult pulse(ControlAction? action) {

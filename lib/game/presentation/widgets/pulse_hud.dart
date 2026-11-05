@@ -18,7 +18,8 @@ final class PulseHud extends StatelessWidget {
     return ListenableBuilder(
       listenable: controller,
       builder: (context, _) {
-        final trains = controller.state.trains;
+        // Count deliveries from the pre-pulse state until trains arrive.
+        final trains = controller.animationStart.trains;
         final delivered = trains.where((t) => t.delivered).length;
         return Padding(
           padding: const EdgeInsets.fromLTRB(4, 4, 16, 0),

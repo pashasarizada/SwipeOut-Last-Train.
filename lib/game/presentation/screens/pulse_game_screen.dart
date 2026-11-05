@@ -48,8 +48,8 @@ class _PulseGameScreenState extends State<PulseGameScreen> {
         _showMessage(AppLocalizations.of(context).failureMessage(reason));
       case LevelWon(:final result):
         _showOutcome(result);
-      case LevelLost():
-        _showOutcome(null);
+      case LevelLost(:final jammed):
+        _showOutcome(null, jammed: jammed);
       case PulseCommitted():
         break;
     }
@@ -67,7 +67,7 @@ class _PulseGameScreenState extends State<PulseGameScreen> {
     });
   }
 
-  void _showOutcome(LevelResult? result) {
+  void _showOutcome(LevelResult? result, {bool jammed = false}) {
     final onNext = widget.onNext;
     void close(BuildContext sheet) => Navigator.of(sheet).pop();
     showModalBottomSheet<void>(
@@ -88,6 +88,7 @@ class _PulseGameScreenState extends State<PulseGameScreen> {
 
         return result == null
             ? LevelOutcomeSheet.lost(
+                jammed: jammed,
                 onUndo: () {
                   close(sheet);
                   _controller.undo();

@@ -15,10 +15,12 @@ final class LevelOutcomeSheet extends StatelessWidget {
     required this.onPlayAgain,
     required this.onBackToCity,
     this.onNext,
-  }) : onUndo = null;
+  }) : onUndo = null,
+       jammed = false;
 
   const LevelOutcomeSheet.lost({
     super.key,
+    required this.jammed,
     required VoidCallback this.onUndo,
     required this.onPlayAgain,
     required this.onBackToCity,
@@ -30,6 +32,9 @@ final class LevelOutcomeSheet extends StatelessWidget {
   final VoidCallback onBackToCity;
   final VoidCallback? onNext;
   final VoidCallback? onUndo;
+
+  /// Lost because the line deadlocked rather than because time ran out.
+  final bool jammed;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +49,9 @@ final class LevelOutcomeSheet extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              result == null ? l.levelLost : l.levelComplete,
+              result != null
+                  ? l.levelComplete
+                  : (jammed ? l.levelJammed : l.levelLost),
               style: text.headlineSmall?.copyWith(
                 fontWeight: FontWeight.w800,
                 letterSpacing: 2,
