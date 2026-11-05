@@ -1,0 +1,48 @@
+{
+  "id": "BAK-06",
+  "city": "baku",
+  "number": 6,
+  "tutorial": false,
+  "title": {"tr": "Son Bakı Seferi", "en": "Last Baku Service"},
+  "maxPulses": 8,
+  "parPulses": 8,
+  "maxChangesPerPulse": 1,
+  "nodes": [
+    {"id": "A", "kind": "depot", "x": 0.06, "y": 0.22},
+    {"id": "H", "kind": "switch", "x": 0.22, "y": 0.30},
+    {"id": "Y", "kind": "terminal", "x": 0.18, "y": 0.06},
+    {"id": "D", "kind": "depot", "x": 0.06, "y": 0.88},
+    {"id": "E", "kind": "track", "x": 0.22, "y": 0.70},
+    {"id": "M", "kind": "switch", "x": 0.38, "y": 0.50},
+    {"id": "S", "kind": "switch", "x": 0.58, "y": 0.50},
+    {"id": "Z", "kind": "terminal", "x": 0.58, "y": 0.86},
+    {"id": "T", "kind": "switch", "x": 0.76, "y": 0.50},
+    {"id": "R", "kind": "goal", "x": 0.93, "y": 0.24},
+    {"id": "B", "kind": "goal", "x": 0.93, "y": 0.76}
+  ],
+  "edges": [
+    {"id": "AH", "a": "A", "b": "H"},
+    {"id": "HY", "a": "H", "b": "Y"},
+    {"id": "HM", "a": "H", "b": "M"},
+    {"id": "DE", "a": "D", "b": "E"},
+    {"id": "EM", "a": "E", "b": "M"},
+    {"id": "MS", "a": "M", "b": "S"},
+    {"id": "SZ", "a": "S", "b": "Z"},
+    {"id": "ST", "a": "S", "b": "T"},
+    {"id": "TR", "a": "T", "b": "R"},
+    {"id": "TB", "a": "T", "b": "B"}
+  ],
+  "switches": [
+    {"nodeId": "H", "trunkEdge": "HM", "branchAEdge": "AH", "branchBEdge": "HY", "selectedBranch": "A"},
+    {"nodeId": "M", "trunkEdge": "MS", "branchAEdge": "HM", "branchBEdge": "EM", "selectedBranch": "A"},
+    {"nodeId": "S", "trunkEdge": "MS", "branchAEdge": "ST", "branchBEdge": "SZ", "selectedBranch": "B"},
+    {"nodeId": "T", "trunkEdge": "ST", "branchAEdge": "TR", "branchBEdge": "TB", "selectedBranch": "A"}
+  ],
+  "signals": [],
+  "trains": [
+    {"id": "red_1", "startNode": "A", "goalNode": "R", "symbol": "circle", "style": "coral"},
+    {"id": "blue_1", "startNode": "D", "goalNode": "B", "symbol": "triangle", "style": "azure"}
+  ],
+  "tutorialSteps": [],
+  "solution": ["switch:H", "switch:M", "switch:H", "switch:S", "switch:T", "switch:M", "wait", "switch:T"]
+}

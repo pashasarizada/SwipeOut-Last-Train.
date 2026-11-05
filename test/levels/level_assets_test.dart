@@ -154,4 +154,10 @@ void main() {
     }
     expect((result as PulseFailed).reason, PulseFailure.headOn);
   });
+
+  test('Baku is complete: six levels, the finale has no spare minute', () {
+    final baku = levels.where((l) => l.city == CityId.baku).toList();
+    expect(baku.map((l) => l.number), [1, 2, 3, 4, 5, 6]);
+    expect((baku.last.parPulses, baku.last.maxPulses), (8, 8));
+  });
 }
