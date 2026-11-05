@@ -137,7 +137,7 @@ expect(const LocalizedText(tr: 'İlk Sefer', en: 'First Departure').of('tr'), '�
 ```
 `test/support/graph_builders.dart` aynı görevde: `ank01()` (spec §8 JSON'unun birebir Dart karşılığı) ve `ank02()` (Görev 7'deki şekil), `chainLevel()`, `headOnLevel()`, `cycleLevel()`, `signalLevel()` (Görev 3 testleri için, aşağıda).
 - [ ] **Step 2:** FAIL doğrula — `flutter test test/game/domain/graph_domain_test.dart`
-- [ ] **Step 3:** Domain dosyalarını yaz (koleksiyonlar unmodifiable; `GameState` trenleri id'ye göre sıralı).
+- [ ] **Step 3:** Domain dosyalarını yaz. `LevelDefinition`, `GameState` ve tüm `Set`/`List`/`Map` alanları constructor'da **kopyalanıp** unmodifiable yapılır (eski kodda çağıranın mutable koleksiyonu tutuluyordu — review M9); testi: dışarıdaki listeyi değiştirmek seviyeyi değiştirmez. `GameState` trenleri id'ye göre sıralı; `initialState` **her** makas ve sinyali açıkça içerir (varsayılan değer key dışında kalmasın — review M5).
 - [ ] **Step 4:** PASS + `test/architecture_test.dart` PASS.
 - [ ] **Step 5: Commit** — `feat(domain): graph model for NIGHT PULSE`
 
@@ -211,7 +211,7 @@ test('restart returns to the initial state')
 **Files:** Create `lib/game/engine/pulse_solver.dart`. Test: `test/game/engine/pulse_solver_test.dart`.
 
 **Interfaces:** `sealed class SolveResult` → `Solved(List<ControlAction?> plan)`, `Unsolvable()`, `SearchLimitReached()`; `final class PulseSolver { const PulseSolver({this.maxStates = 200000}); SolveResult solve(LevelDefinition level, {GameState? from}); }`.
-Algoritma: BFS, ziyaret anahtarı `searchKey` (D-016), genişletme `PulseEngine.actions` sırasıyla, yalnız `PulseApplied` dalları, derinlik `> maxPulses` budanır, `visited.length > maxStates` → `SearchLimitReached`.
+Algoritma: BFS, ziyaret anahtarı `searchKey` (D-016), genişletme `PulseEngine.actions` sırasıyla, yalnız `PulseApplied` dalları, derinlik `> maxPulses` budanır, `visited.length > maxStates` → `SearchLimitReached`. Hedef testi durum **üretilirken** yapılır (kuyruğa alınırken değil) — böylece kuyrukta çözüm varken sınır yüzünden pes edilmez (review M6); birim maliyette yine optimumdur.
 
 - [ ] **Step 1: Failing testler**
 ```dart
@@ -233,7 +233,7 @@ expect(solver.solve(ank02()), solver.solve(ank02()));   // deterministik (plan l
 
 **Format:** spec §8 JSON'u + iki ek alan: `"number": 1`, `"tutorial": true|false`, `"solution": ["wait", "switch:B"]`; sinyal: `"signals": [{"nodeId": "S1", "initial": "red"}]`. Aksiyon dizgesi: `wait` | `switch:<nodeId>` | `signal:<nodeId>` (`ActionCodec.decode/encode`).
 
-**Validator kodları:** `duplicateId`, `unknownReference`, `positionOutOfRange`, `ambiguousTrack` (track/signal ≠ 2 kenar), `badDegree` (depot/goal/terminal ≠ 1 kenar, junction ≠ 3), `invalidSwitch` (3 kenar farklı ve hepsi o düğüme bağlı değil / düğüm junction değil), `signalOnNonSignalNode`, `trainNotOnDepot`, `goalNotGoalNode`, `sharedGoalOrStart`, `parExceedsMax`, `solutionFails` (kayıtlı çözüm replay'de çözmüyor veya uzunluğu ≠ `parPulses`), `parBelowOptimum` (çözücü daha kısa bulmuş → `parPulses` yükseltilmeli değil düşürülmeli; detail'de optimum), `unsolvable` (çözücü `Unsolvable`; `SearchLimitReached` ise **hata değil**, replay yeterli — D-017).
+**Validator kodları:** `duplicateId` (düğüm, kenar **ve tren** id'leri — eski validator aynı id'li iki treni yanıltıcı biçimde `unsolvable` diye raporluyordu, review M3), `unknownReference`, `positionOutOfRange`, `ambiguousTrack` (track/signal ≠ 2 kenar), `badDegree` (depot/goal/terminal ≠ 1 kenar, junction ≠ 3), `invalidSwitch` (3 kenar farklı ve hepsi o düğüme bağlı değil / düğüm junction değil), `signalOnNonSignalNode`, `trainNotOnDepot`, `goalNotGoalNode`, `sharedGoalOrStart`, `parExceedsMax`, `solutionFails` (kayıtlı çözüm replay'de çözmüyor veya uzunluğu ≠ `parPulses`), `parBelowOptimum` (çözücü daha kısa bulmuş → `parPulses` yükseltilmeli değil düşürülmeli; detail'de optimum), `unsolvable` (çözücü `Unsolvable`; `SearchLimitReached` ise **hata değil**, replay yeterli — D-017).
 
 - [ ] **Step 1: Failing testler** — codec: spec §8 ANK-01 JSON'u → `ank01()` ile alan alan eşit; `"kind": "bridge"` / eksik `"x"` / bilinmeyen kenar referansı → `LevelFormatException(levelId: 'ANK-01')`; `ActionCodec.decode('switch:B') == ToggleSwitch('B')`, `decode('wait') == null`, `decode('jump:B')` → exception. Validator: `ank01()`/`ank02()` → `isEmpty`; her kod için tek noktadan bozulmuş fixture.
 - [ ] **Step 2–4:** FAIL → Implement → PASS
@@ -249,7 +249,9 @@ expect(solver.solve(ank02()), solver.solve(ank02()));   // deterministik (plan l
 **ANK-01:** spec §8 JSON'u aynen + `number: 1`, `tutorial: true`, `solution: ["wait", "switch:B"]`.
 **ANK-02 "Kızılay Yönü"** (5 düğüm, 1 tren, tutorial: true): `A` depot (0.12, 0.30) —`AB` (makasın **A kolu**)— `B` junction (0.45, 0.50) —`BC` (trunk)— `C` track (0.70, 0.50) —`CD`— `D` goal (0.90, 0.50); `B` —`BE` (B kolu)— `E` terminal (0.40, 0.85). Başlangıç seçili kol **b** (E'ye açık). Tren A'dan B'ye pasif koldan gelir ve bekler. `maxPulses: 6`, `parPulses: 3`, `solution: ["switch:B", "wait", "wait"]`. Öğretici: `{"tr": "Tren kapalı koldan gelirse bekler.", "en": "A train on a closed branch waits."}`.
 
-- [ ] **Step 1: Failing testler** — her indeksli dosya validator'dan `isEmpty`; ID'ler benzersiz ve `ANK-0n`; `loadCity(CityId.ankara)` → `['ANK-01', 'ANK-02']`; `loadCity(CityId.baku)` → boş.
+Repository ve `LevelIndex`: `jsonDecode` hatası, kökü obje olmayan dosya ve string olmayan liste elemanı **dosya adıyla** `LevelFormatException`'a sarılır (eski kodda çıplak `TypeError`/`FormatException` sızıyordu — review M2). Araç her seviyeyi bir kez çözer: optimum validator sonucundan okunur (review M8).
+
+- [ ] **Step 1: Failing testler** — her indeksli dosya validator'dan `isEmpty`; ID'ler benzersiz ve `ANK-0n`; `loadCity(CityId.ankara)` → `['ANK-01', 'ANK-02']`; `loadCity(CityId.baku)` → boş; bozuk JSON / kökü liste olan dosya / `"levels": [1]` → `LevelFormatException` ve `levelId` dosya adını içerir (sahte `AssetBundle` ile).
 - [ ] **Step 2–4:** FAIL → JSON + repository + araç → PASS; `dart run tool/solve_levels.dart` → `ANK-01 issues=0 optimal=2 par=2`, `ANK-02 issues=0 optimal=3 par=3`, çıkış 0.
 - [ ] **Step 5: Commit** — `feat(levels): ANK-01 and ANK-02 for NIGHT PULSE`
 
@@ -270,9 +272,10 @@ final class PulseController extends ChangeNotifier { PulseController({required L
   void cancelPending(); void advance(); void undo(); void restart();
   void finishAnimation(); }       // ekran, tween bitince çağırır; isAnimating false olur
 ```
+Ömür kuralı (review I1): controller `dispose` edildikten sonra hiçbir bekleyen iş `notifyListeners`/`_events.add` çağırmaz (`_disposed` bayrağı); ileride async iş eklenirse aynı kural geçerli.
 Davranış: `advance` başarılıysa `pending = null`, `isAnimating = true`, `PulseCommitted` yayılır; çözümse `LevelWon`, `isLost` olduysa `LevelLost` (animasyon bitince UI gösterir). Başarısızsa `PulseRejected`, `pending` korunur. `isAnimating` iken `tapNode/advance/undo/restart` yok sayılır. `LevelResult.rating` tutorial'da null.
 
-- [ ] **Step 1: Failing testler** — seçme/değiştirme/iptal (pulse ve state değişmez); başarılı advance → event + `isAnimating`; animasyon sırasında ikinci `advance` yok sayılır (pulses 1); `finishAnimation` sonrası ikinci advance işler; çarpışmada `PulseRejected` + pending korunur; ANK-01 2 pulse → `LevelWon` (tutorial → rating null); `maxPulses` dolunca `LevelLost`; undo → pulses ve makas geri.
+- [ ] **Step 1: Failing testler** — seçme/değiştirme/iptal (pulse ve state değişmez); başarılı advance → event + `isAnimating`; animasyon sırasında ikinci `advance` yok sayılır (pulses 1); `finishAnimation` sonrası ikinci advance işler; çarpışmada `PulseRejected` + pending korunur; ANK-01 2 pulse → `LevelWon` (tutorial → rating null); `maxPulses` dolunca `LevelLost`; undo → pulses ve makas geri; `LevelWon` sonrası `finishAnimation` + `restart` gerçekten başa döner (eski kodda Replay kilit süresine denk gelince sessizce yok sayılıyordu — review M1); `dispose` sonrası `finishAnimation()` çağrısı exception atmaz.
 - [ ] **Step 2–4:** FAIL → Implement → PASS
 - [ ] **Step 5: Commit** — `feat(presentation): pulse controller with pending action`
 
@@ -286,7 +289,7 @@ Davranış: `advance` başarılıysa `pending = null`, `isAnimating = true`, `Pu
 - `BoardLayout({required Size size, double padding = 32})` → `Offset toScreen(NormPoint p)`; `String? nodeAt(Offset local, Map<String, Node> nodes, {double hitRadius = 28})` (en yakın düğüm, yarıçap içinde).
 - `NetworkPainter({level, state, pending, layout, double pulseWave /*0..1*/})` — kenarlar; makasın aktif kolu parlak, pasif kol soluk, `pending` makas/sinyal için önizleme (seçilecek kol vurgulu); sinyal ışığı; hedefler tren sembolü + rengiyle; terminal çizgi sonu; `pulseWave` ile kenarlar boyunca kısa ışık dalgası.
 - `TrainLayer({level, before, after, Animation<double> progress, layout})` — her tren `lerp(toScreen(before.node), toScreen(after.node), Curves.easeInOut(progress))`; teslim edilen tren son %25'te küçülüp ✓'e döner.
-- `BoardView({controller})` — `StatefulWidget` + `SingleTickerProviderStateMixin`; `AnimationController(duration: kPulseMove /*400ms*/)`; `PulseCommitted` gelince `forward(from: 0)` → bitince `controller.finishAnimation()`; `PulseRejected` → 300 ms kırmızı flaş + `HapticFeedback.heavyImpact`; `onTapUp` → `nodeAt` → `tapNode`. Uygulama arka plana geçerse (`AppLifecycleState.paused`) animasyon anında sona sarılır (spec §7).
+- `BoardView({controller})` — `StatefulWidget` + `SingleTickerProviderStateMixin`; `AnimationController(duration: kPulseMove /*400ms*/)`; `PulseCommitted` gelince `forward(from: 0)` → bitince `controller.finishAnimation()`; `PulseRejected` → 300 ms kırmızı flaş + `HapticFeedback.heavyImpact`; `onTapUp` → `nodeAt` → `tapNode`. V2'de sürükleme yok, yalnız dokunma; ileride pan eklenirse `dragStartBehavior: DragStartBehavior.down` zorunlu (eski swipe kodunda ilk ~18 px kayboluyor, kısa kaydırmalar yutuluyor ve yanlış tren seçiliyordu — review C1). Teslim edilen trenin hedefi sembolünü korur, ✓ yanına küçük eklenir (review M4); teslim adımı da animasyonla oynar (review M7). Uygulama arka plana geçerse (`AppLifecycleState.paused`) animasyon anında sona sarılır (spec §7).
 - `motion.dart`'a sabitler: `kPulseMove 400`, `kSwitchFlip 180`, `kSignalFade 150`, `kPulseWave 100`, `kArrival 300`, `kCollisionFlash 300`, `kLevelComplete 700` ms.
 
 - [ ] **Step 1: Failing testler** — `toScreen(NormPoint(0,0))` = `Offset(32,32)`, `(1,1)` = `size - 32`; `nodeAt` yarıçap içi/dışı; widget: ANK-01'de B'ye dokun → `pending == ToggleSwitch('B')`; advance + `pump(200ms)` → tren A ile B arasında; `pumpAndSettle` → B'de ve `isAnimating` false; 16 düğümlü fixture 320×568'de `takeException()` null.
@@ -302,9 +305,9 @@ Davranış: `advance` başarılıysa `pending = null`, `isAnimating = true`, `Pu
 - **HomeScreen:** "SON SEFER BAŞLIYOR" · `DEVAM ET` (Faz V2-B'de kayıtla dolacak; şimdilik Ankara-01'i açar) · `ŞEHİR SEÇ`.
 - **CitySelectScreen:** 5 kart, zorluk yıldızları (★☆☆☆☆…), Moskova alt yazısı "NIGHTMARE NETWORK"; bölümü olmayan şehir `Yakında` (satın alınabilir gibi değil); altta "Gerçek şehirlerden esinlenen kurgusal metro bulmacaları."
 - **CityLevelsScreen:** şehrin bölümleri nokta/kart listesi (`ANK-01 İlk Sefer`).
-- **PulseGameScreen:** HUD `LAST TRAIN · ANKARA 01` / `1/5 PULSE · 🚆 0/1` / `Kontrol: 1/1`; öğretici adımları (≤ 2 satır); `BoardView`; bekleyen kontrol çipi + `İptal`; `Geri Al` / `Baştan`; büyük `▶ 1 DAKİKA İLERLET` düğmesi; olaylar → kayıp sayfası (`Geri Al` / `Tekrar Oyna`), başarı sayfası (tutorial'da yıldızsız).
+- **PulseGameScreen:** HUD `LAST TRAIN · ANKARA 01` / `1/5 PULSE · 🚆 0/1` / `Kontrol: 1/1`; öğretici adımları (≤ 2 satır); `BoardView`; bekleyen kontrol çipi + `İptal`; `Geri Al` / `Baştan`; büyük `▶ 1 DAKİKA İLERLET` düğmesi; olaylar → kayıp sayfası (`Geri Al` / `Tekrar Oyna`), başarı sayfası (tutorial'da yıldızsız). HUD'da her zaman görünen **geri/menü** düğmesi; sonuç sayfalarında `Şehre Dön` düğmesi ve `enableDrag: false` (eski kodda son bölümde sayfa aşağı çekilince oyuncu çıkışsız kalıyordu — review I3).
 - **Paket kararı:** Kullanıcı onaylarsa `flutter_animate` (düğme/çip/yıldız/sayfa girişleri, çarpışma sallanması) + `animations` (ekran geçişleri: shared axis / fade through) eklenir, sürümler `docs/DECISIONS.md` ve `SOURCE_MAPS_AND_LICENSES.md`'ye yazılır. Onay yoksa aynı efektler `AnimatedSwitcher`/`AnimatedScale`/`PageRouteBuilder` ile yapılır. **Tahta animasyonları her iki durumda da Görev 9'daki yerleşik çözümle kalır.**
-- [ ] **Step 1: Failing testler** — home → şehir seçimi → Ankara → ANK-01; ANK-01'i B'ye dokun + iki kez `1 DAKİKA İLERLET` ile bitir → başarı sayfası; Bakü kartı `Yakında` ve dokununca bir şey açmaz; çarpışma fixture'ında reddedilen pulse sonrası pulse sayacı değişmez; TR dilinde `1 DAKİKA İLERLET`, EN'de `ADVANCE 1 MINUTE`; 320×568'de taşma yok.
+- [ ] **Step 1: Failing testler** — oyun ekranından geri düğmesiyle şehir ekranına dönülür; başarı sayfasında `Şehre Dön` çalışır; home → şehir seçimi → Ankara → ANK-01; ANK-01'i B'ye dokun + iki kez `1 DAKİKA İLERLET` ile bitir → başarı sayfası; Bakü kartı `Yakında` ve dokununca bir şey açmaz; çarpışma fixture'ında reddedilen pulse sonrası pulse sayacı değişmez; TR dilinde `1 DAKİKA İLERLET`, EN'de `ADVANCE 1 MINUTE`; 320×568'de taşma yok.
 - [ ] **Step 2–4:** FAIL → Implement → PASS; iOS simülatörde ANK-01 ve ANK-02 elle oynanır, sonuç `PROGRESS.md`'ye.
 - [ ] **Step 5: Commit** — `feat(presentation): city flow and pulse game screen`
 
