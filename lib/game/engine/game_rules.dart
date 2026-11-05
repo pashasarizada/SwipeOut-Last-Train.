@@ -24,7 +24,11 @@ final class GameRules {
 
   /// Applicable moves in a fixed order (trains by id × N/E/S/W, then switches
   /// by row and column) so that search over them is deterministic.
-  Iterable<Move> legalMoves(BoardState state) sync* {
+  Iterable<Move> legalMoves(BoardState state) =>
+      transitions(state).map((t) => t.move);
+
+  /// Each legal move paired with the state it leads to, in [legalMoves] order.
+  Iterable<({Move move, BoardState next})> transitions(BoardState state) sync* {
     final candidates = <Move>[
       for (final train in state.trains)
         if (!train.delivered)
@@ -33,7 +37,8 @@ final class GameRules {
       for (final pos in _switchPositions) SwitchToggle(pos),
     ];
     for (final move in candidates) {
-      if (apply(state, move) is MoveApplied) yield move;
+      final result = apply(state, move);
+      if (result is MoveApplied) yield (move: move, next: result.state);
     }
   }
 
