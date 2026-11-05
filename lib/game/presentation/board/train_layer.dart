@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/widgets.dart';
 
 import '../../domain/game_state.dart';
@@ -7,7 +9,8 @@ import 'train_sprite.dart';
 
 /// Trains tweened from [before] to [after] — all of them at once. Each car
 /// faces the edge it travels; a train delivered by this pulse reaches its
-/// goal, then shrinks away.
+/// goal, then shrinks away. On a rejected pulse the [bumped] trains lurch
+/// towards the conflict and spring back; the state never changes.
 final class TrainLayer extends StatefulWidget {
   const TrainLayer({
     super.key,
@@ -16,6 +19,9 @@ final class TrainLayer extends StatefulWidget {
     required this.after,
     required this.progress,
     required this.layout,
+    this.bump = kAlwaysDismissedAnimation,
+    this.bumped = const {},
+    this.bumpNode,
   });
 
   final LevelDefinition level;
@@ -23,6 +29,15 @@ final class TrainLayer extends StatefulWidget {
   final GameState after;
   final Animation<double> progress;
   final BoardLayout layout;
+  final Animation<double> bump;
+  final Set<String> bumped;
+
+  /// Where the conflict happens; without one, the bumped trains meet in
+  /// the middle (a head-on swap on one edge).
+  final String? bumpNode;
+
+  /// How far towards the conflict a bumped train lurches.
+  static const double bumpReach = 0.35;
 
   @override
   State<TrainLayer> createState() => _TrainLayerState();
@@ -49,8 +64,9 @@ class _TrainLayerState extends State<TrainLayer> {
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: widget.progress,
+      animation: Listenable.merge([widget.progress, widget.bump]),
       builder: (context, _) {
+        final lurch = _lurch();
         final t = Curves.easeInOut.transform(widget.progress.value);
         final moving = widget.progress.value < 1;
         return Stack(
@@ -70,11 +86,32 @@ class _TrainLayerState extends State<TrainLayer> {
                   lights: moving && from.nodeId != train.nodeId
                       ? 1
                       : _idleLights,
+                  lurch: lurch[train.id] ?? Offset.zero,
                 ),
           ],
         );
       },
     );
+  }
+
+  /// Per bumped train, its offset towards the conflict right now.
+  Map<String, Offset> _lurch() {
+    final v = widget.bump.value;
+    if (widget.bumped.isEmpty || v == 0 || v == 1) return const {};
+    final at = {
+      for (final id in widget.bumped)
+        if (widget.after.trainById(id) case final t? when !t.delivered)
+          id: _pos(t.nodeId),
+    };
+    if (at.isEmpty) return const {};
+    final contact = widget.bumpNode != null
+        ? _pos(widget.bumpNode!)
+        : at.values.reduce((a, b) => a + b) / at.length.toDouble();
+    final k = TrainLayer.bumpReach * math.sin(v * math.pi);
+    return {
+      for (final MapEntry(:key, :value) in at.entries)
+        key: (contact - value) * k,
+    };
   }
 
   Widget _car({
@@ -84,6 +121,7 @@ class _TrainLayerState extends State<TrainLayer> {
     required double t,
     required double scale,
     required double lights,
+    Offset lurch = Offset.zero,
   }) {
     final start = _pos(from);
     final end = _pos(to);
@@ -91,7 +129,7 @@ class _TrainLayerState extends State<TrainLayer> {
       _headings[id] = headingOf(start, end);
     }
     final heading = _headings.putIfAbsent(id, () => _initialHeading(from));
-    final center = Offset.lerp(start, end, t)!;
+    final center = Offset.lerp(start, end, t)! + lurch;
     const box = _length * 1.6;
     return Positioned(
       key: ValueKey(id),
