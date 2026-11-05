@@ -1,0 +1,4 @@
+{
+  "city": "istanbul",
+  "levels": ["level_001.json", "level_002.json", "level_003.json"]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "istanbul_002",
+  "number": 2,
+  "width": 5,
+  "height": 5,
+  "optimalMoves": 5,
+  "tutorialKey": "tutorialSwitch",
+  "cells": [
+    {"x": 0, "y": 2, "type": "depot", "ports": "E"},
+    {"x": 1, "y": 2, "type": "straight", "ports": "WE"},
+    {"x": 2, "y": 2, "type": "switch", "common": "W", "branches": "ES", "selected": "b"},
+    {"x": 3, "y": 2, "type": "straight", "ports": "WE"},
+    {"x": 4, "y": 2, "type": "station", "ports": "W", "color": "red"},
+    {"x": 2, "y": 3, "type": "straight", "ports": "NS"},
+    {"x": 2, "y": 4, "type": "station", "ports": "N", "color": "blue"}
+  ],
+  "trains": [{"id": "r1", "color": "red", "x": 0, "y": 2}]
+}
