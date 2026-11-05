@@ -1,5 +1,34 @@
 # PROGRESS
 
+## Genel durum — 06.11.2026 sabahı
+
+| Parça | Durum |
+|---|---|
+| Oyun motoru (pulse, çarpışma, çözücü, doğrulayıcı, kayıt, geri al) | tamam, testli |
+| Görünüm (UI kiti, 5 şehir teması, pasaport, ekran akışı, animasyon) | tamam |
+| **Bölümler** | **30/30** — her biri çözücü + replay + iki ekranda 44 pt testi |
+| Ayarlar (titreşim, hareketi azalt, dil) | tamam |
+| Hayalet tren önizlemesi | tamam |
+| Küçük ekran (320×568) düzeni | tamam |
+| Ses efektleri, High Contrast | yok |
+| Gerçek cihaz / Android / insan oyuncu testi | yapılmadı |
+| Mağaza hazırlığı (logo hakları, bundle id, görseller) | yapılmadı |
+
+Kabaca **%75**: içerik ve ürün tamam; kalan ses, oyuncu testi (zorluk eğrisi) ve yayın hazırlığı.
+
+## 2026-11-06 (4) — gece çalışmasının devamı (`main`)
+
+- **Bölümler:** Bakü, Paris, Londra, Moskova 6'şar bölüm → 30/30. Paris'te sinyal, Londra'da halka, Moskova'da çift halka ve 4 tren.
+- **İnceleme küçük bulguları:** kayıt yükleme kayıt-bazlı tolerans · split-flap yalnız değişen karakter · undo/restart sonrası vagon yönü · ortam döngüsü kesintisiz + statik katman ayrı (performans) · buton takılması · PageController dispose · 200+ satır ekranlar bölündü · Bakü bilet testi gerçekten dokunuyor · kayıt yazma hatası oyunu bozmaz · HUD "TREN" etiketi · pasaport tarihi dile göre.
+- **Yeni:** hayalet tren önizlemesi (bir pulse ileri) · Ayarlar ekranı (sinyal anahtarları, dil anında değişir, tüm haptikler tek kapıdan) · 320×568 kompakt düzen.
+- `scripts/check.sh` → No issues found! · **+324 All tests passed**. `dart run tool/solve_levels.dart` → 30 bölüm issues=0.
+- Simülatör: Paris (PAR-01/02), sinyal direği, hayalet halka, ayarlar ve anlık dil değişimi doğrulandı; ekran görüntüleri `docs/images/v2-ux/11-…`, `12-…`.
+- Londra/Moskova bölümleri ve PAR-03…06 elle oynanmadı (çözücü + replay testleri kapsar). **İnsan oyuncu testi gerekli.**
+
+**Sıradaki küçük görev:** bölümleri birkaç kişiye oynatıp zorluk eğrisini ayarlamak; ses efektleri; mağaza hazırlığı.
+
+---
+
 ## 2026-11-06 (3) — branch `main`
 
 **Bağlam:** Kullanıcı tek branch (`main`) ve her commit'te doğrudan push istedi (D-028). Gece boyu kesintisiz çalışma.
