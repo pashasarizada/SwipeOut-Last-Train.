@@ -95,7 +95,7 @@ Kurallar:
 ## 8. Uygulama kabuğu
 - Görünen ad: **Last Train** (iOS `CFBundleDisplayName`, Android `android:label`).
 - Açılış ekranı (native launch): koyu zemin `#0B1020` + amblem; beyaz flaş yok.
-- Uygulama ikonu: kendi amblemimiz (tren burnu + far), Flutter logosu kalmaz.
+- Uygulama ikonu ve logo: `assets/branding/logo_source.png` (gece silüeti, turkuaz vagon, amber farlar, raylarda makas motifi); ikon çerçeve içinden kırpılır, açılış ve oyun içi logo yuvarlak hâliyle kullanılır. Üretim: `scripts/build_branding.sh`. Flutter logosu kalmaz.
 - Durum çubuğu açık renk ikon; tam ekran his, sistem çubukları temaya uyar.
 
 ## 9. Ses ve haptik

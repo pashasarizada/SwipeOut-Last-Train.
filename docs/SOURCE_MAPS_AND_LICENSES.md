@@ -39,3 +39,8 @@ Ses ve görsel asset'ler: yalnız kendi üretimimiz veya lisansı belgelenmiş k
 - Şehir desenleri, silüetler, tren sprite'ları, damgalar ve ikonlar **bizim çizimimiz** (vektör / `CustomPainter`).
 - Fotoğraf yalnız kendi çekimimiz veya CC0/CC-BY lisanslıysa; her biri bu tabloya kaynak + lisans + atıf ile eklenir.
 - Yasak: EGO / Bakı Metropoliteni / RATP / TfL (roundel, "UNDERGROUND", Johnston fontu) / Moskova Metrosu "M" logoları; resmî hat renk düzenleri; resmî anons kayıtları; Eyfel Kulesi'nin gece ışık gösterisi (telifli).
+
+## Marka görselleri
+| Dosya | Kaynak | Not |
+|---|---|---|
+| `assets/branding/logo_source.png` | Proje sahibi tarafından sağlandı (05.11.2026) | Uygulama ikonu, açılış ve oyun içi logo bundan üretilir (`scripts/build_branding.sh`). Ticari kullanım hakkının (ör. üretildiği aracın koşulları) yayın öncesi teyit edilmesi gerekir. |
