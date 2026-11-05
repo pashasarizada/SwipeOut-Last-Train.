@@ -36,6 +36,9 @@
 - [ ] Ayarlar: ses, titreşim, Reduced Motion, High Contrast, dil (M).
 - [ ] Sonraki pulse "hayalet tren" önizlemesi (S).
 
+## P1 — Küçük ekran (320×568) kompakt oyun düzeni
+- [ ] Tahta 320×568'de ~180 pt kalıyor; Geri Al/Baştan'ı ikonlu tek satıra al, ipuçlarını tek satıra indir; hedef: tüm bölümler 320×568'de 44 pt (D-029) (M).
+
 ## P1 — V2-UX son inceleme küçük bulguları (ertelendi)
 - [ ] SplitFlapText değişmeyen karakteri çevirmesin (S).
 - [ ] Kayıt yükleme kayıt-bazlı tolerans; `getString` try içinde (S).

@@ -8,14 +8,14 @@
   "parPulses": 4,
   "maxChangesPerPulse": 1,
   "nodes": [
-    {"id": "A", "kind": "depot", "x": 0.06, "y": 0.30},
+    {"id": "A", "kind": "depot", "x": 0.04, "y": 0.40},
     {"id": "P", "kind": "switch", "x": 0.24, "y": 0.30},
     {"id": "Q", "kind": "track", "x": 0.50, "y": 0.10},
     {"id": "X", "kind": "switch", "x": 0.42, "y": 0.50},
     {"id": "E", "kind": "track", "x": 0.24, "y": 0.78},
     {"id": "D", "kind": "depot", "x": 0.06, "y": 0.90},
     {"id": "Y", "kind": "switch", "x": 0.62, "y": 0.50},
-    {"id": "W", "kind": "switch", "x": 0.78, "y": 0.30},
+    {"id": "W", "kind": "switch", "x": 0.74, "y": 0.30},
     {"id": "R", "kind": "goal", "x": 0.94, "y": 0.30},
     {"id": "B", "kind": "goal", "x": 0.86, "y": 0.80}
   ],

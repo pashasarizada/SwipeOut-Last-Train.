@@ -229,18 +229,29 @@ class _PulseGameScreenState extends State<PulseGameScreen> {
                 ),
               ),
             ),
-          SizedBox(
-            height: 44,
-            child: Center(
-              child: _message == null
-                  ? null
-                  : PlatformAnnouncement(
-                      message: _message!,
-                      serial: _messageSerial,
+          Expanded(
+            child: Stack(
+              children: [
+                Positioned.fill(child: BoardView(controller: _controller)),
+                // The announcement floats over the board's top edge so the
+                // board keeps that space; it never blocks a tap.
+                if (_message case final message?)
+                  Positioned(
+                    top: 4,
+                    left: 0,
+                    right: 0,
+                    child: IgnorePointer(
+                      child: Center(
+                        child: PlatformAnnouncement(
+                          message: message,
+                          serial: _messageSerial,
+                        ),
+                      ),
                     ),
+                  ),
+              ],
             ),
           ),
-          Expanded(child: BoardView(controller: _controller)),
           PulseControls(controller: _controller),
         ],
       ),

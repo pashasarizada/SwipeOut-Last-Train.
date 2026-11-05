@@ -181,4 +181,10 @@ void main() {
     expect(used.toSet(), {'G', 'H'});
     expect(level.parPulses, 7);
   });
+
+  test('PAR-04: three trains, a control every single minute', () {
+    final level = levels.firstWhere((l) => l.id == 'PAR-04');
+    expect(level.trains, hasLength(3));
+    expect(level.solution.every((a) => a != null), isTrue);
+  });
 }
