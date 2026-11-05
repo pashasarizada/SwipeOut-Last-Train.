@@ -1,25 +1,42 @@
-# Seviye Formatı (LEVEL_FORMAT)
+# Seviye Formatı (V2 — NIGHT PULSE)
 
-Seviyeler `assets/levels/level_NNN.json` dosyalarında tutulur; sırası `assets/levels/index.json` ile belirlenir. Çözümleme `LevelJsonCodec`, kural denetimi `LevelValidator` ile yapılır.
+Her seviye tek dosya: `assets/levels/<ID>.json` (örn. `ANK-01.json`). Sıra ve şehir bilgisi `assets/levels/index.json`'da. Çözümleme `LevelJsonCodec` (yalnız yapı), kural denetimi `LevelValidator` (kurallar + çözücü + kayıtlı çözüm replay'i).
 
-## Örnek (Bölüm 1)
+## Örnek — ANK-01 "İlk Sefer"
 
 ```json
 {
-  "id": "istanbul_001",
+  "id": "ANK-01",
+  "city": "ankara",
   "number": 1,
-  "width": 5,
-  "height": 5,
-  "optimalMoves": 4,
-  "tutorialKey": "tutorialSelectSwipe",
-  "cells": [
-    {"x": 0, "y": 2, "type": "depot", "ports": "E"},
-    {"x": 1, "y": 2, "type": "straight", "ports": "WE"},
-    {"x": 2, "y": 2, "type": "straight", "ports": "WE"},
-    {"x": 3, "y": 2, "type": "straight", "ports": "WE"},
-    {"x": 4, "y": 2, "type": "station", "ports": "W", "color": "red"}
+  "tutorial": true,
+  "title": {"tr": "İlk Sefer", "en": "First Departure"},
+  "maxPulses": 5,
+  "parPulses": 2,
+  "maxChangesPerPulse": 1,
+  "nodes": [
+    {"id": "A", "kind": "depot", "x": 0.13, "y": 0.50},
+    {"id": "B", "kind": "switch", "x": 0.48, "y": 0.50},
+    {"id": "C", "kind": "goal", "x": 0.84, "y": 0.25},
+    {"id": "D", "kind": "terminal", "x": 0.84, "y": 0.76}
   ],
-  "trains": [{"id": "r1", "color": "red", "x": 0, "y": 2}]
+  "edges": [
+    {"id": "AB", "a": "A", "b": "B"},
+    {"id": "BC", "a": "B", "b": "C"},
+    {"id": "BD", "a": "B", "b": "D"}
+  ],
+  "switches": [
+    {"nodeId": "B", "trunkEdge": "AB", "branchAEdge": "BC", "branchBEdge": "BD", "selectedBranch": "B"}
+  ],
+  "signals": [],
+  "trains": [
+    {"id": "red_1", "startNode": "A", "goalNode": "C", "symbol": "circle", "style": "coral"}
+  ],
+  "tutorialSteps": [
+    {"tr": "Trenler her dakikada bir durak ilerler.", "en": "Trains move one stop each minute."},
+    {"tr": "Makası doğru raya çevir.", "en": "Switch to the correct track."}
+  ],
+  "solution": ["wait", "switch:B"]
 }
 ```
 
@@ -27,47 +44,48 @@ Seviyeler `assets/levels/level_NNN.json` dosyalarında tutulur; sırası `assets
 
 | Alan | Tip | Açıklama |
 |---|---|---|
-| `id` | string | Benzersiz kimlik, örn. `istanbul_001` |
-| `number` | int | Bölüm sırası (1'den başlar, ardışık) |
-| `width`, `height` | int | 5–7 |
-| `optimalMoves` | int | Çözücünün bulduğu en kısa çözüm uzunluğu ile **aynı** olmalı |
-| `tutorialKey` | string? | ARB anahtarı (`tutorialSelectSwipe`, `tutorialSwitch`, `tutorialOrder`) |
-| `cells` | liste | Yalnız boş olmayan hücreler; listelenmeyen hücre `empty` |
-| `trains` | liste | `id`, `color`, `x`, `y` |
+| `id` | string | `ANK-01` … `MOS-06` |
+| `city` | `ankara` \| `baku` \| `paris` \| `london` \| `moscow` | |
+| `number` | int | Şehir içi sıra (1–6) |
+| `tutorial` | bool? | `true` → yıldız gösterilmez (varsayılan `false`) |
+| `title` | `{tr, en}` | |
+| `maxPulses` | int | Bu sayıda pulse içinde çözülmeli |
+| `parPulses` | int | 3 ★ eşiği; `1 ≤ par ≤ max`, kayıtlı çözüm uzunluğuna eşit, çözücü optimumundan büyük olamaz |
+| `maxChangesPerPulse` | int | Şimdilik hep 1 (okunur ama motor sabit 1 uygular) |
+| `nodes` | liste | `id`, `kind`, `x`, `y` (0.0–1.0), `label?` |
+| `edges` | liste | `id`, `a`, `b` — her kenar 1 pulse |
+| `switches` | liste? | `nodeId`, `trunkEdge`, `branchAEdge`, `branchBEdge`, `selectedBranch` (`A`/`B`, varsayılan `A`) |
+| `signals` | liste? | `nodeId`, `initial` (`red`/`green`, varsayılan `red`) |
+| `trains` | liste | `id`, `startNode` (depot), `goalNode` (goal), `symbol` (`circle`/`triangle`/`square`/`diamond`), `style` (`coral`/`azure`/`lime`/`amber`) |
+| `tutorialSteps` | liste? | `{tr, en}`, en fazla iki satır |
+| `solution` | liste | Pulse başına bir adım: `wait` · `switch:<nodeId>` · `signal:<nodeId>` |
 
-**Koordinat:** `x` sağa, `y` aşağı artar; (0,0) sol üst. **Yönler:** `N` (y−1), `E` (x+1), `S` (y+1), `W` (x−1). **Renkler:** `red`, `blue`, `green`, `amber` (semboller R, B, G, A).
+## Düğüm türleri ve hareket
 
-## Hücre tipleri
-
-| `type` | Ek alanlar | Kural |
+| `kind` | Kenar sayısı | Davranış |
 |---|---|---|
-| `straight` | `ports` | Tam iki karşılıklı yön (`WE`, `NS`) |
-| `corner` | `ports` | Tam iki bitişik yön (`NE`, `ES`, `SW`, `WN`) |
-| `depot` | `ports` | 1–2 yön; trenlerin başlangıç hattı |
-| `station` | `ports`, `color` | ≥1 yön; aynı renkteki tren girince teslim edilir |
-| `switch` | `common`, `branches`, `selected?` | `common` + iki dal; üç yön birbirinden farklı. `branches: "ES"` → dal `a` = E, dal `b` = S. `selected` `a`/`b`, varsayılan `a`. Aktif portlar = `common` + seçili dal |
-| `blocked` | — | Geçilemez |
+| `depot` | 1 | Tren başlangıcı; tek kenardan çıkar |
+| `track` | 2 | Gelinen kenar dışındaki kenardan çıkar |
+| `switch` | 3 | trunk → seçili kol; seçili kol → trunk; pasif koldan gelen bekler |
+| `signal` | 2 | Kırmızıysa bekletir; yeşilse `track` gibi |
+| `goal` | 1 | Kendi treni girerse teslim; başka tren girerse **yanlış hat** |
+| `terminal` | 1 | Çıkmaz; tren orada kalır |
 
-## Doğrulama kuralları (`LevelValidator`)
+Trenler geri dönmez. Çarpışma (aynı düğüm), kafa kafaya geçiş, duran trene giriş ve yanlış hedef pulse'ı iptal eder (durum değişmez).
 
-Yapısal kurallar (biri bile bozuksa çözücü çalıştırılmaz):
-- `invalidSize` — genişlik/yükseklik 5–7 dışında
-- `noTrains` — hiç tren yok
-- `missingStation` — bir trenin rengine ait istasyon yok
-- `duplicateTrainPosition` — iki tren aynı karede
-- `trainOutOfBounds` — tren tahta dışında
-- `trainNotOnTrack` — tren ray/depo/makas dışında (istasyon, boş, engel)
-- `invalidTrackShape` — tip ile portlar uyuşmuyor
-- `invalidSwitch` — makasın yönleri tekrar ediyor
-- `portMismatch` — bir port tahta dışına ya da karşı portu olmayan komşuya bakıyor (makaslar için üç yönün hepsi sayılır)
+## Doğrulama (`LevelValidator`)
 
-Çözücü kuralları:
-- `unsolvable` — BFS çözüm bulamadı (veya durum sınırına ulaştı)
-- `optimalMismatch` — `optimalMoves` çözücünün bulduğu uzunlukla aynı değil
+**Format hataları** (`LevelFormatException(levelId, message)`): eksik alan, yanlış tip, bilinmeyen `kind`/şehir/sembol/stil/sinyal, tekrar eden düğüm veya kenar id'si, geçersiz `selectedBranch`, bilinmeyen çözüm adımı.
 
-Bozuk JSON (eksik alan, yanlış tip, bilinmeyen tip/yön/renk) `LevelFormatException(levelId, message)` fırlatır; `id` okunamazsa `levelId` = `?`.
+**Yapısal kurallar** (biri bile varsa çözücü çalışmaz):
+`duplicateId` (tren) · `unknownReference` · `positionOutOfRange` · `ambiguousTrack` (track/signal ≠ 2 kenar) · `badDegree` (depot/goal/terminal ≠ 1, switch ≠ 3) · `invalidSwitch` (switch kaydı yok / düğüm switch değil / 3 farklı ve bağlı kenar değil) · `signalOnNonSignalNode` · `trainNotOnDepot` · `goalNotGoalNode` · `sharedGoalOrStart` · `parExceedsMax`
+
+**Çözüm kuralları:**
+- `solutionFails` — kayıtlı çözüm replay'de başarısız bir pulse içeriyor, çözmüyor veya uzunluğu `parPulses` değil.
+- `parAboveOptimum` — çözücü daha kısa çözüm buldu; `parPulses` düşürülmeli.
+- `unsolvable` — çözücü `maxPulses` içinde çözüm yok dedi. Çözücü durum sınırına takılırsa hata **değildir**; kayıtlı çözüm kanıttır (D-017).
 
 ## Yeni seviye eklemek
-1. `assets/levels/level_NNN.json` oluştur, `index.json`'a ekle.
-2. `dart run tool/solve_levels.dart` → optimumu ve çözümü yazar; `issues=0` değilse çıkış kodu 1.
-3. `optimalMoves`'u çıktıya göre ayarla, `scripts/check.sh` çalıştır.
+1. `assets/levels/<ID>.json` yaz, `index.json`'da şehrin listesine ekle.
+2. `dart run tool/solve_levels.dart` → optimum ve sorunlar; sorun varsa çıkış kodu 1.
+3. `scripts/check.sh`.

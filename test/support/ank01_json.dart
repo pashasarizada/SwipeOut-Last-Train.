@@ -1,0 +1,49 @@
+/// The design doc §8 sample, plus the V2 plan's extra fields.
+Map<String, Object?> ank01Json() => {
+  'id': 'ANK-01',
+  'city': 'ankara',
+  'number': 1,
+  'tutorial': true,
+  'title': {'tr': 'İlk Sefer', 'en': 'First Departure'},
+  'maxPulses': 5,
+  'parPulses': 2,
+  'maxChangesPerPulse': 1,
+  'nodes': [
+    {'id': 'A', 'kind': 'depot', 'x': 0.13, 'y': 0.50},
+    {'id': 'B', 'kind': 'switch', 'x': 0.48, 'y': 0.50},
+    {'id': 'C', 'kind': 'goal', 'x': 0.84, 'y': 0.25},
+    {'id': 'D', 'kind': 'terminal', 'x': 0.84, 'y': 0.76},
+  ],
+  'edges': [
+    {'id': 'AB', 'a': 'A', 'b': 'B'},
+    {'id': 'BC', 'a': 'B', 'b': 'C'},
+    {'id': 'BD', 'a': 'B', 'b': 'D'},
+  ],
+  'switches': [
+    {
+      'nodeId': 'B',
+      'trunkEdge': 'AB',
+      'branchAEdge': 'BC',
+      'branchBEdge': 'BD',
+      'selectedBranch': 'B',
+    },
+  ],
+  'signals': <Object?>[],
+  'trains': [
+    {
+      'id': 'red_1',
+      'startNode': 'A',
+      'goalNode': 'C',
+      'symbol': 'circle',
+      'style': 'coral',
+    },
+  ],
+  'tutorialSteps': [
+    {
+      'tr': 'Trenler her dakikada bir durak ilerler.',
+      'en': 'Trains move one stop each minute.',
+    },
+    {'tr': 'Makası doğru raya çevir.', 'en': 'Switch to the correct track.'},
+  ],
+  'solution': ['wait', 'switch:B'],
+};
