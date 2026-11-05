@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
 
 import '../../domain/city.dart';
+import '../city/city_backdrop.dart';
 import '../city/city_theme.dart';
 
 /// Every player-facing screen sits on its city's platform: themed
-/// background, safe area, optional header. City art is layered in by
-/// `CityBackdrop` (V2-UX Task 5).
+/// background with its living artwork, safe area, optional header.
 final class GameScaffold extends StatelessWidget {
   const GameScaffold({
     super.key,
     required this.city,
     required this.body,
     this.header,
+    this.backdrop = true,
+    this.backdropOpacity = 1,
   });
 
   final CityId city;
   final Widget body;
   final Widget? header;
+
+  /// Draw the living city artwork behind the screen.
+  final bool backdrop;
+  final double backdropOpacity;
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +40,24 @@ final class GameScaffold extends StatelessWidget {
             ],
           ),
         ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              if (header case final header?) header,
-              Expanded(child: body),
-            ],
-          ),
+        child: Stack(
+          children: [
+            if (backdrop)
+              Positioned.fill(
+                child: Opacity(
+                  opacity: backdropOpacity,
+                  child: CityBackdrop(city: city),
+                ),
+              ),
+            SafeArea(
+              child: Column(
+                children: [
+                  if (header case final header?) header,
+                  Expanded(child: body),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

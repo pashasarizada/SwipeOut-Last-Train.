@@ -47,6 +47,13 @@ class _SplitFlapTextState extends State<SplitFlapText>
     _controller.forward(from: 0);
   }
 
+  /// Long board lines shrink instead of overflowing narrow screens.
+  static Widget _fit(Widget child) => FittedBox(
+    fit: BoxFit.scaleDown,
+    alignment: AlignmentDirectional.centerStart,
+    child: child,
+  );
+
   @override
   void dispose() {
     _controller.dispose();
@@ -59,7 +66,7 @@ class _SplitFlapTextState extends State<SplitFlapText>
       animation: _controller,
       builder: (context, _) {
         if (_controller.value >= 1) {
-          return Text(widget.text, style: widget.style);
+          return _fit(Text(widget.text, style: widget.style, maxLines: 1));
         }
         final total = _controller.duration?.inMicroseconds ?? 1;
         final elapsed = _controller.value * total;
@@ -79,7 +86,7 @@ class _SplitFlapTextState extends State<SplitFlapText>
             ),
           );
         }
-        return Row(mainAxisSize: MainAxisSize.min, children: chars);
+        return _fit(Row(mainAxisSize: MainAxisSize.min, children: chars));
       },
     );
   }

@@ -60,7 +60,7 @@ final class ControlTicket extends StatelessWidget {
                   behavior: HitTestBehavior.opaque,
                   onTap: onTear,
                   child: const SizedBox.square(
-                    dimension: 44,
+                    dimension: 48,
                     child: Icon(
                       Icons.close,
                       size: 18,

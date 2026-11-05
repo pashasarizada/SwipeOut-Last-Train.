@@ -34,7 +34,8 @@ void main() {
       SwipeOutApp(home: PassportScreen(passport: _passport())),
     );
     await tester.pumpAndSettle();
-    expect(find.text('METRO PASSPORT'), findsOneWidget);
+    final title = tester.widget<Text>(find.text('METRO PASSPORT'));
+    expect(title.textAlign, TextAlign.center);
 
     await tester.drag(find.byType(PageView), const Offset(-400, 0));
     await tester.pumpAndSettle();

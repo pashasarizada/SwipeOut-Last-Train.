@@ -134,12 +134,6 @@ abstract class AppLocalizations {
   /// **'Fictional metro puzzles inspired by real cities.'**
   String get fictionalNotice;
 
-  /// No description provided for @comingSoon.
-  ///
-  /// In en, this message translates to:
-  /// **'Coming soon'**
-  String get comingSoon;
-
   /// No description provided for @nightmareNetwork.
   ///
   /// In en, this message translates to:
@@ -209,13 +203,13 @@ abstract class AppLocalizations {
   /// No description provided for @undo.
   ///
   /// In en, this message translates to:
-  /// **'Undo'**
+  /// **'UNDO'**
   String get undo;
 
   /// No description provided for @restart.
   ///
   /// In en, this message translates to:
-  /// **'Restart'**
+  /// **'RESTART'**
   String get restart;
 
   /// No description provided for @pendingSwitch.
@@ -245,31 +239,31 @@ abstract class AppLocalizations {
   /// No description provided for @levelLost.
   ///
   /// In en, this message translates to:
-  /// **'No minutes left'**
+  /// **'NO MINUTES LEFT'**
   String get levelLost;
 
   /// No description provided for @levelJammed.
   ///
   /// In en, this message translates to:
-  /// **'The line is jammed'**
+  /// **'THE LINE IS JAMMED'**
   String get levelJammed;
 
   /// No description provided for @playAgain.
   ///
   /// In en, this message translates to:
-  /// **'Play again'**
+  /// **'PLAY AGAIN'**
   String get playAgain;
 
   /// No description provided for @next.
   ///
   /// In en, this message translates to:
-  /// **'Next'**
+  /// **'NEXT'**
   String get next;
 
   /// No description provided for @backToCity.
   ///
   /// In en, this message translates to:
-  /// **'Back to city'**
+  /// **'BACK TO CITY'**
   String get backToCity;
 
   /// No description provided for @failCollision.
@@ -367,6 +361,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Добро пожаловать!'**
   String get greetingMoscow;
+
+  /// No description provided for @board.
+  ///
+  /// In en, this message translates to:
+  /// **'BOARD'**
+  String get board;
+
+  /// No description provided for @openPassport.
+  ///
+  /// In en, this message translates to:
+  /// **'OPEN PASSPORT'**
+  String get openPassport;
+
+  /// No description provided for @lineUnderConstruction.
+  ///
+  /// In en, this message translates to:
+  /// **'LINE UNDER CONSTRUCTION'**
+  String get lineUnderConstruction;
+
+  /// No description provided for @homeBoardLine.
+  ///
+  /// In en, this message translates to:
+  /// **'LAST SERVICE 23:59'**
+  String get homeBoardLine;
+
+  /// No description provided for @parLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'PAR {par}'**
+  String parLabel(int par);
+
+  /// No description provided for @bestLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'BEST {pulses}'**
+  String bestLabel(int pulses);
 }
 
 class _AppLocalizationsDelegate

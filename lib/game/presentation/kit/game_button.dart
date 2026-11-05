@@ -61,52 +61,58 @@ class _GameButtonState extends State<GameButton> {
     final color = widget.color;
     final base = Color.lerp(color, Colors.black, 0.55)!;
     final radius = BorderRadius.circular(18);
-    final face = AnimatedContainer(
-      key: GameButton.faceKey,
+    // The decoration (and its shadow) never animates: lerping a shadow list
+    // with an overshooting curve produces a negative blur and an assertion.
+    // Only the position springs.
+    final face = TweenAnimationBuilder<double>(
+      tween: Tween(end: _down ? GameButton._depth : 0),
       duration: Duration(milliseconds: _down ? 80 : 160),
       curve: _down ? Curves.easeOut : Curves.easeOutBack,
-      transform: Matrix4.translationValues(0, _down ? GameButton._depth : 0, 0),
-      height: widget.size.height,
-      padding: const EdgeInsets.symmetric(horizontal: 22),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        borderRadius: radius,
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [Color.lerp(color, Colors.white, 0.18)!, color],
-        ),
-        border: Border.all(
-          color: Color.lerp(color, Colors.white, 0.45)!,
-          width: 1.5,
-        ),
-        boxShadow: [
-          if (!_down)
-            BoxShadow(color: color.withValues(alpha: 0.35), blurRadius: 18),
-        ],
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (widget.icon case final icon?) ...[
-            icon,
-            const SizedBox(width: 10),
+      builder: (context, dy, child) =>
+          Transform.translate(offset: Offset(0, dy), child: child),
+      child: Container(
+        key: GameButton.faceKey,
+        height: widget.size.height,
+        padding: const EdgeInsets.symmetric(horizontal: 22),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: radius,
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color.lerp(color, Colors.white, 0.18)!, color],
+          ),
+          border: Border.all(
+            color: Color.lerp(color, Colors.white, 0.45)!,
+            width: 1.5,
+          ),
+          boxShadow: [
+            BoxShadow(color: color.withValues(alpha: 0.30), blurRadius: 16),
           ],
-          Flexible(
-            child: Text(
-              widget.label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontFamily: GameFonts.display,
-                fontSize: widget.size.fontSize,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 1.2,
-                color: AppColors.background,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (widget.icon case final icon?) ...[
+              icon,
+              const SizedBox(width: 10),
+            ],
+            Flexible(
+              child: Text(
+                widget.label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontFamily: GameFonts.display,
+                  fontSize: widget.size.fontSize,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 1.2,
+                  color: AppColors.background,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
     return Semantics(

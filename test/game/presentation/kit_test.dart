@@ -61,6 +61,30 @@ void main() {
       expect(haptics, contains('HapticFeedbackType.selectionClick'));
     });
 
+    testWidgets('the shadow never changes while pressing (no negative blur)', (
+      tester,
+    ) async {
+      await _pump(tester, GameButton(label: 'GO', onPressed: () {}));
+      List<BoxShadow>? shadows() =>
+          (tester.widget<Container>(find.byKey(GameButton.faceKey)).decoration!
+                  as BoxDecoration)
+              .boxShadow;
+      final rest = shadows();
+
+      final gesture = await tester.startGesture(
+        tester.getCenter(find.text('GO')),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 40));
+      expect(shadows(), rest);
+      await gesture.up();
+      for (var i = 0; i < 12; i++) {
+        await tester.pump(const Duration(milliseconds: 16));
+        expect(tester.takeException(), isNull);
+      }
+      expect(shadows(), rest);
+    });
+
     testWidgets('a disabled button ignores taps', (tester) async {
       await _pump(tester, const GameButton(label: 'X'));
       await tester.tap(find.byType(GameButton), warnIfMissed: false);
@@ -205,7 +229,11 @@ void main() {
   testWidgets('GameScaffold paints the city background', (tester) async {
     await tester.pumpWidget(
       const MaterialApp(
-        home: GameScaffold(city: CityId.baku, body: Text('peron')),
+        home: GameScaffold(
+          city: CityId.baku,
+          backdrop: false,
+          body: Text('peron'),
+        ),
       ),
     );
     final scaffold = tester.widget<Scaffold>(find.byType(Scaffold));

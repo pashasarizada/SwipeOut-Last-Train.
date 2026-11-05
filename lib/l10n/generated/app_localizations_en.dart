@@ -28,9 +28,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Fictional metro puzzles inspired by real cities.';
 
   @override
-  String get comingSoon => 'Coming soon';
-
-  @override
   String get nightmareNetwork => 'NIGHTMARE NETWORK';
 
   @override
@@ -70,10 +67,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cancel => 'Cancel';
 
   @override
-  String get undo => 'Undo';
+  String get undo => 'UNDO';
 
   @override
-  String get restart => 'Restart';
+  String get restart => 'RESTART';
 
   @override
   String pendingSwitch(String node) {
@@ -94,19 +91,19 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get levelLost => 'No minutes left';
+  String get levelLost => 'NO MINUTES LEFT';
 
   @override
-  String get levelJammed => 'The line is jammed';
+  String get levelJammed => 'THE LINE IS JAMMED';
 
   @override
-  String get playAgain => 'Play again';
+  String get playAgain => 'PLAY AGAIN';
 
   @override
-  String get next => 'Next';
+  String get next => 'NEXT';
 
   @override
-  String get backToCity => 'Back to city';
+  String get backToCity => 'BACK TO CITY';
 
   @override
   String get failCollision => 'Two trains met at the same stop.';
@@ -160,4 +157,26 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get greetingMoscow => 'Добро пожаловать!';
+
+  @override
+  String get board => 'BOARD';
+
+  @override
+  String get openPassport => 'OPEN PASSPORT';
+
+  @override
+  String get lineUnderConstruction => 'LINE UNDER CONSTRUCTION';
+
+  @override
+  String get homeBoardLine => 'LAST SERVICE 23:59';
+
+  @override
+  String parLabel(int par) {
+    return 'PAR $par';
+  }
+
+  @override
+  String bestLabel(int pulses) {
+    return 'BEST $pulses';
+  }
 }

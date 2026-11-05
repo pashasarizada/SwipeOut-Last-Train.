@@ -23,6 +23,14 @@ extension GameTexts on AppLocalizations {
     CityId.moscow => greetingMoscow,
   };
 
+  /// The last service leaves at 23:50; every pulse is one minute.
+  static String clock(int pulses) {
+    final minutes = 23 * 60 + 50 + pulses;
+    final h = (minutes ~/ 60) % 24;
+    final m = minutes % 60;
+    return '${h.toString().padLeft(2, '0')}:${m.toString().padLeft(2, '0')}';
+  }
+
   /// `ANKARA 01`.
   String levelCode(LevelDefinition level) =>
       '${cityName(level.city)} ${level.number.toString().padLeft(2, '0')}';

@@ -7,13 +7,13 @@ import '../../support/graph_builders.dart';
 
 void main() {
   test('the unit square maps inside the padding of a square board', () {
-    final layout = BoardLayout(size: const Size(300, 300));
+    final layout = BoardLayout(size: const Size(300, 300), padding: 32);
     expect(layout.toScreen(const NormPoint(0, 0)), const Offset(32, 32));
     expect(layout.toScreen(const NormPoint(1, 1)), const Offset(268, 268));
   });
 
   test('a wide board stays square and centred', () {
-    final layout = BoardLayout(size: const Size(400, 300));
+    final layout = BoardLayout(size: const Size(400, 300), padding: 32);
     expect(layout.toScreen(const NormPoint(0, 0)), const Offset(82, 32));
     expect(layout.toScreen(const NormPoint(1, 1)), const Offset(318, 268));
   });

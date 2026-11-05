@@ -6,7 +6,6 @@
   "continueGame": "CONTINUE",
   "chooseCity": "CHOOSE CITY",
   "fictionalNotice": "Fictional metro puzzles inspired by real cities.",
-  "comingSoon": "Coming soon",
   "nightmareNetwork": "NIGHTMARE NETWORK",
   "cityAnkara": "ANKARA",
   "cityBaku": "BAKU",
@@ -45,8 +44,8 @@
   },
   "advance": "▶  ADVANCE 1 MINUTE",
   "cancel": "Cancel",
-  "undo": "Undo",
-  "restart": "Restart",
+  "undo": "UNDO",
+  "restart": "RESTART",
   "pendingSwitch": "Switch {node}",
   "@pendingSwitch": {
     "placeholders": {
@@ -72,11 +71,11 @@
       }
     }
   },
-  "levelLost": "No minutes left",
-  "levelJammed": "The line is jammed",
-  "playAgain": "Play again",
-  "next": "Next",
-  "backToCity": "Back to city",
+  "levelLost": "NO MINUTES LEFT",
+  "levelJammed": "THE LINE IS JAMMED",
+  "playAgain": "PLAY AGAIN",
+  "next": "NEXT",
+  "backToCity": "BACK TO CITY",
   "failCollision": "Two trains met at the same stop.",
   "failHeadOn": "Head-on! Two trains on one track.",
   "failBlocked": "A train ran into a waiting one.",
@@ -109,5 +108,25 @@
   "greetingBaku": "Xoş gəlmisən!",
   "greetingParis": "Bienvenue !",
   "greetingLondon": "Welcome aboard!",
-  "greetingMoscow": "Добро пожаловать!"
+  "greetingMoscow": "Добро пожаловать!",
+  "board": "BOARD",
+  "openPassport": "OPEN PASSPORT",
+  "lineUnderConstruction": "LINE UNDER CONSTRUCTION",
+  "homeBoardLine": "LAST SERVICE 23:59",
+  "parLabel": "PAR {par}",
+  "@parLabel": {
+    "placeholders": {
+      "par": {
+        "type": "int"
+      }
+    }
+  },
+  "bestLabel": "BEST {pulses}",
+  "@bestLabel": {
+    "placeholders": {
+      "pulses": {
+        "type": "int"
+      }
+    }
+  }
 }

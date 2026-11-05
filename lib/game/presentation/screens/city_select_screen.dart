@@ -1,140 +1,264 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../../l10n/generated/app_localizations.dart';
-import '../../data/level_repository.dart';
 import '../../domain/city.dart';
-import '../../domain/level_definition.dart';
+import '../../domain/passport.dart';
+import '../city/city_backdrop.dart';
+import '../city/city_theme.dart';
+import '../game/game_scope.dart';
+import '../kit/departure_board.dart';
+import '../kit/game_fonts.dart';
+import '../kit/signal_back_button.dart';
 import '../theme/app_colors.dart';
 import '../widgets/game_texts.dart';
-import 'city_levels_screen.dart';
+import 'city_map_screen.dart';
 
-/// Five city cards, easiest first. Cities without levels are "coming soon".
-final class CitySelectScreen extends StatefulWidget {
-  const CitySelectScreen({super.key, required this.repository});
-
-  final LevelRepository repository;
-
-  @override
-  State<CitySelectScreen> createState() => _CitySelectScreenState();
-}
-
-class _CitySelectScreenState extends State<CitySelectScreen> {
-  late final Future<Map<CityId, List<LevelDefinition>>> _cities = _load();
-
-  Future<Map<CityId, List<LevelDefinition>>> _load() async => {
-    for (final city in CityId.values)
-      city: await widget.repository.loadCity(city),
-  };
+/// City tickets in a carousel, each in its own city's colours and art.
+final class CitySelectScreen extends StatelessWidget {
+  const CitySelectScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(l.chooseCity)),
-      body: FutureBuilder(
-        future: _cities,
-        builder: (context, snapshot) {
-          final cities = snapshot.data;
-          if (snapshot.hasError) {
-            return Center(child: Text('${snapshot.error}'));
-          }
-          if (cities == null) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          return ListView(
-            padding: const EdgeInsets.all(16),
-            children: [
-              for (final (i, city) in CityId.values.indexed)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: _CityCard(city: city, levels: cities[city]!),
-                ).animate(delay: (70 * i).ms).fadeIn().slideY(begin: 0.15),
-              Text(
-                l.fictionalNotice,
-                textAlign: TextAlign.center,
-                style: const TextStyle(color: AppColors.textSecondary),
+      backgroundColor: AppColors.background,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(4, 4, 12, 8),
+              child: Row(
+                children: [
+                  const SignalBackButton(),
+                  const SizedBox(width: 4),
+                  Expanded(
+                    child: DepartureBoard(
+                      lines: [l.chooseCity, l.fictionalNotice],
+                    ),
+                  ),
+                ],
               ),
-            ],
-          );
-        },
+            ),
+            Expanded(
+              child: PageView(
+                controller: PageController(viewportFraction: 0.84),
+                children: [
+                  for (final city in CityId.values) _CityTicket(city: city),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }
 }
 
-class _CityCard extends StatelessWidget {
-  const _CityCard({required this.city, required this.levels});
+final class _CityTicket extends StatelessWidget {
+  const _CityTicket({required this.city});
 
   final CityId city;
-  final List<LevelDefinition> levels;
-
-  @override
-  Widget build(BuildContext context) {
-    final available = levels.isNotEmpty;
-    return OpenContainer<void>(
-      tappable: available,
-      closedColor: AppColors.surface,
-      openColor: AppColors.background,
-      middleColor: AppColors.surface,
-      closedShape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
-      openBuilder: (_, _) => CityLevelsScreen(city: city, levels: levels),
-      closedBuilder: (context, _) =>
-          _CardFace(city: city, available: available),
-    );
-  }
-}
-
-class _CardFace extends StatelessWidget {
-  const _CardFace({required this.city, required this.available});
-
-  final CityId city;
-  final bool available;
 
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
-    final text = Theme.of(context).textTheme;
-    final muted = available ? AppColors.textPrimary : AppColors.textSecondary;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  l.cityName(city),
-                  style: text.titleLarge?.copyWith(
-                    color: muted,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 2,
+    final store = GameScope.of(context);
+    final theme = CityTheme.of(city);
+    final stamp = store.passport.stampFor(city);
+    final open = store.levelsOf(city).isNotEmpty;
+    return GestureDetector(
+      key: ValueKey('ticket-${city.name}'),
+      behavior: HitTestBehavior.opaque,
+      onTap: open
+          ? () => Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (_) => CityMapScreen(city: city),
+              ),
+            )
+          : null,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+        child: ClipPath(
+          clipper: const _TicketClipper(),
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              CityBackdrop(city: city),
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      theme.background.withValues(alpha: 0.2),
+                      theme.background.withValues(alpha: 0.85),
+                    ],
                   ),
                 ),
-                if (city == CityId.moscow)
-                  Text(
-                    l.nightmareNetwork,
-                    style: text.labelSmall?.copyWith(color: AppColors.danger),
-                  ),
-                if (!available)
-                  Text(
-                    l.comingSoon,
-                    style: text.labelMedium?.copyWith(color: muted),
-                  ),
-              ],
-            ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _SignalLamps(lit: city.difficulty, color: theme.accent),
+                    const Spacer(),
+                    if (city == CityId.moscow)
+                      Text(
+                        l.nightmareNetwork,
+                        style: TextStyle(
+                          color: theme.accent,
+                          letterSpacing: 2,
+                          fontSize: 12,
+                        ),
+                      ),
+                    Text(
+                      l.cityName(city),
+                      style: TextStyle(
+                        fontFamily: GameFonts.display,
+                        fontSize: 36,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 3,
+                        color: open
+                            ? AppColors.textPrimary
+                            : AppColors.textSecondary,
+                      ),
+                    ),
+                    Text(
+                      l.greeting(city),
+                      style: TextStyle(color: theme.accentAlt, fontSize: 15),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      l.cityProgress(stamp.solved, kLevelsPerCity),
+                      style: const TextStyle(
+                        fontFamily: GameFonts.board,
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              if (!open) _UnderConstruction(label: l.lineUnderConstruction),
+            ],
           ),
-          Text(
-            '★' * city.difficulty +
-                '☆' * (CityId.values.length - city.difficulty),
-            style: const TextStyle(color: AppColors.accentAmber, fontSize: 16),
-          ),
-        ],
+        ),
       ),
     );
   }
+}
+
+/// Difficulty as five signal lamps.
+final class _SignalLamps extends StatelessWidget {
+  const _SignalLamps({required this.lit, required this.color});
+
+  final int lit;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) => Row(
+    children: [
+      for (var i = 0; i < CityId.values.length; i++)
+        Container(
+          width: 14,
+          height: 14,
+          margin: const EdgeInsets.only(right: 6),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: i < lit ? color : AppColors.trackInactive,
+            boxShadow: i < lit
+                ? [
+                    BoxShadow(
+                      color: color.withValues(alpha: 0.7),
+                      blurRadius: 8,
+                    ),
+                  ]
+                : null,
+          ),
+        ),
+    ],
+  );
+}
+
+/// Barrier tape across a city that is not open yet (never "for sale").
+final class _UnderConstruction extends StatelessWidget {
+  const _UnderConstruction({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) => Center(
+    child: Transform.rotate(
+      angle: -0.18,
+      child: CustomPaint(
+        painter: const _TapePainter(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+          child: Text(
+            label,
+            style: const TextStyle(
+              fontFamily: GameFonts.board,
+              fontWeight: FontWeight.w600,
+              color: AppColors.background,
+              letterSpacing: 1.5,
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+final class _TapePainter extends CustomPainter {
+  const _TapePainter();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final rect = Rect.fromLTWH(-40, 0, size.width + 80, size.height);
+    canvas.drawRect(rect, Paint()..color = AppColors.accentAmber);
+    final stripe = Paint()
+      ..color = AppColors.background.withValues(alpha: 0.85);
+    for (var x = rect.left; x < rect.right; x += 26) {
+      canvas.drawPath(
+        Path()
+          ..moveTo(x, rect.bottom)
+          ..lineTo(x + 10, rect.bottom)
+          ..lineTo(x + 18, rect.bottom - 6)
+          ..lineTo(x + 8, rect.bottom - 6)
+          ..close(),
+        stripe,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(_TapePainter old) => false;
+}
+
+/// A ticket with punched notches halfway down each side.
+final class _TicketClipper extends CustomClipper<Path> {
+  const _TicketClipper();
+
+  @override
+  Path getClip(Size size) {
+    final body = Path()
+      ..addRRect(
+        RRect.fromRectAndRadius(Offset.zero & size, const Radius.circular(24)),
+      );
+    final notches = Path()
+      ..addOval(
+        Rect.fromCircle(center: Offset(0, size.height * 0.72), radius: 14),
+      )
+      ..addOval(
+        Rect.fromCircle(
+          center: Offset(size.width, size.height * 0.72),
+          radius: 14,
+        ),
+      );
+    return Path.combine(PathOperation.difference, body, notches);
+  }
+
+  @override
+  bool shouldReclip(_TicketClipper old) => false;
 }

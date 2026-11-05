@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../../../l10n/generated/app_localizations.dart';
-import '../board/train_sprite.dart';
+import '../city/city_theme.dart';
 import '../game/pulse_controller.dart';
-import '../theme/app_colors.dart';
+import '../kit/departure_board.dart';
+import '../kit/signal_back_button.dart';
 import 'game_texts.dart';
 
-/// `LAST TRAIN · ANKARA 01`, pulse and delivery counters, controls left.
+/// The platform's departure board: line and level, the clock (23:50 + one
+/// minute per pulse), pulses, delivered trains and the control left.
 final class PulseHud extends StatelessWidget {
   const PulseHud({super.key, required this.controller});
 
@@ -15,7 +17,9 @@ final class PulseHud extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
-    final text = Theme.of(context).textTheme;
+    final language = Localizations.localeOf(context).languageCode;
+    final level = controller.level;
+    final theme = CityTheme.of(level.city);
     return ListenableBuilder(
       listenable: controller,
       builder: (context, _) {
@@ -23,49 +27,22 @@ final class PulseHud extends StatelessWidget {
         final trains = controller.animationStart.trains;
         final delivered = trains.where((t) => t.delivered).length;
         return Padding(
-          padding: const EdgeInsets.fromLTRB(4, 4, 16, 0),
+          padding: const EdgeInsets.fromLTRB(4, 4, 12, 0),
           child: Row(
             children: [
-              const BackButton(),
+              const SignalBackButton(),
+              const SizedBox(width: 4),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${l.brandLastTrain} · ${l.levelCode(controller.level)}',
-                      style: text.labelLarge?.copyWith(
-                        color: AppColors.textSecondary,
-                        letterSpacing: 1.4,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Flexible(
-                          child: Text(
-                            '${l.pulseCounter(controller.pulses, controller.maxPulses)} · ',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: text.titleMedium?.copyWith(
-                              color: AppColors.accentTurquoise,
-                            ),
-                          ),
-                        ),
-                        const TrainGlyph(),
-                        const SizedBox(width: 6),
-                        Text(
-                          l.trainsDelivered(delivered, trains.length),
-                          style: text.titleMedium?.copyWith(
-                            color: AppColors.accentTurquoise,
-                          ),
-                        ),
-                      ],
-                    ),
+                child: DepartureBoard(
+                  color: theme.accentAlt,
+                  lines: [
+                    '${l.levelCode(level)} · ${level.title.of(language)}',
+                    '${GameTexts.clock(controller.pulses)} · '
+                        '${l.pulseCounter(controller.pulses, controller.maxPulses)} · '
+                        '${l.trainsDelivered(delivered, trains.length)}',
+                    l.controlsLeft(controller.pending == null ? 1 : 0),
                   ],
                 ),
-              ),
-              Text(
-                l.controlsLeft(controller.pending == null ? 1 : 0),
-                style: text.labelLarge?.copyWith(color: AppColors.accentAmber),
               ),
             ],
           ),

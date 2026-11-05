@@ -28,9 +28,6 @@ class AppLocalizationsTr extends AppLocalizations {
       'Gerçek şehirlerden esinlenen kurgusal metro bulmacaları.';
 
   @override
-  String get comingSoon => 'Yakında';
-
-  @override
   String get nightmareNetwork => 'NIGHTMARE NETWORK';
 
   @override
@@ -70,10 +67,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get cancel => 'İptal';
 
   @override
-  String get undo => 'Geri Al';
+  String get undo => 'GERİ AL';
 
   @override
-  String get restart => 'Baştan';
+  String get restart => 'BAŞTAN';
 
   @override
   String pendingSwitch(String node) {
@@ -94,19 +91,19 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get levelLost => 'Dakika kalmadı';
+  String get levelLost => 'DAKİKA KALMADI';
 
   @override
-  String get levelJammed => 'Hat kilitlendi';
+  String get levelJammed => 'HAT KİLİTLENDİ';
 
   @override
-  String get playAgain => 'Tekrar Oyna';
+  String get playAgain => 'TEKRAR OYNA';
 
   @override
-  String get next => 'Sonraki';
+  String get next => 'SONRAKİ';
 
   @override
-  String get backToCity => 'Şehre Dön';
+  String get backToCity => 'ŞEHRE DÖN';
 
   @override
   String get failCollision => 'İki tren aynı durakta karşılaştı.';
@@ -160,4 +157,26 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get greetingMoscow => 'Добро пожаловать!';
+
+  @override
+  String get board => 'BİN';
+
+  @override
+  String get openPassport => 'PASAPORTU AÇ';
+
+  @override
+  String get lineUnderConstruction => 'HAT YAPIM AŞAMASINDA';
+
+  @override
+  String get homeBoardLine => 'SON SEFER 23:59';
+
+  @override
+  String parLabel(int par) {
+    return 'PAR $par';
+  }
+
+  @override
+  String bestLabel(int pulses) {
+    return 'EN İYİ $pulses';
+  }
 }

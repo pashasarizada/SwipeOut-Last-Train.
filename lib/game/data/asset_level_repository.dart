@@ -15,9 +15,14 @@ final class AssetLevelRepository implements LevelRepository {
   final AssetBundle bundle;
   final LevelJsonCodec codec;
 
+  /// The index is read once per repository, not once per city.
+  late final Future<LevelIndex> _index = _readJson(
+    LevelIndex.fileName,
+  ).then(LevelIndex.fromJson);
+
   @override
   Future<List<LevelDefinition>> loadCity(CityId city) async {
-    final index = LevelIndex.fromJson(await _readJson(LevelIndex.fileName));
+    final index = await _index;
     return [
       for (final file in index.filesFor(city))
         codec.decode(JsonReader(file).object(await _readJson(file), 'level')),

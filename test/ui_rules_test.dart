@@ -39,38 +39,32 @@ void main() {
             .where((f) => f.path.endsWith('.dart')),
   ];
 
-  test(
-    'player-facing screens use the game kit, never Material widgets',
-    () {
-      for (final file in files) {
-        final code = file.readAsStringSync();
-        for (final name in _forbidden) {
-          expect(
-            code,
-            isNot(contains(name)),
-            reason: '${file.path} uses $name',
-          );
-        }
-      }
-    },
-    skip: 'Enabled in V2-UX Task 8 once the screens are rebuilt',
-  );
-
-  test(
-    'no emoji in player-facing code or translations',
-    () {
-      for (final file in [
-        ...files,
-        File('lib/l10n/app_en.arb'),
-        File('lib/l10n/app_tr.arb'),
-      ]) {
+  test('player-facing screens use the game kit, never Material widgets', () {
+    for (final file in files) {
+      final code = file.readAsStringSync();
+      for (final name in _forbidden) {
+        // Whole names only: SignalBackButton is ours, BackButton is not.
+        final pattern = RegExp(r'\b' + RegExp.escape(name));
         expect(
-          _emoji.hasMatch(file.readAsStringSync()),
+          pattern.hasMatch(code),
           isFalse,
-          reason: file.path,
+          reason: '${file.path} uses $name',
         );
       }
-    },
-    skip: 'Enabled in V2-UX Task 4 when the HUD train emoji is replaced',
-  );
+    }
+  });
+
+  test('no emoji in player-facing code or translations', () {
+    for (final file in [
+      ...files,
+      File('lib/l10n/app_en.arb'),
+      File('lib/l10n/app_tr.arb'),
+    ]) {
+      expect(
+        _emoji.hasMatch(file.readAsStringSync()),
+        isFalse,
+        reason: file.path,
+      );
+    }
+  });
 }

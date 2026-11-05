@@ -101,20 +101,24 @@ final class _Cover extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 28),
-            Text(
-              l.metroPassport,
-              style: TextStyle(
-                fontFamily: GameFonts.display,
-                fontSize: 26,
-                fontWeight: FontWeight.w800,
-                letterSpacing: 3,
-                color: AppColors.accentAmber,
-                shadows: [
-                  Shadow(
-                    color: AppColors.accentAmber.withValues(alpha: 0.5),
-                    blurRadius: 12,
-                  ),
-                ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Text(
+                l.metroPassport,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: GameFonts.display,
+                  fontSize: 26,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 3,
+                  color: AppColors.accentAmber,
+                  shadows: [
+                    Shadow(
+                      color: AppColors.accentAmber.withValues(alpha: 0.5),
+                      blurRadius: 12,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

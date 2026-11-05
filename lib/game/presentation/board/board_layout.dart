@@ -7,7 +7,7 @@ import '../../domain/norm_point.dart';
 /// Maps normalised node positions onto a centred square and back.
 /// Shared by painting, trains and tap handling.
 final class BoardLayout {
-  BoardLayout({required this.size, this.padding = 32})
+  BoardLayout({required this.size, this.padding = 24})
     : side = math.max(0, math.min(size.width, size.height) - 2 * padding);
 
   final Size size;
