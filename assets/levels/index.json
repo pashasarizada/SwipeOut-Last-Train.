@@ -1,6 +1,6 @@
 {
   "cities": [
-    {"id": "ankara", "levels": ["ANK-01.json", "ANK-02.json"]},
+    {"id": "ankara", "levels": ["ANK-01.json", "ANK-02.json", "ANK-03.json"]},
     {"id": "baku", "levels": []},
     {"id": "paris", "levels": []},
     {"id": "london", "levels": []},

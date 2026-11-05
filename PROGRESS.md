@@ -1,5 +1,23 @@
 # PROGRESS
 
+## 2026-11-06 (2) — branch `claude/v2-b`
+
+**Bağlam:** V2-B'nin ilk görevi: ANK-03 "İki Vagon" (GAME_DESIGN_V2 §6: iki tren aynı anda, ~6 düğüm).
+
+**Tamamlanan:** `assets/levels/ANK-03.json` — 6 düğüm (2 depo, 2 makas, 2 hedef), kırmızı ve mavi tren. İki makas da baştan ortak JK bağlantısına bakar; beklemek kafa kafaya çarpışma verir. Dakikada tek kontrol olduğu için önce J, sonra K çevrilir (par 2, max 4). İlk yıldızlı bölüm (`tutorial: false`).
+
+**Çalıştırılan komutlar ve gerçek sonuçları:**
+- `dart run tool/solve_levels.dart` → ANK-03 issues=0 optimal=2 par=2 max=4 solution=switch:J switch:K
+- `scripts/check.sh` → No issues found! · +184 All tests passed!
+- `flutter build ios --simulator --debug` → ✓ Built Runner.app
+- iOS Simülatör: DEVAM → ANK-03; bekle-bekle çarpışma reddi (pulse 1/4'te kaldı), RESTART, J → K ile çözüldü, 3 yıldız.
+
+**Bilinen eksikler:** Çarpışma sıçraması/duyurusu simülatör ekran görüntüsünde yakalanamadı (görüntü bir adım gecikmeli); widget testleri kapsar. İnsan oyuncu testi yapılmadı.
+
+**Sıradaki küçük görev:** ANK-04 "Son Aktarma" (önce kimin geçeceğini bul).
+
+---
+
 ## 2026-11-06 — branch `claude/v2-ux`
 
 **Bağlam:** Kullanıcı "Flutter uygulaması gibi görünmesin, gerçek metro havası, şehir temaları, Metro Passport" istedi. Plan: `docs/superpowers/plans/2026-11-05-v2-ux-oyun-hissi-ve-passport.md`; bağlayıcı kurallar `docs/UI_UX_GUIDELINES.md`.

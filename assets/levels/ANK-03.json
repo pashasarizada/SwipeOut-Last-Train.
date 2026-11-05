@@ -1,0 +1,39 @@
+{
+  "id": "ANK-03",
+  "city": "ankara",
+  "number": 3,
+  "tutorial": false,
+  "title": {"tr": "İki Vagon", "en": "Two Cars"},
+  "maxPulses": 4,
+  "parPulses": 2,
+  "maxChangesPerPulse": 1,
+  "nodes": [
+    {"id": "A", "kind": "depot", "x": 0.10, "y": 0.28},
+    {"id": "J", "kind": "switch", "x": 0.42, "y": 0.28},
+    {"id": "R", "kind": "goal", "x": 0.88, "y": 0.12},
+    {"id": "D", "kind": "depot", "x": 0.10, "y": 0.76},
+    {"id": "K", "kind": "switch", "x": 0.58, "y": 0.72},
+    {"id": "B", "kind": "goal", "x": 0.90, "y": 0.88}
+  ],
+  "edges": [
+    {"id": "AJ", "a": "A", "b": "J"},
+    {"id": "JR", "a": "J", "b": "R"},
+    {"id": "JK", "a": "J", "b": "K"},
+    {"id": "DK", "a": "D", "b": "K"},
+    {"id": "KB", "a": "K", "b": "B"}
+  ],
+  "switches": [
+    {"nodeId": "J", "trunkEdge": "AJ", "branchAEdge": "JR", "branchBEdge": "JK", "selectedBranch": "B"},
+    {"nodeId": "K", "trunkEdge": "DK", "branchAEdge": "KB", "branchBEdge": "JK", "selectedBranch": "B"}
+  ],
+  "signals": [],
+  "trains": [
+    {"id": "red_1", "startNode": "A", "goalNode": "R", "symbol": "circle", "style": "coral"},
+    {"id": "blue_1", "startNode": "D", "goalNode": "B", "symbol": "triangle", "style": "azure"}
+  ],
+  "tutorialSteps": [
+    {"tr": "İki tren aynı dakikada birlikte ilerler.", "en": "Both trains move in the same minute."},
+    {"tr": "Her dakika yalnız bir makas çevrilir.", "en": "You can turn one switch per minute."}
+  ],
+  "solution": ["switch:J", "switch:K"]
+}

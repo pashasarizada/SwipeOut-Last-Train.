@@ -29,7 +29,8 @@
 - [x] **U10 Doğrulama** (S) — Kabul: tüm ekranların simülatör görüntüleri PROGRESS'te.
 
 ## P1 — V2-B (Ankara + Bakü kabuğu)
-- [ ] ANK-03…06 (M) — Kabul: her biri validator + replay, iki tren eş zamanlı.
+- [x] ANK-03 "İki Vagon" (S) — iki tren, iki makas, par 2; bekleme kafa kafaya çarpışma.
+- [ ] ANK-04…06 (M) — Kabul: her biri validator + replay, iki tren eş zamanlı.
 - [ ] Bakü 6 bölüm (L) — Kabul: ortak ray darboğazı, aynı haritanın renk değişikliği değil.
 - [x] Bölümlerin sırayla açılması (S, ←U6) — U8'de yapıldı.
 - [ ] Ayarlar: ses, titreşim, Reduced Motion, High Contrast, dil (M).
