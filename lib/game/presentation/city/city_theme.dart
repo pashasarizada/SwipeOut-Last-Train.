@@ -1,9 +1,14 @@
 import 'dart:ui';
 
 import '../../domain/city.dart';
+import 'ankara_art.dart';
+import 'baku_art.dart';
+import 'city_art.dart';
+import 'london_art.dart';
+import 'moscow_art.dart';
+import 'paris_art.dart';
 
-/// A city's own palette (docs/ART_DIRECTION.md). Art and ambience are added
-/// by `CityArt` (V2-UX Task 5).
+/// A city's own palette and artwork (docs/ART_DIRECTION.md).
 final class CityTheme {
   const CityTheme._({
     required this.city,
@@ -11,6 +16,7 @@ final class CityTheme {
     required this.rail,
     required this.accent,
     required this.accentAlt,
+    required this.art,
   });
 
   final CityId city;
@@ -23,6 +29,9 @@ final class CityTheme {
   /// Secondary highlight: patterns, borders.
   final Color accentAlt;
 
+  /// Pattern, skyline, ambience and passport stamp.
+  final CityArt art;
+
   static const Map<CityId, CityTheme> _themes = {
     CityId.ankara: CityTheme._(
       city: CityId.ankara,
@@ -30,6 +39,7 @@ final class CityTheme {
       rail: Color(0xFF8A93B2),
       accent: Color(0xFFE5484D),
       accentAlt: Color(0xFFF2C14E),
+      art: AnkaraArt(),
     ),
     CityId.baku: CityTheme._(
       city: CityId.baku,
@@ -37,6 +47,7 @@ final class CityTheme {
       rail: Color(0xFF93A4C0),
       accent: Color(0xFF3BA3C7),
       accentAlt: Color(0xFFD9B98C),
+      art: BakuArt(),
     ),
     CityId.paris: CityTheme._(
       city: CityId.paris,
@@ -44,6 +55,7 @@ final class CityTheme {
       rail: Color(0xFFA8A2C8),
       accent: Color(0xFFF5A524),
       accentAlt: Color(0xFFF3E9D2),
+      art: ParisArt(),
     ),
     CityId.london: CityTheme._(
       city: CityId.london,
@@ -51,6 +63,7 @@ final class CityTheme {
       rail: Color(0xFF8E96A3),
       accent: Color(0xFFE8C547),
       accentAlt: Color(0xFF8C2F39),
+      art: LondonArt(),
     ),
     CityId.moscow: CityTheme._(
       city: CityId.moscow,
@@ -58,6 +71,7 @@ final class CityTheme {
       rail: Color(0xFF9AA6BC),
       accent: Color(0xFFA3262A),
       accentAlt: Color(0xFF5B8DEF),
+      art: MoscowArt(),
     ),
   };
 

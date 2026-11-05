@@ -29,6 +29,8 @@ Her şehir tek bir `CityArt` arayüzünü uygular (OCP: yeni şehir = yeni sın�
 
 Silüetler ve desenler bizim çizimimizdir; resmî logo, hat rengi düzeni, resmî font ve Eyfel gece ışık gösterisi **kullanılmaz** (bkz. `UI_UX_GUIDELINES.md` §6).
 
+![Beş şehrin zemini ve pasaport damgaları](images/city-art-preview.png)
+
 ## Tren sprite'ı (`TrainSprite`)
 - Üstten bakış metro vagonu: yuvarlak burun, pencere şeridi, tren stili renginde livre şeridi, burunda sembol (● ▲ ■ ◆), iki ön far + önüne düşen ışık konisi.
 - Gittiği kenarın açısına döner; pulse boyunca hafif salınım; beklerken farlar kısık.
