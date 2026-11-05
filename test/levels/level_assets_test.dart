@@ -92,4 +92,20 @@ void main() {
       (8, 2, 5),
     );
   });
+
+  test('BAK-01: opposite directions on one track, red must clear first', () {
+    final level = levels.firstWhere((l) => l.id == 'BAK-01');
+    expect((level.city, level.parPulses), (CityId.baku, 5));
+    final engine = PulseEngine(level);
+    var state = level.initialState;
+    for (var i = 0; i < 5; i++) {
+      final next = engine.simulatePulse(state, null);
+      if (next is! PulseApplied) {
+        expect((next as PulseFailed).reason, PulseFailure.blockedByStanding);
+        return;
+      }
+      state = next.state;
+    }
+    fail('waiting never blocks the line');
+  });
 }
