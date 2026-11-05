@@ -118,6 +118,8 @@ abstract base class CityArtBase implements CityArt {
     ink.strokeWidth = 3;
   }
 
+  /// [t] runs 0 → 1 and then starts again, so every motion here is a whole
+  /// number of cycles per loop: at t = 1 everything is back where it began.
   @override
   void paintAmbient(Canvas canvas, Size size, CityTheme theme, double t) {
     final rnd = math.Random(ambient.index);
@@ -125,7 +127,10 @@ abstract base class CityArtBase implements CityArt {
     switch (ambient) {
       case AmbientEffect.dust:
         for (var i = 0; i < 40; i++) {
-          final x = (rnd.nextDouble() + t * 0.05 * (i % 3 + 1)) % 1;
+          final x =
+              (rnd.nextDouble() +
+                  math.sin((t * (i % 3 + 1) + i / 7) * math.pi * 2) * 0.04) %
+              1;
           final y =
               (rnd.nextDouble() + math.sin((t + i) * math.pi * 2) * 0.01) % 1;
           canvas.drawCircle(
@@ -168,8 +173,7 @@ abstract base class CityArtBase implements CityArt {
           ..strokeWidth = 1;
         for (var i = 0; i < 70; i++) {
           final x = rnd.nextDouble() * size.width;
-          final y =
-              (rnd.nextDouble() + t * (1 + i % 3 * 0.3)) % 1 * size.height;
+          final y = (rnd.nextDouble() + t * (i % 3 + 1)) % 1 * size.height;
           canvas.drawLine(Offset(x, y), Offset(x - 3, y + 12), drop);
         }
       case AmbientEffect.snow:
@@ -177,7 +181,7 @@ abstract base class CityArtBase implements CityArt {
         for (var i = 0; i < 60; i++) {
           final x =
               (rnd.nextDouble() + math.sin((t + i) * math.pi * 2) * 0.02) % 1;
-          final y = (rnd.nextDouble() + t * (0.6 + i % 4 * 0.15)) % 1;
+          final y = (rnd.nextDouble() + t * (i % 2 + 1)) % 1;
           canvas.drawCircle(
             Offset(x * size.width, y * size.height),
             1 + i % 3 * 0.6,

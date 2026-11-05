@@ -17,7 +17,31 @@ void _paintAll(CityTheme theme, Size size) {
   recorder.endRecording().dispose();
 }
 
+Future<List<int>> _ambientPixels(CityTheme theme, double t) async {
+  const size = Size(160, 160);
+  final recorder = ui.PictureRecorder();
+  theme.art.paintAmbient(Canvas(recorder), size, theme, t);
+  final image = await recorder.endRecording().toImage(160, 160);
+  final bytes = await image.toByteData();
+  image.dispose();
+  return bytes!.buffer.asUint8List();
+}
+
 void main() {
+  test(
+    'every ambient effect loops seamlessly: t = 1 looks like t = 0',
+    () async {
+      for (final city in CityId.values) {
+        final theme = CityTheme.of(city);
+        expect(
+          await _ambientPixels(theme, 1),
+          await _ambientPixels(theme, 0),
+          reason: '${city.name} jumps when its loop restarts',
+        );
+      }
+    },
+  );
+
   test('every city has its own art', () {
     final arts = CityId.values
         .map((c) => CityTheme.of(c).art.runtimeType)
