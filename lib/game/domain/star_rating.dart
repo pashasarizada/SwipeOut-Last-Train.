@@ -7,12 +7,12 @@ enum StarRating {
 
   final int stars;
 
-  static const int _goldSlack = 1;
-  static const int _silverSlack = 4;
+  static const int _silverSlack = 2;
 
-  static StarRating forMoves({required int moves, required int optimal}) {
-    if (moves <= optimal + _goldSlack) return StarRating.gold;
-    if (moves <= optimal + _silverSlack) return StarRating.silver;
+  /// 3 ★ at or under par, 2 ★ up to par+2, otherwise 1 ★ (within the limit).
+  static StarRating forPulses({required int pulses, required int par}) {
+    if (pulses <= par) return StarRating.gold;
+    if (pulses <= par + _silverSlack) return StarRating.silver;
     return StarRating.bronze;
   }
 }

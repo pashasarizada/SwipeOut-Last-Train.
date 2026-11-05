@@ -3,11 +3,13 @@ import 'star_rating.dart';
 final class LevelResult {
   const LevelResult({
     required this.levelId,
-    required this.moves,
+    required this.pulses,
     required this.rating,
   });
 
   final String levelId;
-  final int moves;
-  final StarRating rating;
+  final int pulses;
+
+  /// Null for tutorial levels, which award no stars.
+  final StarRating? rating;
 }
