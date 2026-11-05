@@ -314,4 +314,11 @@ void main() {
     }
     expect(throughCentre, hasLength(4));
   });
+
+  test('MOS-05: four trains, a red signal, not one spare minute', () {
+    final level = levels.firstWhere((l) => l.id == 'MOS-05');
+    expect(level.trains, hasLength(4));
+    expect(level.initialSignals, {'G': SignalAspect.red});
+    expect(level.parPulses, level.maxPulses);
+  });
 }

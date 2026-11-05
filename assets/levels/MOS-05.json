@@ -1,0 +1,68 @@
+{
+  "id": "MOS-05",
+  "city": "moscow",
+  "number": 5,
+  "tutorial": false,
+  "title": {"tr": "Son Sinyal", "en": "Last Signal"},
+  "maxPulses": 12,
+  "parPulses": 12,
+  "maxChangesPerPulse": 1,
+  "nodes": [
+    {"id": "A", "kind": "depot", "x": 0.30, "y": 0.02},
+    {"id": "G", "kind": "signal", "x": 0.10, "y": 0.08},
+    {"id": "M", "kind": "switch", "x": 0.18, "y": 0.22},
+    {"id": "D", "kind": "depot", "x": 0.04, "y": 0.56},
+    {"id": "E", "kind": "track", "x": 0.10, "y": 0.38},
+    {"id": "F", "kind": "depot", "x": 0.18, "y": 0.96},
+    {"id": "N", "kind": "switch", "x": 0.34, "y": 0.80},
+    {"id": "H", "kind": "depot", "x": 0.82, "y": 0.98},
+    {"id": "V", "kind": "track", "x": 0.64, "y": 0.98},
+    {"id": "T", "kind": "track", "x": 0.46, "y": 0.94},
+    {"id": "P", "kind": "switch", "x": 0.36, "y": 0.50},
+    {"id": "S", "kind": "switch", "x": 0.56, "y": 0.40},
+    {"id": "R", "kind": "goal", "x": 0.66, "y": 0.14},
+    {"id": "U", "kind": "switch", "x": 0.74, "y": 0.56},
+    {"id": "B", "kind": "goal", "x": 0.96, "y": 0.38},
+    {"id": "K", "kind": "switch", "x": 0.84, "y": 0.74},
+    {"id": "L", "kind": "goal", "x": 0.98, "y": 0.58},
+    {"id": "Q", "kind": "goal", "x": 0.98, "y": 0.90}
+  ],
+  "edges": [
+    {"id": "AG", "a": "A", "b": "G"},
+    {"id": "GM", "a": "G", "b": "M"},
+    {"id": "DE", "a": "D", "b": "E"},
+    {"id": "EM", "a": "E", "b": "M"},
+    {"id": "MP", "a": "M", "b": "P"},
+    {"id": "FN", "a": "F", "b": "N"},
+    {"id": "HV", "a": "H", "b": "V"},
+    {"id": "VT", "a": "V", "b": "T"},
+    {"id": "TN", "a": "T", "b": "N"},
+    {"id": "NP", "a": "N", "b": "P"},
+    {"id": "PS", "a": "P", "b": "S"},
+    {"id": "SR", "a": "S", "b": "R"},
+    {"id": "SU", "a": "S", "b": "U"},
+    {"id": "UB", "a": "U", "b": "B"},
+    {"id": "UK", "a": "U", "b": "K"},
+    {"id": "KL", "a": "K", "b": "L"},
+    {"id": "KQ", "a": "K", "b": "Q"}
+  ],
+  "switches": [
+    {"nodeId": "M", "trunkEdge": "MP", "branchAEdge": "GM", "branchBEdge": "EM", "selectedBranch": "A"},
+    {"nodeId": "N", "trunkEdge": "NP", "branchAEdge": "FN", "branchBEdge": "TN", "selectedBranch": "A"},
+    {"nodeId": "P", "trunkEdge": "PS", "branchAEdge": "MP", "branchBEdge": "NP", "selectedBranch": "A"},
+    {"nodeId": "S", "trunkEdge": "PS", "branchAEdge": "SR", "branchBEdge": "SU", "selectedBranch": "A"},
+    {"nodeId": "U", "trunkEdge": "SU", "branchAEdge": "UB", "branchBEdge": "UK", "selectedBranch": "A"},
+    {"nodeId": "K", "trunkEdge": "UK", "branchAEdge": "KL", "branchBEdge": "KQ", "selectedBranch": "A"}
+  ],
+  "signals": [
+    {"nodeId": "G", "initial": "red"}
+  ],
+  "trains": [
+    {"id": "red_1", "startNode": "A", "goalNode": "B", "symbol": "circle", "style": "coral"},
+    {"id": "blue_1", "startNode": "D", "goalNode": "R", "symbol": "triangle", "style": "azure"},
+    {"id": "lime_1", "startNode": "F", "goalNode": "L", "symbol": "square", "style": "lime"},
+    {"id": "amber_1", "startNode": "H", "goalNode": "Q", "symbol": "diamond", "style": "amber"}
+  ],
+  "tutorialSteps": [],
+  "solution": ["switch:P", "switch:S", "switch:N", "switch:U", "switch:M", "switch:M", "switch:K", "signal:G", "switch:P", "switch:S", "switch:S", "switch:U"]
+}
