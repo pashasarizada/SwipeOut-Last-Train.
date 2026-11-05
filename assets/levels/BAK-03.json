@@ -1,0 +1,50 @@
+{
+  "id": "BAK-03",
+  "city": "baku",
+  "number": 3,
+  "tutorial": false,
+  "title": {"tr": "Memar Əcəmi", "en": "Memar Ajami"},
+  "maxPulses": 6,
+  "parPulses": 4,
+  "maxChangesPerPulse": 1,
+  "nodes": [
+    {"id": "A", "kind": "depot", "x": 0.06, "y": 0.30},
+    {"id": "P", "kind": "switch", "x": 0.24, "y": 0.30},
+    {"id": "Q", "kind": "track", "x": 0.50, "y": 0.10},
+    {"id": "X", "kind": "switch", "x": 0.42, "y": 0.50},
+    {"id": "E", "kind": "track", "x": 0.24, "y": 0.78},
+    {"id": "D", "kind": "depot", "x": 0.06, "y": 0.90},
+    {"id": "Y", "kind": "switch", "x": 0.62, "y": 0.50},
+    {"id": "W", "kind": "switch", "x": 0.78, "y": 0.30},
+    {"id": "R", "kind": "goal", "x": 0.94, "y": 0.30},
+    {"id": "B", "kind": "goal", "x": 0.86, "y": 0.80}
+  ],
+  "edges": [
+    {"id": "AP", "a": "A", "b": "P"},
+    {"id": "PQ", "a": "P", "b": "Q"},
+    {"id": "PX", "a": "P", "b": "X"},
+    {"id": "DE", "a": "D", "b": "E"},
+    {"id": "EX", "a": "E", "b": "X"},
+    {"id": "XY", "a": "X", "b": "Y"},
+    {"id": "YW", "a": "Y", "b": "W"},
+    {"id": "YB", "a": "Y", "b": "B"},
+    {"id": "QW", "a": "Q", "b": "W"},
+    {"id": "WR", "a": "W", "b": "R"}
+  ],
+  "switches": [
+    {"nodeId": "P", "trunkEdge": "AP", "branchAEdge": "PX", "branchBEdge": "PQ", "selectedBranch": "A"},
+    {"nodeId": "X", "trunkEdge": "XY", "branchAEdge": "PX", "branchBEdge": "EX", "selectedBranch": "B"},
+    {"nodeId": "Y", "trunkEdge": "XY", "branchAEdge": "YW", "branchBEdge": "YB", "selectedBranch": "A"},
+    {"nodeId": "W", "trunkEdge": "WR", "branchAEdge": "YW", "branchBEdge": "QW", "selectedBranch": "A"}
+  ],
+  "signals": [],
+  "trains": [
+    {"id": "red_1", "startNode": "A", "goalNode": "R", "symbol": "circle", "style": "coral"},
+    {"id": "blue_1", "startNode": "D", "goalNode": "B", "symbol": "triangle", "style": "azure"}
+  ],
+  "tutorialSteps": [
+    {"tr": "Aktarma tek, yollar iki.", "en": "One transfer, two routes."},
+    {"tr": "Makası tren gelmeden seç.", "en": "Set the switch before the train arrives."}
+  ],
+  "solution": ["wait", "switch:P", "switch:W", "switch:Y"]
+}

@@ -10,6 +10,7 @@ import 'package:swipeout_last_train/game/data/level_index.dart';
 import 'package:swipeout_last_train/game/data/level_json_codec.dart';
 import 'package:swipeout_last_train/game/domain/city.dart';
 import 'package:swipeout_last_train/game/engine/level_validator.dart';
+import 'package:swipeout_last_train/game/engine/pulse_solver.dart';
 
 Object? _read(String file) =>
     jsonDecode(File('${LevelIndex.assetDir}/$file').readAsStringSync());
@@ -30,6 +31,13 @@ void main() {
         '${level.id}  issues=${result.issues.length}  optimal=$optimum  '
         'par=${level.parPulses}  max=${level.maxPulses}  solution=$solution',
       );
+      if (result.solve case Solved(
+        :final plan,
+      ) when plan.length < level.parPulses || result.issues.isNotEmpty) {
+        stdout.writeln(
+          '    solver plan: ${plan.map(ActionCodec.encode).join(' ')}',
+        );
+      }
       for (final issue in result.issues) {
         stdout.writeln('    - $issue');
       }

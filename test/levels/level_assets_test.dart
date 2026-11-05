@@ -119,4 +119,14 @@ void main() {
     expect(state.trainById('red_1')!.nodeId, 'Z');
     expect(const PulseSolver().solve(level, from: state), isA<Unsolvable>());
   });
+
+  test('BAK-03: red must take the bypass, the transfer is for blue', () {
+    final level = levels.firstWhere((l) => l.id == 'BAK-03');
+    final session = level.solution.fold(level.initialState, (state, action) {
+      final next = PulseEngine(level).simulatePulse(state, action);
+      return (next as PulseApplied).state;
+    });
+    expect(session.trains.every((t) => t.delivered), isTrue);
+    expect(level.parPulses, 4);
+  });
 }
