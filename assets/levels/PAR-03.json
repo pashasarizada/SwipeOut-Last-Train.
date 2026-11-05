@@ -1,0 +1,49 @@
+{
+  "id": "PAR-03",
+  "city": "paris",
+  "number": 3,
+  "tutorial": false,
+  "title": {"tr": "Châtelet Kavşağı", "en": "Châtelet Junction"},
+  "maxPulses": 9,
+  "parPulses": 7,
+  "maxChangesPerPulse": 1,
+  "nodes": [
+    {"id": "A", "kind": "depot", "x": 0.06, "y": 0.16},
+    {"id": "G", "kind": "signal", "x": 0.20, "y": 0.30},
+    {"id": "D", "kind": "depot", "x": 0.06, "y": 0.88},
+    {"id": "E", "kind": "track", "x": 0.20, "y": 0.72},
+    {"id": "M", "kind": "switch", "x": 0.36, "y": 0.50},
+    {"id": "C", "kind": "track", "x": 0.50, "y": 0.50},
+    {"id": "H", "kind": "signal", "x": 0.64, "y": 0.50},
+    {"id": "S", "kind": "switch", "x": 0.78, "y": 0.50},
+    {"id": "R", "kind": "goal", "x": 0.93, "y": 0.80},
+    {"id": "B", "kind": "goal", "x": 0.93, "y": 0.20}
+  ],
+  "edges": [
+    {"id": "AG", "a": "A", "b": "G"},
+    {"id": "GM", "a": "G", "b": "M"},
+    {"id": "DE", "a": "D", "b": "E"},
+    {"id": "EM", "a": "E", "b": "M"},
+    {"id": "MC", "a": "M", "b": "C"},
+    {"id": "CH", "a": "C", "b": "H"},
+    {"id": "HS", "a": "H", "b": "S"},
+    {"id": "SR", "a": "S", "b": "R"},
+    {"id": "SB", "a": "S", "b": "B"}
+  ],
+  "switches": [
+    {"nodeId": "M", "trunkEdge": "MC", "branchAEdge": "GM", "branchBEdge": "EM", "selectedBranch": "B"},
+    {"nodeId": "S", "trunkEdge": "HS", "branchAEdge": "SR", "branchBEdge": "SB", "selectedBranch": "A"}
+  ],
+  "signals": [
+    {"nodeId": "G", "initial": "green"},
+    {"nodeId": "H", "initial": "red"}
+  ],
+  "trains": [
+    {"id": "red_1", "startNode": "A", "goalNode": "R", "symbol": "circle", "style": "coral"},
+    {"id": "blue_1", "startNode": "D", "goalNode": "B", "symbol": "triangle", "style": "azure"}
+  ],
+  "tutorialSteps": [
+    {"tr": "Aynı kavşak, farklı dakika.", "en": "Same junction, different minute."}
+  ],
+  "solution": ["wait", "signal:G", "signal:G", "switch:M", "signal:H", "switch:S", "switch:S"]
+}

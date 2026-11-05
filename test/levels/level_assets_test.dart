@@ -174,4 +174,11 @@ void main() {
     expect(level.initialSignals.keys, ['G']);
     expect(level.solution.whereType<ToggleSignal>(), hasLength(2));
   });
+
+  test('PAR-03: both signals matter, one control per minute', () {
+    final level = levels.firstWhere((l) => l.id == 'PAR-03');
+    final used = level.solution.whereType<ToggleSignal>().map((a) => a.nodeId);
+    expect(used.toSet(), {'G', 'H'});
+    expect(level.parPulses, 7);
+  });
 }
