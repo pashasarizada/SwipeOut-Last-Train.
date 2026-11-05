@@ -1,0 +1,41 @@
+{
+  "id": "ANK-04",
+  "city": "ankara",
+  "number": 4,
+  "tutorial": false,
+  "title": {"tr": "Son Aktarma", "en": "Last Transfer"},
+  "maxPulses": 6,
+  "parPulses": 4,
+  "maxChangesPerPulse": 1,
+  "nodes": [
+    {"id": "A", "kind": "depot", "x": 0.08, "y": 0.22},
+    {"id": "D", "kind": "depot", "x": 0.08, "y": 0.82},
+    {"id": "T", "kind": "track", "x": 0.22, "y": 0.62},
+    {"id": "M", "kind": "switch", "x": 0.40, "y": 0.45},
+    {"id": "S", "kind": "switch", "x": 0.66, "y": 0.45},
+    {"id": "R", "kind": "goal", "x": 0.92, "y": 0.20},
+    {"id": "B", "kind": "goal", "x": 0.92, "y": 0.72}
+  ],
+  "edges": [
+    {"id": "AM", "a": "A", "b": "M"},
+    {"id": "DT", "a": "D", "b": "T"},
+    {"id": "TM", "a": "T", "b": "M"},
+    {"id": "MS", "a": "M", "b": "S"},
+    {"id": "SR", "a": "S", "b": "R"},
+    {"id": "SB", "a": "S", "b": "B"}
+  ],
+  "switches": [
+    {"nodeId": "M", "trunkEdge": "MS", "branchAEdge": "AM", "branchBEdge": "TM", "selectedBranch": "B"},
+    {"nodeId": "S", "trunkEdge": "MS", "branchAEdge": "SR", "branchBEdge": "SB", "selectedBranch": "B"}
+  ],
+  "signals": [],
+  "trains": [
+    {"id": "red_1", "startNode": "A", "goalNode": "R", "symbol": "circle", "style": "coral"},
+    {"id": "blue_1", "startNode": "D", "goalNode": "B", "symbol": "triangle", "style": "azure"}
+  ],
+  "tutorialSteps": [
+    {"tr": "Aktarmadan aynı anda tek tren geçer.", "en": "One train at a time through the transfer."},
+    {"tr": "Önce kimin geçeceğine sen karar ver.", "en": "You decide who goes first."}
+  ],
+  "solution": ["switch:M", "switch:S", "switch:M", "switch:S"]
+}

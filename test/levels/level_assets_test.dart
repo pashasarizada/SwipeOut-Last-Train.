@@ -62,4 +62,13 @@ void main() {
     expect(second, isA<PulseFailed>());
     expect((second as PulseFailed).reason, PulseFailure.headOn);
   });
+
+  test('ANK-04: whoever waits at the transfer blocks the other train', () {
+    final level = levels.firstWhere((l) => l.id == 'ANK-04');
+    expect((level.parPulses, level.trains.length), (4, 2));
+    final engine = PulseEngine(level);
+    final first = engine.simulatePulse(level.initialState, null);
+    final second = engine.simulatePulse((first as PulseApplied).state, null);
+    expect((second as PulseFailed).reason, PulseFailure.blockedByStanding);
+  });
 }
