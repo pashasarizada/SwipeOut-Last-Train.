@@ -31,7 +31,7 @@
 ## P1 — V2-B (Ankara + Bakü kabuğu)
 - [x] ANK-03 "İki Vagon" (S) — iki tren, iki makas, par 2; bekleme kafa kafaya çarpışma.
 - [x] ANK-04 "Son Aktarma", ANK-05 "Bir Dakika Daha", ANK-06 "Başkent Finali" — Ankara 6/6, ilk damga basıldı (06.11.2026).
-- [ ] Bakü 6 bölüm (L) — Kabul: ortak ray darboğazı, aynı haritanın renk değişikliği değil.
+- [x] Bakü 6 bölüm (L) — BAK-01 karşı yönlü tek hat · 02 ortak ray + yan hat tuzağı · 03 aktarma öncesi çevre yol · 04 bekletme makası · 05 bekleme dakikası · 06 dar limitli final (06.11.2026).
 - [x] Bölümlerin sırayla açılması (S, ←U6) — U8'de yapıldı.
 - [ ] Ayarlar: ses, titreşim, Reduced Motion, High Contrast, dil (M).
 - [ ] Sonraki pulse "hayalet tren" önizlemesi (S).

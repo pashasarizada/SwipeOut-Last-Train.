@@ -15,7 +15,13 @@
 - `scripts/check.sh` → No issues found! · +190 All tests passed!
 - iOS Simülatör: ANK-04, 05, 06 uçtan uca 3 yıldızla oynandı; ANK-06 sonunda "PASAPORTU AÇ" → **Ankara damgası basıldı** (`docs/images/v2-ux/10-ankara-stamp.png`).
 
-**Sıradaki küçük görev:** BAK-01 "Hazar Gecesi" (iki güzergâhı çakıştırma, 7 düğüm).
+**Bakü (aynı gece):**
+- BAK-01 "Hazar Gecesi" — tek hat, iki yön (par 5) · BAK-02 "28 May" — ortak ray + yan hat tuzağı (par 5) · BAK-03 "Memar Əcəmi" — kırmızı çevre yola, mavi aktarmaya (par 4) · BAK-04 "Kırmızı mı Yeşil mi?" — eş zamanlı varış, bir treni beklet; her dakika bir makas (par 6) · BAK-05 "Kapanan Koridor" — bekleme dakikası (par 6) · BAK-06 "Son Bakı Seferi" — 4 makas, par = max = 8.
+- `dart run tool/solve_levels.dart` → 12 bölümün hepsi issues=0, optimal = par. Araç artık çözücünün planını da yazdırıyor.
+- `scripts/check.sh` → No issues found! · +202 All tests passed!
+- Simülatör: BAK-01 uçtan uca oynandı (ana ekran Bakü temasına geçti); BAK-02…06 tahtaları render edilip okunurluk kontrol edildi, **elle oynanmadı**.
+
+**Sıradaki küçük görev:** PAR-01 "Gece Aktarması" (Paris, 2 tren, iki giriş kolu, ortak aktarma; sinyal PAR-02'de).
 
 ---
 
