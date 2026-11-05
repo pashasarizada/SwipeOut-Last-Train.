@@ -277,4 +277,19 @@ void main() {
     expect(path, containsAllInOrder(['K', 'J']));
     expect(state.trains.every((t) => t.delivered), isTrue);
   });
+
+  test('MOS-02: lime, not red, must take the bridge', () {
+    final level = levels.firstWhere((l) => l.id == 'MOS-02');
+    final engine = PulseEngine(level);
+    var state = level.initialState;
+    final lime = <String>[];
+    final red = <String>[];
+    for (final action in level.solution) {
+      state = (engine.simulatePulse(state, action) as PulseApplied).state;
+      lime.add(state.trainById('lime_1')!.nodeId);
+      red.add(state.trainById('red_1')!.nodeId);
+    }
+    expect(lime, contains('J'));
+    expect(red, isNot(contains('J')));
+  });
 }
