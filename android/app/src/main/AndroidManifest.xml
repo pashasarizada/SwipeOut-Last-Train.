@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="swipeout_last_train"
+        android:label="Last Train"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
