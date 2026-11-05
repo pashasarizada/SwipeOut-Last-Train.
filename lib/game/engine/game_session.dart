@@ -26,6 +26,10 @@ final class GameSession {
   bool get isOutOfPulses => _engine.isOutOfPulses(_state);
   bool get canUndo => _history.canUndo;
 
+  /// What [pulse] would do with [action], without playing it.
+  PulseResult preview(ControlAction? action) =>
+      _engine.simulatePulse(_state, action);
+
   PulseResult pulse(ControlAction? action) {
     final result = _engine.simulatePulse(_state, action);
     if (result is PulseApplied) {

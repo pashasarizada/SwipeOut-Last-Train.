@@ -62,6 +62,17 @@ final class PulseController extends ChangeNotifier {
   /// The control used by each committed pulse, oldest first (for saving).
   List<ControlAction?> get history => List.unmodifiable(_history);
 
+  /// Where the trains would be after one more pulse with the pending
+  /// control (docs/GAME_DESIGN_V2.md §3.2/5: next pulse only). Hidden while
+  /// a pulse plays, once the run is over, and when that pulse would fail.
+  GameState? get ghost {
+    if (!_canPlan) return null;
+    return switch (_session.preview(_pending)) {
+      PulseApplied(:final state) => state,
+      PulseFailed() => null,
+    };
+  }
+
   /// True between a committed pulse and [finishAnimation].
   bool get isAnimating => _animatingFrom != null;
 

@@ -9,6 +9,7 @@ import '../game/pulse_controller.dart';
 import '../kit/motion_settings.dart';
 import '../theme/motion.dart';
 import 'board_layout.dart';
+import 'ghost_painter.dart';
 import 'network_painter.dart';
 import 'train_layer.dart';
 
@@ -154,6 +155,16 @@ class _BoardViewState extends State<BoardView>
                         wave: _pulse.isAnimating ? 1 - _wave.value : 0,
                         flashNode: _flashNode,
                         flash: _flash.value,
+                      ),
+                    ),
+                  ),
+                  Positioned.fill(
+                    child: CustomPaint(
+                      painter: GhostPainter(
+                        level: _controller.level,
+                        state: _controller.state,
+                        ghost: _controller.ghost,
+                        layout: layout,
                       ),
                     ),
                   ),

@@ -92,4 +92,12 @@ void main() {
     expect(history.pop(), 1);
     expect(history.pop(), isNull);
   });
+
+  test('preview shows the next pulse without playing it', () {
+    final session = GameSession(ank01());
+    final preview = session.preview(null);
+    expect((preview as PulseApplied).state.trainById('red_1')!.nodeId, 'B');
+    expect(session.pulses, 0);
+    expect(session.state.trainById('red_1')!.nodeId, 'A');
+  });
 }

@@ -34,7 +34,7 @@
 - [x] Bakü 6 bölüm (L) — BAK-01 karşı yönlü tek hat · 02 ortak ray + yan hat tuzağı · 03 aktarma öncesi çevre yol · 04 bekletme makası · 05 bekleme dakikası · 06 dar limitli final (06.11.2026).
 - [x] Bölümlerin sırayla açılması (S, ←U6) — U8'de yapıldı.
 - [ ] Ayarlar: ses, titreşim, Reduced Motion, High Contrast, dil (M).
-- [ ] Sonraki pulse "hayalet tren" önizlemesi (S).
+- [x] Sonraki pulse "hayalet tren" önizlemesi (S) — yer değiştirecek trenin varacağı düğümde soluk halka; yalnız bir pulse ileri (§3.2/5).
 
 ## P1 — Küçük ekran (320×568) kompakt oyun düzeni
 - [ ] Tahta 320×568'de ~180 pt kalıyor; Geri Al/Baştan'ı ikonlu tek satıra al, ipuçlarını tek satıra indir; hedef: tüm bölümler 320×568'de 44 pt (D-029) (M).

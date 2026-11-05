@@ -5,6 +5,7 @@ import 'package:swipeout_last_train/game/domain/level_definition.dart';
 import 'package:swipeout_last_train/game/domain/node.dart';
 import 'package:swipeout_last_train/game/presentation/board/board_layout.dart';
 import 'package:swipeout_last_train/game/presentation/board/board_view.dart';
+import 'package:swipeout_last_train/game/presentation/board/ghost_painter.dart';
 import 'package:swipeout_last_train/game/presentation/board/network_painter.dart';
 import 'package:swipeout_last_train/game/presentation/board/train_sprite.dart';
 import 'package:swipeout_last_train/game/presentation/game/pulse_controller.dart';
@@ -119,5 +120,24 @@ void main() {
 
     expect(tester.takeException(), isNull);
     expect(find.byType(TrainSprite), findsOneWidget);
+  });
+
+  testWidgets('the board draws the next pulse as ghosts, not while moving', (
+    tester,
+  ) async {
+    final level = ank01();
+    final c = await _pump(tester, level);
+    GhostPainter painter() => tester
+        .widgetList<CustomPaint>(find.byType(CustomPaint))
+        .map((p) => p.painter)
+        .whereType<GhostPainter>()
+        .single;
+
+    expect(painter().ghost?.trainById('red_1')!.nodeId, 'B');
+    c.advance();
+    await tester.pump();
+    expect(painter().ghost, isNull);
+    await tester.pumpAndSettle();
+    expect(painter().ghost?.trainById('red_1')!.nodeId, 'D');
   });
 }

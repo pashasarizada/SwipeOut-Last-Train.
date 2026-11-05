@@ -228,4 +228,27 @@ void main() {
 
     expect(c.finishAnimation, returnsNormally);
   });
+
+  group('ghost', () {
+    test('shows where trains will be after the pending control', () async {
+      final (c, _) = await _start(ank01());
+      expect(c.ghost!.trainById('red_1')!.nodeId, 'B');
+      await _advanceAndSettle(c);
+      // At the switch, B points away from the goal until it is turned.
+      expect(c.ghost!.trainById('red_1')!.nodeId, 'D');
+      c.tapNode('B');
+      expect(c.ghost!.trainById('red_1')!.delivered, isTrue);
+    });
+
+    test(
+      'is hidden while a pulse plays, on a rejected pulse and at the end',
+      () async {
+        final (c, _) = await _start(jamLevel());
+        c.advance();
+        expect(c.ghost, isNull, reason: 'animating');
+        c.finishAnimation();
+        expect(c.ghost, isNull, reason: 'the line is jammed');
+      },
+    );
+  });
 }
