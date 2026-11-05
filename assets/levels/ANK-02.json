@@ -1,0 +1,35 @@
+{
+  "id": "ANK-02",
+  "city": "ankara",
+  "number": 2,
+  "tutorial": true,
+  "title": {"tr": "Kızılay Yönü", "en": "Towards Kızılay"},
+  "maxPulses": 6,
+  "parPulses": 3,
+  "maxChangesPerPulse": 1,
+  "nodes": [
+    {"id": "A", "kind": "depot", "x": 0.12, "y": 0.30},
+    {"id": "B", "kind": "switch", "x": 0.45, "y": 0.50},
+    {"id": "C", "kind": "track", "x": 0.70, "y": 0.50},
+    {"id": "D", "kind": "goal", "x": 0.90, "y": 0.50},
+    {"id": "E", "kind": "terminal", "x": 0.40, "y": 0.85}
+  ],
+  "edges": [
+    {"id": "AB", "a": "A", "b": "B"},
+    {"id": "BC", "a": "B", "b": "C"},
+    {"id": "CD", "a": "C", "b": "D"},
+    {"id": "BE", "a": "B", "b": "E"}
+  ],
+  "switches": [
+    {"nodeId": "B", "trunkEdge": "BC", "branchAEdge": "AB", "branchBEdge": "BE", "selectedBranch": "B"}
+  ],
+  "signals": [],
+  "trains": [
+    {"id": "red_1", "startNode": "A", "goalNode": "D", "symbol": "circle", "style": "coral"}
+  ],
+  "tutorialSteps": [
+    {"tr": "Tren kapalı koldan gelirse bekler.", "en": "A train on a closed branch waits."},
+    {"tr": "Makası treninin geldiği yöne çevir.", "en": "Turn the switch towards your train."}
+  ],
+  "solution": ["switch:B", "wait", "wait"]
+}
