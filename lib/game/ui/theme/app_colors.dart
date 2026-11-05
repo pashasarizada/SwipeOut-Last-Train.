@@ -1,5 +1,7 @@
 import 'package:flutter/painting.dart';
 
+import '../../domain/train_color.dart';
+
 /// Colour tokens for the midnight-metro look. Widgets never hard-code colours.
 abstract final class AppColors {
   static const Color background = Color(0xFF0B1020);
@@ -14,3 +16,10 @@ abstract final class AppColors {
   static const Color textPrimary = Color(0xFFE8ECF8);
   static const Color textSecondary = Color(0xFF8A93B2);
 }
+
+Color colorForTrain(TrainColor color) => switch (color) {
+  TrainColor.red => AppColors.accentRed,
+  TrainColor.blue => AppColors.trainBlue,
+  TrainColor.green => AppColors.trainGreen,
+  TrainColor.amber => AppColors.accentAmber,
+};
