@@ -1,11 +1,11 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../domain/passport.dart';
 import '../city/city_theme.dart';
 import '../kit/game_fonts.dart';
+import '../kit/game_haptics.dart';
 import '../kit/motion_settings.dart';
 import '../theme/app_colors.dart';
 
@@ -68,7 +68,7 @@ class _PassportStampState extends State<PassportStamp>
     if (MotionSettings.reducedOf(context)) return;
     _controller.forward(from: 0);
     Future<void>.delayed(PassportStamp.press, () {
-      if (mounted) HapticFeedback.heavyImpact();
+      if (mounted) GameHaptics.play(context, HapticKind.heavy);
     });
   }
 

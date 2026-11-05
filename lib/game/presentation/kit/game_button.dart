@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../theme/app_colors.dart';
 import 'game_fonts.dart';
+import 'game_haptics.dart';
 
 enum GameButtonSize {
   small(48, 14),
@@ -25,7 +25,7 @@ final class GameButton extends StatefulWidget {
     this.icon,
     this.size = GameButtonSize.large,
     this.color = AppColors.accentTurquoise,
-    this.haptic = HapticFeedback.selectionClick,
+    this.haptic = HapticKind.selection,
   });
 
   static const Key faceKey = ValueKey('game-button-face');
@@ -36,7 +36,7 @@ final class GameButton extends StatefulWidget {
   final Widget? icon;
   final GameButtonSize size;
   final Color color;
-  final Future<void> Function() haptic;
+  final HapticKind haptic;
 
   @override
   State<GameButton> createState() => _GameButtonState();
@@ -54,7 +54,7 @@ class _GameButtonState extends State<GameButton> {
   }
 
   void _fire() {
-    widget.haptic();
+    GameHaptics.play(context, widget.haptic);
     widget.onPressed?.call();
   }
 

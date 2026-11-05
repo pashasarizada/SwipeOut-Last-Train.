@@ -47,4 +47,8 @@ final class SettingsScope extends InheritedNotifier<SettingsStore> {
   /// The store, or null when the app runs without one (tests, previews).
   static SettingsStore? maybeOf(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<SettingsScope>()?.notifier;
+
+  /// Reads the store without rebuilding on change (event handlers).
+  static SettingsStore? read(BuildContext context) =>
+      context.getInheritedWidgetOfExactType<SettingsScope>()?.notifier;
 }

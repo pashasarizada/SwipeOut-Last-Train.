@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../game/game_event.dart';
 import '../game/pulse_controller.dart';
+import '../kit/game_haptics.dart';
 import '../kit/motion_settings.dart';
 import '../theme/motion.dart';
 import 'board_layout.dart';
@@ -81,7 +81,7 @@ class _BoardViewState extends State<BoardView>
         });
         _flash.forward(from: 0).then((_) => _flash.reverse());
         if (!_reduced) _bump.forward(from: 0);
-        HapticFeedback.heavyImpact();
+        GameHaptics.play(context, HapticKind.heavy);
       case LevelWon() || LevelLost():
         break;
     }
@@ -89,9 +89,11 @@ class _BoardViewState extends State<BoardView>
 
   /// Delivery speaks in two light taps (docs/UI_UX_GUIDELINES.md §9).
   void _deliveryTaps() {
-    HapticFeedback.lightImpact();
+    GameHaptics.play(context, HapticKind.light);
     _secondTap?.cancel();
-    _secondTap = Timer(kDeliveryTapGap, HapticFeedback.lightImpact);
+    _secondTap = Timer(kDeliveryTapGap, () {
+      if (mounted) GameHaptics.play(context, HapticKind.light);
+    });
   }
 
   /// A damped side-to-side shake that starts and ends at rest.

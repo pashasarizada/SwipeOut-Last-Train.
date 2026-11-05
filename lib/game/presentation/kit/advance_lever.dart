@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../theme/app_colors.dart';
 import 'game_button.dart';
+import 'game_haptics.dart';
 
 /// The big "advance one minute" control at the bottom of the platform:
 /// a hero-sized game button with a clock mark and a medium thump.
@@ -20,7 +20,7 @@ final class AdvanceLever extends StatelessWidget {
         label: label,
         onPressed: onPressed,
         size: GameButtonSize.hero,
-        haptic: HapticFeedback.mediumImpact,
+        haptic: HapticKind.medium,
         icon: const SizedBox.square(
           dimension: 26,
           child: CustomPaint(painter: _ClockPainter()),

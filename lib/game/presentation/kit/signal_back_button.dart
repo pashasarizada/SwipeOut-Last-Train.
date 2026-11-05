@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../theme/app_colors.dart';
+import 'game_haptics.dart';
 
 /// A small signal post used as "back": the lamp turns green, then we leave.
 final class SignalBackButton extends StatefulWidget {
@@ -23,7 +23,7 @@ class _SignalBackButtonState extends State<SignalBackButton> {
 
   Future<void> _press() async {
     if (_green) return;
-    HapticFeedback.selectionClick();
+    GameHaptics.play(context, HapticKind.selection);
     setState(() => _green = true);
     await Future<void>.delayed(SignalBackButton._greenFor);
     if (!mounted) return;
