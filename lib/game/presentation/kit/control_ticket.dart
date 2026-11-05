@@ -11,7 +11,7 @@ final class ControlTicket extends StatelessWidget {
     super.key,
     required this.label,
     required this.onTear,
-    this.tearLabel = 'Cancel',
+    required this.tearLabel,
     this.icon = GameIconKind.route,
   });
 

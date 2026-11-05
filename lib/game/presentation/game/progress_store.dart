@@ -96,9 +96,15 @@ final class ProgressStore extends ChangeNotifier {
     return fresh;
   }
 
+  /// The new progress is live at once; a failed disk write is reported
+  /// but never breaks the game — the next change saves everything again.
   Future<void> _update(Progress next) async {
     _progress = next;
     notifyListeners();
-    await _repository.save(next);
+    try {
+      await _repository.save(next);
+    } on Object catch (error) {
+      debugPrint('Progress not saved: $error');
+    }
   }
 }

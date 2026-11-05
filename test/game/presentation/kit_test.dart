@@ -181,7 +181,11 @@ void main() {
       var torn = 0;
       await _pump(
         tester,
-        ControlTicket(label: 'Makas B', onTear: () => torn++),
+        ControlTicket(
+          label: 'Makas B',
+          tearLabel: 'İptal',
+          onTear: () => torn++,
+        ),
       );
 
       await tester.drag(find.byType(ControlTicket), const Offset(-60, 0));
@@ -203,6 +207,7 @@ void main() {
         tester,
         ControlTicket(
           label: 'Sinyal G',
+          tearLabel: 'İptal',
           icon: GameIconKind.signal,
           onTear: () {},
         ),

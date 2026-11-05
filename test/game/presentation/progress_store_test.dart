@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
+import 'package:swipeout_last_train/game/data/progress_repository.dart';
 import 'package:swipeout_last_train/game/domain/city.dart';
 import 'package:swipeout_last_train/game/domain/control_action.dart';
 import 'package:swipeout_last_train/game/domain/level_definition.dart';
@@ -100,4 +103,32 @@ void main() {
     );
     expect(await store.recordWin(_won('BAK-06')), isEmpty);
   });
+
+  test(
+    'a failing disk write keeps the progress in memory, never throws',
+    () async {
+      final store = ProgressStore(
+        catalog: {
+          CityId.ankara: [ank01(), ank02()],
+        },
+        repository: _FailingRepository(),
+        progress: const Progress(),
+      );
+      await store.saveRun('ANK-01', const [null]);
+      expect(store.progress.run!.levelId, 'ANK-01');
+      await store.recordWin(
+        const LevelResult(levelId: 'ANK-01', pulses: 2, rating: null),
+      );
+      expect(store.progress.isSolved('ANK-01'), isTrue);
+    },
+  );
+}
+
+final class _FailingRepository implements ProgressRepository {
+  @override
+  Future<Progress> load() async => const Progress();
+
+  @override
+  Future<void> save(Progress progress) async =>
+      throw const FileSystemException('disk full');
 }
