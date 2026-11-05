@@ -52,4 +52,44 @@ void main() {
     expect(tester.widget<TrainSprite>(sprite).heading, closeTo(expected, 1e-6));
     expect(tester.widget<TrainSprite>(sprite).headlights, lessThan(1));
   });
+
+  testWidgets('after undo or restart the car faces the way its state says', (
+    tester,
+  ) async {
+    // ANK-01: A (depot) -> B (switch) -> C (goal, up-right).
+    final level = ank01();
+    final controller = PulseController(level: level);
+    addTearDown(controller.dispose);
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(body: BoardView(controller: controller)),
+      ),
+    );
+    double heading() =>
+        tester.widget<TrainSprite>(find.byType(TrainSprite)).heading;
+    double angle(String from, String to) {
+      final a = level.nodes[from]!.position;
+      final b = level.nodes[to]!.position;
+      return math.atan2(b.y - a.y, b.x - a.x);
+    }
+
+    final atStart = heading();
+    expect(atStart, closeTo(angle('A', 'B'), 1e-6));
+
+    controller.advance();
+    await tester.pumpAndSettle();
+    controller.tapNode('B');
+    controller.advance();
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(heading(), closeTo(angle('B', 'C'), 1e-6));
+    await tester.pumpAndSettle();
+
+    controller.undo();
+    await tester.pump();
+    expect(heading(), closeTo(angle('A', 'B'), 1e-6), reason: 'undo');
+
+    controller.restart();
+    await tester.pump();
+    expect(heading(), closeTo(atStart, 1e-6), reason: 'restart');
+  });
 }

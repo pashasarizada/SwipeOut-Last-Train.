@@ -51,14 +51,17 @@ class _TrainLayerState extends State<TrainLayer> {
   static const double _idleLights = 0.4;
   static const Interval _shrink = Interval(0.75, 1);
 
-  /// Last known facing per train, kept while a train stands still.
-  final Map<String, double> _headings = {};
-
   Offset _pos(String nodeId) =>
       widget.layout.toScreen(widget.level.nodes[nodeId]!.position);
 
-  /// Facing at the depot: towards the depot's only edge.
-  double _initialHeading(String nodeId) {
+  /// Facing of a standing train, read from its state so undo and restart
+  /// can never leave it pointing the wrong way: along the edge it came in
+  /// on, or at the depot towards the depot's only edge.
+  double _standingHeading(String nodeId, String? incomingEdgeId) {
+    final incoming = widget.level.edges[incomingEdgeId];
+    if (incoming != null) {
+      return headingOf(_pos(incoming.other(nodeId)), _pos(nodeId));
+    }
     final edges = widget.level.edgesOf(nodeId);
     if (edges.isEmpty) return 0;
     return headingOf(_pos(nodeId), _pos(edges.first.other(nodeId)));
@@ -82,6 +85,7 @@ class _TrainLayerState extends State<TrainLayer> {
                   id: train.id,
                   from: from.nodeId,
                   to: train.nodeId,
+                  incomingEdgeId: train.incomingEdgeId,
                   t: t,
                   scale: train.delivered
                       ? 1 - _shrink.transform(widget.progress.value)
@@ -121,6 +125,7 @@ class _TrainLayerState extends State<TrainLayer> {
     required String id,
     required String from,
     required String to,
+    required String? incomingEdgeId,
     required double t,
     required double scale,
     required double lights,
@@ -128,10 +133,9 @@ class _TrainLayerState extends State<TrainLayer> {
   }) {
     final start = _pos(from);
     final end = _pos(to);
-    if (from != to) {
-      _headings[id] = headingOf(start, end);
-    }
-    final heading = _headings.putIfAbsent(id, () => _initialHeading(from));
+    final heading = from != to
+        ? headingOf(start, end)
+        : _standingHeading(to, incomingEdgeId);
     final center = Offset.lerp(start, end, t)! + lurch;
     const box = _length * 1.6;
     return Positioned(
