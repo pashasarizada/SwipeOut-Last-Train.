@@ -1,0 +1,23 @@
+{
+  "@@locale": "tr",
+  "appTitle": "SwipeOut: Last Train",
+  "play": "Oyna",
+  "cityIstanbul": "İSTANBUL",
+  "levelLabel": "BÖLÜM {number}",
+  "moves": "Hamle: {count}",
+  "undo": "Geri Al",
+  "restart": "Baştan",
+  "hint": "İpucu",
+  "levelComplete": "Hat temiz!",
+  "next": "Sonraki",
+  "replay": "Tekrar",
+  "tutorialSelectSwipe": "Trene dokun, sonra kaydırarak bir kare ilerlet.",
+  "tutorialSwitch": "Yönü değiştirmek için makasa dokun. Her dokunuş bir hamle.",
+  "tutorialOrder": "Trenler birbirinin içinden geçemez. Önce kim gidecek, seç.",
+  "blockedWrongStation": "Bu tren için yanlış istasyon.",
+  "blockedOccupied": "Yolda başka bir tren var.",
+  "blockedNoTrack": "O yönde ray yok.",
+  "blockedSwitchOccupied": "Makasın üstünde tren var.",
+  "selectTrainFirst": "Önce bir trene dokun.",
+  "hintUnavailable": "Şu an ipucu yok."
+}

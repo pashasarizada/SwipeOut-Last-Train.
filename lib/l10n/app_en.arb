@@ -1,0 +1,29 @@
+{
+  "@@locale": "en",
+  "appTitle": "SwipeOut: Last Train",
+  "play": "Play",
+  "cityIstanbul": "ISTANBUL",
+  "levelLabel": "LEVEL {number}",
+  "@levelLabel": {
+    "placeholders": { "number": { "type": "String" } }
+  },
+  "moves": "Moves: {count}",
+  "@moves": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "undo": "Undo",
+  "restart": "Restart",
+  "hint": "Hint",
+  "levelComplete": "Line cleared!",
+  "next": "Next",
+  "replay": "Replay",
+  "tutorialSelectSwipe": "Tap the train, then swipe to move it one square.",
+  "tutorialSwitch": "Tap the switch to change its route. Each tap is a move.",
+  "tutorialOrder": "Trains can't pass each other. Choose who goes first.",
+  "blockedWrongStation": "Wrong station for this train.",
+  "blockedOccupied": "Another train is in the way.",
+  "blockedNoTrack": "No track in that direction.",
+  "blockedSwitchOccupied": "A train is on the switch.",
+  "selectTrainFirst": "Tap a train first.",
+  "hintUnavailable": "No hint available right now."
+}
