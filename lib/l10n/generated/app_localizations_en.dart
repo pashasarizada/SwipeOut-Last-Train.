@@ -179,4 +179,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String bestLabel(int pulses) {
     return 'BEST $pulses';
   }
+
+  @override
+  String get settings => 'SETTINGS';
+
+  @override
+  String get settingsLabel => 'Settings';
+
+  @override
+  String get vibration => 'Vibration';
+
+  @override
+  String get reduceMotion => 'Reduce motion';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get languagePhone => 'PHONE';
+
+  @override
+  String get languageTurkish => 'TÜRKÇE';
+
+  @override
+  String get languageEnglish => 'ENGLISH';
 }

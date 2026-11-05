@@ -4,7 +4,17 @@ import 'package:flutter/widgets.dart';
 
 /// Our own drawn icons — the game never shows Material Icons
 /// (docs/UI_UX_GUIDELINES.md §1).
-enum GameIconKind { lock, star, starOutline, cross, route, signal, horn, check }
+enum GameIconKind {
+  gear,
+  lock,
+  star,
+  starOutline,
+  cross,
+  route,
+  signal,
+  horn,
+  check,
+}
 
 /// A small drawn icon, [size] pt square.
 final class GameIcon extends StatelessWidget {
@@ -46,6 +56,18 @@ final class GameIcon extends StatelessWidget {
     final fill = Paint()..color = color;
 
     switch (kind) {
+      case GameIconKind.gear:
+        // A cog: eight teeth round a ring with a hole.
+        for (var i = 0; i < 8; i++) {
+          final a = i * math.pi / 4;
+          canvas.drawLine(
+            p(0.30 * math.cos(a), 0.30 * math.sin(a)),
+            p(0.44 * math.cos(a), 0.44 * math.sin(a)),
+            line..strokeWidth = s * 0.14,
+          );
+        }
+        canvas.drawCircle(o, s * 0.28, line..strokeWidth = s * 0.12);
+        canvas.drawCircle(o, s * 0.08, fill);
       case GameIconKind.lock:
         canvas.drawArc(
           Rect.fromCenter(

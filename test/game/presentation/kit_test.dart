@@ -12,6 +12,7 @@ import 'package:swipeout_last_train/game/presentation/kit/game_scaffold.dart';
 import 'package:swipeout_last_train/game/presentation/kit/motion_settings.dart';
 import 'package:swipeout_last_train/game/presentation/kit/platform_announcement.dart';
 import 'package:swipeout_last_train/game/presentation/kit/signal_back_button.dart';
+import 'package:swipeout_last_train/game/presentation/kit/signal_toggle.dart';
 import 'package:swipeout_last_train/game/presentation/kit/split_flap_text.dart';
 import 'package:swipeout_last_train/game/presentation/kit/track_loader.dart';
 
@@ -136,6 +137,45 @@ void main() {
     setOuter(() => enabled = true);
     await tester.pumpAndSettle();
     expect(faceOffset(), rest);
+  });
+
+  testWidgets('SignalToggle flips its lamp, is 44 pt and says its state', (
+    tester,
+  ) async {
+    var on = false;
+    late StateSetter set;
+    final handle = tester.ensureSemantics();
+    await _pump(
+      tester,
+      StatefulBuilder(
+        builder: (context, setState) {
+          set = setState;
+          return SignalToggle(
+            value: on,
+            label: 'Titreşim',
+            onChanged: (v) => set(() => on = v),
+          );
+        },
+      ),
+    );
+    final size = tester.getSize(find.byType(SignalToggle));
+    expect(size.height, greaterThanOrEqualTo(44));
+    expect(size.width, greaterThanOrEqualTo(44));
+    await tester.tap(find.byType(SignalToggle));
+    await tester.pumpAndSettle();
+    expect(on, isTrue);
+    expect(
+      tester.getSemantics(find.byType(SignalToggle)),
+      matchesSemantics(
+        label: 'Titreşim',
+        hasToggledState: true,
+        isToggled: true,
+        hasTapAction: true,
+        hasEnabledState: true,
+        isEnabled: true,
+      ),
+    );
+    handle.dispose();
   });
 
   group('SplitFlapText', () {

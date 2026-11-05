@@ -397,6 +397,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'BEST {pulses}'**
   String bestLabel(int pulses);
+
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'SETTINGS'**
+  String get settings;
+
+  /// No description provided for @settingsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsLabel;
+
+  /// No description provided for @vibration.
+  ///
+  /// In en, this message translates to:
+  /// **'Vibration'**
+  String get vibration;
+
+  /// No description provided for @reduceMotion.
+  ///
+  /// In en, this message translates to:
+  /// **'Reduce motion'**
+  String get reduceMotion;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @languagePhone.
+  ///
+  /// In en, this message translates to:
+  /// **'PHONE'**
+  String get languagePhone;
+
+  /// No description provided for @languageTurkish.
+  ///
+  /// In en, this message translates to:
+  /// **'TÜRKÇE'**
+  String get languageTurkish;
+
+  /// No description provided for @languageEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'ENGLISH'**
+  String get languageEnglish;
 }
 
 class _AppLocalizationsDelegate

@@ -128,5 +128,13 @@
         "type": "int"
       }
     }
-  }
+  },
+  "settings": "SETTINGS",
+  "settingsLabel": "Settings",
+  "vibration": "Vibration",
+  "reduceMotion": "Reduce motion",
+  "language": "Language",
+  "languagePhone": "PHONE",
+  "languageTurkish": "TÜRKÇE",
+  "languageEnglish": "ENGLISH"
 }

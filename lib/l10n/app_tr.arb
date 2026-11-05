@@ -49,5 +49,13 @@
   "lineUnderConstruction": "HAT YAPIM AŞAMASINDA",
   "homeBoardLine": "SON SEFER 23:59",
   "parLabel": "PAR {par}",
-  "bestLabel": "EN İYİ {pulses}"
+  "bestLabel": "EN İYİ {pulses}",
+  "settings": "AYARLAR",
+  "settingsLabel": "Ayarlar",
+  "vibration": "Titreşim",
+  "reduceMotion": "Hareketi azalt",
+  "language": "Dil",
+  "languagePhone": "TELEFON",
+  "languageTurkish": "TÜRKÇE",
+  "languageEnglish": "ENGLISH"
 }

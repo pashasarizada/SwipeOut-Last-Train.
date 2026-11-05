@@ -179,4 +179,28 @@ class AppLocalizationsTr extends AppLocalizations {
   String bestLabel(int pulses) {
     return 'EN İYİ $pulses';
   }
+
+  @override
+  String get settings => 'AYARLAR';
+
+  @override
+  String get settingsLabel => 'Ayarlar';
+
+  @override
+  String get vibration => 'Titreşim';
+
+  @override
+  String get reduceMotion => 'Hareketi azalt';
+
+  @override
+  String get language => 'Dil';
+
+  @override
+  String get languagePhone => 'TELEFON';
+
+  @override
+  String get languageTurkish => 'TÜRKÇE';
+
+  @override
+  String get languageEnglish => 'ENGLISH';
 }
