@@ -31,7 +31,9 @@ OSM verisi kullanılırsa ODbL atıf ve "share-alike" yükümlülükleri ayrıca
 | `animations` | BSD-3-Clause | Ekran geçişleri (D-020) |
 | Material Icons | Apache-2.0 | Yalnız geçici; oyun UI kitiyle kendi ikonlarımıza geçilecek (D-021) |
 | `shared_preferences` (planlı) | BSD-3-Clause | İlerleme + Metro Passport (D-026) |
-| Fontlar (planlı, OFL) | SIL Open Font License 1.1 | Gömülü; aday: Unbounded/Bebas Neue, Share Tech Mono/DotGothic16, Inter/Manrope (D-025) |
+| Unbounded (`assets/fonts/Unbounded-Variable.ttf`) | SIL OFL 1.1 — `OFL-Unbounded.txt` | Başlık; kaynak github.com/google/fonts (05.11.2026) |
+| IBM Plex Mono SemiBold | SIL OFL 1.1 — `OFL-IBMPlexMono.txt` | Kalkış panosu/HUD |
+| Inter | SIL OFL 1.1 — `OFL-Inter.txt` | Gövde + tren sembolleri |
 
 Ses ve görsel asset'ler: yalnız kendi üretimimiz veya lisansı belgelenmiş kaynaklar; resmî metro anonsları kullanılmaz.
 

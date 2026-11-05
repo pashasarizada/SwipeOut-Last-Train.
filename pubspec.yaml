@@ -26,3 +26,15 @@ flutter:
   generate: true
   assets:
     - assets/levels/
+    - assets/branding/logo_512.png
+  fonts:
+    - family: Unbounded
+      fonts:
+        - asset: assets/fonts/Unbounded-Variable.ttf
+    - family: IBMPlexMono
+      fonts:
+        - asset: assets/fonts/IBMPlexMono-SemiBold.ttf
+          weight: 600
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Variable.ttf
