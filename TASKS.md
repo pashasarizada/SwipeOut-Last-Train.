@@ -35,6 +35,17 @@
 - [ ] Ayarlar: ses, titreşim, Reduced Motion, High Contrast, dil (M).
 - [ ] Sonraki pulse "hayalet tren" önizlemesi (S).
 
+## P1 — V2-UX son inceleme küçük bulguları (ertelendi)
+- [ ] SplitFlapText değişmeyen karakteri çevirmesin (S).
+- [ ] Kayıt yükleme kayıt-bazlı tolerans; `getString` try içinde (S).
+- [ ] Restart/undo sonrası vagon yönünü sıfırla (S).
+- [ ] Ortam parçacık döngüsü 8 sn'de sıçramasın; statik arka plan katmanlarını ayrı boya (S).
+- [ ] GameButton devre dışıyken bırakma; CitySelect PageController dispose (S).
+- [ ] 200 satırı aşan ekranları böl: city_map, city_select, pulse_game (M).
+- [ ] Bakü bilet testi boşa dokunuyor — düzelt (S).
+- [ ] Plan sapmaları: HUD tren glifi, parallax, Reduced Motion süre yarılama, ayar dişlisi, bilet yırtma animasyonu, yerel tarih biçimi, damga tekrar oynatma (M).
+- [ ] ControlTicket `tearLabel` zorunlu; `saveRun` hata yakalama (S).
+
 ## P2 — V2-C/D
 - [ ] Paris 6 (sinyal UI'ı ilk kez) · Londra 6 (halka) · Moskova 6 (çift halka) (L her biri).
 - [ ] Pasaport/rozet için Rive animasyonları değerlendirmesi (U7 sonrası).

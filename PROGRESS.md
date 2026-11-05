@@ -17,11 +17,13 @@
 - Düzeltme: GameButton gölge animasyonu negatif blur üretip sayfa geçişlerinde `_dependents.isEmpty` zincirine yol açıyordu; gölge artık sabit.
 
 **Çalıştırılan komutlar ve gerçek sonuçları:**
-- `scripts/check.sh` → format 0 değişiklik · `flutter analyze`: No issues found! · `flutter test`: +177 All tests passed!
+- `scripts/check.sh` → format 0 değişiklik · `flutter analyze`: No issues found! · `flutter test`: +181 All tests passed! (son inceleme düzeltmeleri sonrası)
 - `dart run tool/solve_levels.dart` → ANK-01 issues=0 optimal=2 par=2 · ANK-02 issues=0 optimal=3 par=3
 - `flutter build web --release` → ✓ Built build/web
 - `flutter build ios --simulator --debug` → ✓ Built Runner.app
 - iOS Simülatör (iPhone 16e): tüm akış elle oynandı (ANK-01/02 kazanıldı, geri dönüşler, pasaport); hata yok.
+
+- Son branch incelemesi (bağımsız reviewer): 0 kritik, 3 önemli (yetim sonuç panosu, kaybedilmiş kaydın geri yüklenmesi, Material ikonlar) → düzeltildi, testlerle; 13 küçük bulgu ertelendi (ledger'dan `TASKS.md`'ye taşınacak).
 
 **Simülatör görüntüleri** (`docs/images/v2-ux/`): 01-home · 02-city-ankara · 03-city-baku · 04-city-paris · 05-line-map · 06-platform · 07-line-cleared · 08-passport-cover · 09-passport-ankara
 
