@@ -30,7 +30,11 @@
 
 **BLOCKED / bilinen:** 320×568'de tahta ~180 pt; 44 pt hedefi orada tutmuyor (taşma yok). Kompakt düzen TASKS P1'de.
 
-**Sıradaki küçük görev:** LON-01 (Londra, ilk halka).
+**Londra (aynı gece):** LON-01 "Halka Girişi" (par 5) · LON-02 "Bir Tur Daha" — üç tren tek halka (par 7) · LON-03 "Son Aktarma" — mavi tam tur atar (par 8) · LON-04 "Paralel Hatlar" (par 7) · LON-05 "Gece Yarısı Sinyali" (par 8) · LON-06 "Son Halka" — par = max = 9. `scripts/check.sh` → +252 All tests passed. Londra bölümleri simülatörde elle oynanmadı (çözücü + replay + 44 pt düzen testleri kapsar).
+
+**BLOCKED — GitHub push:** `b37ef89` (LON-01) ve sonrası `remote: fatal error in commit_refs` ile reddediliyor; GitHub durum sayfası "All Systems Operational", `git fsck` temiz, tek fast-forward commit de reddedildi. Commit'ler yerelde `main`'de güvende; force push yapılmadı. Sabah tekrar denenmeli (`git push origin main`).
+
+**Sıradaki küçük görev:** MOS-01 (Moskova, çift halka).
 
 ---
 

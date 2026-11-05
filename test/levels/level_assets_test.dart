@@ -258,4 +258,10 @@ void main() {
     expect(level.initialSignals, {'G': SignalAspect.red});
     expect(level.solution, contains(const ToggleSignal('G')));
   });
+
+  test('London is complete: the finale leaves no spare minute', () {
+    final london = levels.where((l) => l.city == CityId.london).toList();
+    expect(london.map((l) => l.number), [1, 2, 3, 4, 5, 6]);
+    expect((london.last.parPulses, london.last.maxPulses), (9, 9));
+  });
 }

@@ -3,7 +3,7 @@
     {"id": "ankara", "levels": ["ANK-01.json", "ANK-02.json", "ANK-03.json", "ANK-04.json", "ANK-05.json", "ANK-06.json"]},
     {"id": "baku", "levels": ["BAK-01.json", "BAK-02.json", "BAK-03.json", "BAK-04.json", "BAK-05.json", "BAK-06.json"]},
     {"id": "paris", "levels": ["PAR-01.json", "PAR-02.json", "PAR-03.json", "PAR-04.json", "PAR-05.json", "PAR-06.json"]},
-    {"id": "london", "levels": ["LON-01.json", "LON-02.json", "LON-03.json", "LON-04.json", "LON-05.json"]},
+    {"id": "london", "levels": ["LON-01.json", "LON-02.json", "LON-03.json", "LON-04.json", "LON-05.json", "LON-06.json"]},
     {"id": "moscow", "levels": []}
   ]
 }
