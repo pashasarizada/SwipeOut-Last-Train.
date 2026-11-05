@@ -1,5 +1,24 @@
 # PROGRESS
 
+## 2026-11-06 (3) — branch `main`
+
+**Bağlam:** Kullanıcı tek branch (`main`) ve her commit'te doğrudan push istedi (D-028). Gece boyu kesintisiz çalışma.
+
+**Tamamlanan:**
+- `main` oluşturuldu (en güncel `claude/v2-b` hâliyle), kural `CLAUDE.md` + D-028'e yazıldı.
+- ANK-04 "Son Aktarma" (7 düğüm, par 4): ortak aktarmadan önce kim geçecek; beklemek "duran trene giriş" reddi.
+- ANK-05 "Bir Dakika Daha" (7 düğüm, par 4 = max 4): ilk kez dar saat; ilk dakikayı boşa harcamak çözümsüz (çözücü testi).
+- ANK-06 "Başkent Finali" (8 düğüm, par 5): koridorda iki tren aynı anda; Ankara tamamlandı.
+
+**Çalıştırılan komutlar ve gerçek sonuçları:**
+- `dart run tool/solve_levels.dart` → ANK-04 optimal=4 par=4 · ANK-05 optimal=4 par=4 max=4 · ANK-06 optimal=5 par=5; hepsi issues=0
+- `scripts/check.sh` → No issues found! · +190 All tests passed!
+- iOS Simülatör: ANK-04, 05, 06 uçtan uca 3 yıldızla oynandı; ANK-06 sonunda "PASAPORTU AÇ" → **Ankara damgası basıldı** (`docs/images/v2-ux/10-ankara-stamp.png`).
+
+**Sıradaki küçük görev:** BAK-01 "Hazar Gecesi" (iki güzergâhı çakıştırma, 7 düğüm).
+
+---
+
 ## 2026-11-06 (2) — branch `claude/v2-b`
 
 **Bağlam:** V2-B'nin ilk görevi: ANK-03 "İki Vagon" (GAME_DESIGN_V2 §6: iki tren aynı anda, ~6 düğüm).
