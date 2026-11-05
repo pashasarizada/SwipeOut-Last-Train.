@@ -1,0 +1,63 @@
+{
+  "id": "MOS-01",
+  "city": "moscow",
+  "number": 1,
+  "tutorial": false,
+  "title": {"tr": "Soğuk Başlangıç", "en": "Cold Start"},
+  "maxPulses": 11,
+  "parPulses": 9,
+  "maxChangesPerPulse": 1,
+  "nodes": [
+    {"id": "A", "kind": "depot", "x": 0.04, "y": 0.10},
+    {"id": "E", "kind": "switch", "x": 0.14, "y": 0.30},
+    {"id": "F", "kind": "depot", "x": 0.40, "y": 0.02},
+    {"id": "V", "kind": "switch", "x": 0.40, "y": 0.22},
+    {"id": "K", "kind": "switch", "x": 0.40, "y": 0.58},
+    {"id": "X", "kind": "switch", "x": 0.18, "y": 0.66},
+    {"id": "R", "kind": "goal", "x": 0.10, "y": 0.90},
+    {"id": "J", "kind": "switch", "x": 0.62, "y": 0.62},
+    {"id": "D", "kind": "depot", "x": 0.70, "y": 0.06},
+    {"id": "Y", "kind": "switch", "x": 0.64, "y": 0.28},
+    {"id": "Z", "kind": "switch", "x": 0.88, "y": 0.36},
+    {"id": "B", "kind": "goal", "x": 0.98, "y": 0.14},
+    {"id": "W", "kind": "switch", "x": 0.86, "y": 0.70},
+    {"id": "L", "kind": "goal", "x": 0.94, "y": 0.94}
+  ],
+  "edges": [
+    {"id": "AE", "a": "A", "b": "E"},
+    {"id": "EV", "a": "E", "b": "V"},
+    {"id": "FV", "a": "F", "b": "V"},
+    {"id": "VK", "a": "V", "b": "K"},
+    {"id": "KX", "a": "K", "b": "X"},
+    {"id": "XE", "a": "X", "b": "E"},
+    {"id": "XR", "a": "X", "b": "R"},
+    {"id": "KJ", "a": "K", "b": "J"},
+    {"id": "JY", "a": "J", "b": "Y"},
+    {"id": "DY", "a": "D", "b": "Y"},
+    {"id": "YZ", "a": "Y", "b": "Z"},
+    {"id": "ZB", "a": "Z", "b": "B"},
+    {"id": "ZW", "a": "Z", "b": "W"},
+    {"id": "WJ", "a": "W", "b": "J"},
+    {"id": "WL", "a": "W", "b": "L"}
+  ],
+  "switches": [
+    {"nodeId": "E", "trunkEdge": "EV", "branchAEdge": "XE", "branchBEdge": "AE", "selectedBranch": "B"},
+    {"nodeId": "V", "trunkEdge": "VK", "branchAEdge": "EV", "branchBEdge": "FV", "selectedBranch": "A"},
+    {"nodeId": "K", "trunkEdge": "VK", "branchAEdge": "KX", "branchBEdge": "KJ", "selectedBranch": "A"},
+    {"nodeId": "X", "trunkEdge": "KX", "branchAEdge": "XE", "branchBEdge": "XR", "selectedBranch": "A"},
+    {"nodeId": "J", "trunkEdge": "JY", "branchAEdge": "WJ", "branchBEdge": "KJ", "selectedBranch": "A"},
+    {"nodeId": "Y", "trunkEdge": "YZ", "branchAEdge": "JY", "branchBEdge": "DY", "selectedBranch": "A"},
+    {"nodeId": "Z", "trunkEdge": "YZ", "branchAEdge": "ZW", "branchBEdge": "ZB", "selectedBranch": "A"},
+    {"nodeId": "W", "trunkEdge": "ZW", "branchAEdge": "WJ", "branchBEdge": "WL", "selectedBranch": "A"}
+  ],
+  "signals": [],
+  "trains": [
+    {"id": "red_1", "startNode": "A", "goalNode": "B", "symbol": "circle", "style": "coral"},
+    {"id": "blue_1", "startNode": "D", "goalNode": "L", "symbol": "triangle", "style": "azure"},
+    {"id": "lime_1", "startNode": "F", "goalNode": "R", "symbol": "square", "style": "lime"}
+  ],
+  "tutorialSteps": [
+    {"tr": "İki halka, tek köprü.", "en": "Two rings, one bridge."}
+  ],
+  "solution": ["switch:J", "switch:V", "switch:W", "switch:X", "switch:V", "switch:K", "switch:Y", "switch:Y", "switch:Z"]
+}

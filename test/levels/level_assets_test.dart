@@ -264,4 +264,17 @@ void main() {
     expect(london.map((l) => l.number), [1, 2, 3, 4, 5, 6]);
     expect((london.last.parPulses, london.last.maxPulses), (9, 9));
   });
+
+  test('MOS-01: red crosses the bridge from one ring to the other', () {
+    final level = levels.firstWhere((l) => l.id == 'MOS-01');
+    final engine = PulseEngine(level);
+    var state = level.initialState;
+    final path = <String>[];
+    for (final action in level.solution) {
+      state = (engine.simulatePulse(state, action) as PulseApplied).state;
+      path.add(state.trainById('red_1')!.nodeId);
+    }
+    expect(path, containsAllInOrder(['K', 'J']));
+    expect(state.trains.every((t) => t.delivered), isTrue);
+  });
 }

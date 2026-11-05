@@ -53,10 +53,8 @@ void main() {
   });
 
   test('a city without levels yet is empty', () async {
-    expect(
-      await AssetLevelRepository(rootBundle).loadCity(CityId.moscow),
-      isEmpty,
-    );
+    final bundle = _MapBundle({'assets/levels/index.json': _index([])});
+    expect(await AssetLevelRepository(bundle).loadCity(CityId.moscow), isEmpty);
   });
 
   test('broken JSON names the file', () async {
