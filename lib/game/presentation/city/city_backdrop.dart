@@ -42,25 +42,30 @@ class _CityBackdropState extends State<CityBackdrop>
     super.dispose();
   }
 
+  /// Two layers: the still city (background, pattern, glow, skyline)
+  /// paints once; only the ambient layer above it repaints each frame.
   @override
-  Widget build(BuildContext context) => RepaintBoundary(
-    child: CustomPaint(
-      size: Size.infinite,
-      painter: _BackdropPainter(
-        CityTheme.of(widget.city),
-        _ambient,
-        widget.parallax,
-      ),
-    ),
-  );
+  Widget build(BuildContext context) {
+    final theme = CityTheme.of(widget.city);
+    return Stack(
+      fit: StackFit.expand,
+      alignment: Alignment.center,
+      children: [
+        RepaintBoundary(
+          child: CustomPaint(painter: _CityPainter(theme, widget.parallax)),
+        ),
+        RepaintBoundary(
+          child: CustomPaint(painter: _AmbientPainter(theme, _ambient)),
+        ),
+      ],
+    );
+  }
 }
 
-final class _BackdropPainter extends CustomPainter {
-  _BackdropPainter(this.theme, this.ambient, this.parallax)
-    : super(repaint: ambient);
+final class _CityPainter extends CustomPainter {
+  const _CityPainter(this.theme, this.parallax);
 
   final CityTheme theme;
-  final Animation<double> ambient;
   final double parallax;
 
   @override
@@ -69,10 +74,23 @@ final class _BackdropPainter extends CustomPainter {
     theme.art.paintPattern(canvas, size, theme);
     CityArtBase.horizonGlow(canvas, size, theme);
     theme.art.paintSkyline(canvas, size, theme, parallax: parallax);
-    theme.art.paintAmbient(canvas, size, theme, ambient.value);
   }
 
   @override
-  bool shouldRepaint(_BackdropPainter old) =>
+  bool shouldRepaint(_CityPainter old) =>
       old.theme != theme || old.parallax != parallax;
+}
+
+final class _AmbientPainter extends CustomPainter {
+  _AmbientPainter(this.theme, this.ambient) : super(repaint: ambient);
+
+  final CityTheme theme;
+  final Animation<double> ambient;
+
+  @override
+  void paint(Canvas canvas, Size size) =>
+      theme.art.paintAmbient(canvas, size, theme, ambient.value);
+
+  @override
+  bool shouldRepaint(_AmbientPainter old) => old.theme != theme;
 }

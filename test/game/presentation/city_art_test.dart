@@ -87,4 +87,22 @@ void main() {
     await tester.pumpAndSettle();
     expect(tester.binding.hasScheduledFrame, isFalse);
   });
+
+  testWidgets('the still city and its ambience paint in separate layers', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      const MotionSettings(
+        reduced: true,
+        child: CityBackdrop(city: CityId.london),
+      ),
+    );
+    expect(
+      find.descendant(
+        of: find.byType(CityBackdrop),
+        matching: find.byType(RepaintBoundary),
+      ),
+      findsNWidgets(2),
+    );
+  });
 }
