@@ -18,9 +18,28 @@ final class PulseController extends ChangeNotifier {
   PulseController({required LevelDefinition level})
     : _session = GameSession(level);
 
+  /// Rebuilds a half-played level by replaying its committed controls. A
+  /// run that no longer replays (the level changed) starts fresh.
+  factory PulseController.restore({
+    required LevelDefinition level,
+    required List<ControlAction?> actions,
+  }) {
+    final controller = PulseController(level: level);
+    for (final action in actions) {
+      if (controller._session.pulse(action) is PulseFailed) {
+        controller._session.restart();
+        controller._history.clear();
+        return controller;
+      }
+      controller._history.add(action);
+    }
+    return controller;
+  }
+
   final GameSession _session;
   final StreamController<GameEvent> _events = StreamController.broadcast();
 
+  final List<ControlAction?> _history = [];
   ControlAction? _pending;
   GameState? _animatingFrom;
   bool _disposed = false;
@@ -34,6 +53,9 @@ final class PulseController extends ChangeNotifier {
   bool get isLost => _session.isLost;
   bool get canUndo => _session.canUndo;
   Stream<GameEvent> get events => _events.stream;
+
+  /// The control used by each committed pulse, oldest first (for saving).
+  List<ControlAction?> get history => List.unmodifiable(_history);
 
   /// True between a committed pulse and [finishAnimation].
   bool get isAnimating => _animatingFrom != null;
@@ -68,8 +90,10 @@ final class PulseController extends ChangeNotifier {
   void advance() {
     if (!_canPlan) return;
     final before = state;
-    switch (_session.pulse(_pending)) {
+    final action = _pending;
+    switch (_session.pulse(action)) {
       case PulseApplied(:final state, :final delivered):
+        _history.add(action);
         _pending = null;
         _animatingFrom = before;
         _emit(PulseCommitted(before, state, delivered));
@@ -90,6 +114,7 @@ final class PulseController extends ChangeNotifier {
 
   void undo() {
     if (!_acceptsInput || !_session.undo()) return;
+    _history.removeLast();
     _pending = null;
     _notify();
   }
@@ -97,6 +122,7 @@ final class PulseController extends ChangeNotifier {
   void restart() {
     if (!_acceptsInput) return;
     _session.restart();
+    _history.clear();
     _pending = null;
     _notify();
   }
