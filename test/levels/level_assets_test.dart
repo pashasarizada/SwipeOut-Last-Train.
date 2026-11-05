@@ -227,4 +227,17 @@ void main() {
     expect(level.switches, hasLength(6));
     expect(level.solution.every((a) => a != null), isTrue);
   });
+
+  test('LON-03: blue rides a full lap of the ring to its goal', () {
+    final level = levels.firstWhere((l) => l.id == 'LON-03');
+    final engine = PulseEngine(level);
+    var state = level.initialState;
+    final path = <String>[];
+    for (final action in level.solution) {
+      state = (engine.simulatePulse(state, action) as PulseApplied).state;
+      path.add(state.trainById('blue_1')!.nodeId);
+    }
+    expect(path, containsAll(['Y', 'X', 'Z', 'W', 'E', 'V']));
+    expect(state.trainById('blue_1')!.delivered, isTrue);
+  });
 }
