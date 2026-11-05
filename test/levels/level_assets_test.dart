@@ -220,4 +220,11 @@ void main() {
     expect(state.trainById('red_1')!.nodeId, 'Z');
     expect(state.trainById('red_1')!.delivered, isFalse);
   });
+
+  test('LON-02: three trains share one ring, a control every minute', () {
+    final level = levels.firstWhere((l) => l.id == 'LON-02');
+    expect(level.trains, hasLength(3));
+    expect(level.switches, hasLength(6));
+    expect(level.solution.every((a) => a != null), isTrue);
+  });
 }

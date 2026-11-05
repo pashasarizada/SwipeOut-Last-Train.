@@ -1,0 +1,56 @@
+{
+  "id": "LON-02",
+  "city": "london",
+  "number": 2,
+  "tutorial": false,
+  "title": {"tr": "Bir Tur Daha", "en": "One More Loop"},
+  "maxPulses": 9,
+  "parPulses": 7,
+  "maxChangesPerPulse": 1,
+  "nodes": [
+    {"id": "A", "kind": "depot", "x": 0.06, "y": 0.14},
+    {"id": "E", "kind": "switch", "x": 0.28, "y": 0.30},
+    {"id": "V", "kind": "switch", "x": 0.55, "y": 0.16},
+    {"id": "Y", "kind": "switch", "x": 0.80, "y": 0.30},
+    {"id": "D", "kind": "depot", "x": 0.96, "y": 0.10},
+    {"id": "X", "kind": "switch", "x": 0.82, "y": 0.66},
+    {"id": "R", "kind": "goal", "x": 0.96, "y": 0.86},
+    {"id": "Z", "kind": "switch", "x": 0.55, "y": 0.82},
+    {"id": "B", "kind": "goal", "x": 0.34, "y": 0.98},
+    {"id": "W", "kind": "switch", "x": 0.28, "y": 0.66},
+    {"id": "F", "kind": "depot", "x": 0.04, "y": 0.56},
+    {"id": "L", "kind": "goal", "x": 0.55, "y": 0.44}
+  ],
+  "edges": [
+    {"id": "AE", "a": "A", "b": "E"},
+    {"id": "EV", "a": "E", "b": "V"},
+    {"id": "VY", "a": "V", "b": "Y"},
+    {"id": "DY", "a": "D", "b": "Y"},
+    {"id": "YX", "a": "Y", "b": "X"},
+    {"id": "XR", "a": "X", "b": "R"},
+    {"id": "XZ", "a": "X", "b": "Z"},
+    {"id": "ZB", "a": "Z", "b": "B"},
+    {"id": "ZW", "a": "Z", "b": "W"},
+    {"id": "WE", "a": "W", "b": "E"},
+    {"id": "FW", "a": "F", "b": "W"},
+    {"id": "VL", "a": "V", "b": "L"}
+  ],
+  "switches": [
+    {"nodeId": "E", "trunkEdge": "EV", "branchAEdge": "WE", "branchBEdge": "AE", "selectedBranch": "B"},
+    {"nodeId": "V", "trunkEdge": "EV", "branchAEdge": "VY", "branchBEdge": "VL", "selectedBranch": "A"},
+    {"nodeId": "Y", "trunkEdge": "YX", "branchAEdge": "VY", "branchBEdge": "DY", "selectedBranch": "A"},
+    {"nodeId": "X", "trunkEdge": "YX", "branchAEdge": "XZ", "branchBEdge": "XR", "selectedBranch": "A"},
+    {"nodeId": "Z", "trunkEdge": "XZ", "branchAEdge": "ZW", "branchBEdge": "ZB", "selectedBranch": "A"},
+    {"nodeId": "W", "trunkEdge": "WE", "branchAEdge": "ZW", "branchBEdge": "FW", "selectedBranch": "A"}
+  ],
+  "signals": [],
+  "trains": [
+    {"id": "red_1", "startNode": "A", "goalNode": "R", "symbol": "circle", "style": "coral"},
+    {"id": "blue_1", "startNode": "D", "goalNode": "B", "symbol": "triangle", "style": "azure"},
+    {"id": "lime_1", "startNode": "F", "goalNode": "L", "symbol": "square", "style": "lime"}
+  ],
+  "tutorialSteps": [
+    {"tr": "Fazladan bir tur dakika yer.", "en": "An extra loop costs minutes."}
+  ],
+  "solution": ["switch:W", "switch:Y", "switch:Y", "switch:Z", "switch:X", "switch:E", "switch:V"]
+}
