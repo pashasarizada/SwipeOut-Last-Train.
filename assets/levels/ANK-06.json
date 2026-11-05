@@ -1,0 +1,40 @@
+{
+  "id": "ANK-06",
+  "city": "ankara",
+  "number": 6,
+  "tutorial": false,
+  "title": {"tr": "Başkent Finali", "en": "Capital Finale"},
+  "maxPulses": 6,
+  "parPulses": 5,
+  "maxChangesPerPulse": 1,
+  "nodes": [
+    {"id": "A", "kind": "depot", "x": 0.08, "y": 0.20},
+    {"id": "D", "kind": "depot", "x": 0.08, "y": 0.84},
+    {"id": "T", "kind": "track", "x": 0.18, "y": 0.62},
+    {"id": "M", "kind": "switch", "x": 0.32, "y": 0.44},
+    {"id": "C", "kind": "track", "x": 0.52, "y": 0.44},
+    {"id": "S", "kind": "switch", "x": 0.72, "y": 0.44},
+    {"id": "R", "kind": "goal", "x": 0.92, "y": 0.18},
+    {"id": "B", "kind": "goal", "x": 0.92, "y": 0.74}
+  ],
+  "edges": [
+    {"id": "AM", "a": "A", "b": "M"},
+    {"id": "DT", "a": "D", "b": "T"},
+    {"id": "TM", "a": "T", "b": "M"},
+    {"id": "MC", "a": "M", "b": "C"},
+    {"id": "CS", "a": "C", "b": "S"},
+    {"id": "SR", "a": "S", "b": "R"},
+    {"id": "SB", "a": "S", "b": "B"}
+  ],
+  "switches": [
+    {"nodeId": "M", "trunkEdge": "MC", "branchAEdge": "AM", "branchBEdge": "TM", "selectedBranch": "B"},
+    {"nodeId": "S", "trunkEdge": "CS", "branchAEdge": "SR", "branchBEdge": "SB", "selectedBranch": "B"}
+  ],
+  "signals": [],
+  "trains": [
+    {"id": "red_1", "startNode": "A", "goalNode": "R", "symbol": "circle", "style": "coral"},
+    {"id": "blue_1", "startNode": "D", "goalNode": "B", "symbol": "triangle", "style": "azure"}
+  ],
+  "tutorialSteps": [],
+  "solution": ["switch:M", "switch:S", "switch:M", "wait", "switch:S"]
+}

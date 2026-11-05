@@ -82,4 +82,14 @@ void main() {
       isA<Unsolvable>(),
     );
   });
+
+  test('Ankara is complete: six levels, the finale has a corridor', () {
+    final ankara = levels.where((l) => l.city == CityId.ankara).toList();
+    expect(ankara.map((l) => l.number), [1, 2, 3, 4, 5, 6]);
+    final finale = ankara.last;
+    expect(
+      (finale.nodes.length, finale.switches.length, finale.parPulses),
+      (8, 2, 5),
+    );
+  });
 }
