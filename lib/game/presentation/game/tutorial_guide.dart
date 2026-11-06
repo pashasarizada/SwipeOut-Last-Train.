@@ -61,7 +61,12 @@ abstract final class TutorialGuide {
       }
     }
     if (history.length >= solution.length) return null;
-    final expected = solution[history.length];
+    return towards(solution[history.length], pending);
+  }
+
+  /// The tap that brings [pending] to [expected]: the control to pick (or
+  /// a wrong pick to cancel), then the lever.
+  static GuideTarget towards(ControlAction? expected, ControlAction? pending) {
     if (pending == expected) return const GuideLever();
     if (pending != null) return GuideNode(pending.nodeId);
     return GuideNode(expected!.nodeId);

@@ -18,6 +18,7 @@
   "meterLabel": "{minutes} · {trains}",
   "labelSeparator": ". ",
   "showRulesAgain": "Kuralları yeniden göster",
+  "hint": "İpucu",
   "forecastWarning": "Dikkat: bu dakika geçmez",
   "cancel": "İptal",
   "undo": "GERİ AL",

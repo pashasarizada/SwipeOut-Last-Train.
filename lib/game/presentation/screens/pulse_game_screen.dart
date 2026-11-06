@@ -7,9 +7,11 @@ import '../../../l10n/generated/app_localizations.dart';
 import '../../domain/control_action.dart';
 import '../../domain/level_definition.dart';
 import '../../domain/level_result.dart';
+import '../../engine/hint_finder.dart';
 import '../board/board_view.dart';
 import '../game/game_event.dart';
 import '../game/game_scope.dart';
+import '../game/hint_controller.dart';
 import '../game/progress_store.dart';
 import '../game/pulse_controller.dart';
 import '../game/tutorial_guide.dart';
@@ -33,6 +35,7 @@ final class PulseGameScreen extends StatefulWidget {
     required this.level,
     this.restore = const [],
     this.onNext,
+    this.hintRunner,
   });
 
   final LevelDefinition level;
@@ -40,6 +43,10 @@ final class PulseGameScreen extends StatefulWidget {
   /// Controls of a half-played run to replay on open.
   final List<ControlAction?> restore;
   final VoidCallback? onNext;
+
+  /// Where hints are worked out; tests run them inline.
+  @visibleForTesting
+  final HintRunner? hintRunner;
 
   @override
   State<PulseGameScreen> createState() => _PulseGameScreenState();
@@ -49,6 +56,9 @@ class _PulseGameScreenState extends State<PulseGameScreen> {
   late final PulseController _controller = widget.restore.isEmpty
       ? PulseController(level: widget.level)
       : PulseController.restore(level: widget.level, actions: widget.restore);
+  late final HintController? _hints = widget.level.tutorial
+      ? null
+      : HintController(_controller, runner: widget.hintRunner);
   late final StreamSubscription<GameEvent> _events;
   ProgressStore? _store;
   List<ControlAction?> _saved = const [];
@@ -116,6 +126,7 @@ class _PulseGameScreenState extends State<PulseGameScreen> {
     _events.cancel();
     _controller.removeListener(_saveRun);
     _controller.removeListener(_hideRulesOnPlay);
+    _hints?.dispose();
     _controller.dispose();
     super.dispose();
   }
@@ -160,6 +171,7 @@ class _PulseGameScreenState extends State<PulseGameScreen> {
                 controller: _controller,
                 leverKey: _leverKey,
                 undoKey: _undoKey,
+                hints: _hints,
               ),
             ],
           ),

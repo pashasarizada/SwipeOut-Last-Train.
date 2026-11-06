@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:swipeout_last_train/app.dart';
 import 'package:swipeout_last_train/game/domain/city.dart';
+import 'package:swipeout_last_train/game/domain/control_action.dart';
+import 'package:swipeout_last_train/game/domain/game_state.dart';
 import 'package:swipeout_last_train/game/domain/level_definition.dart';
 import 'package:swipeout_last_train/game/domain/node.dart';
 import 'package:swipeout_last_train/game/domain/progress.dart';
+import 'package:swipeout_last_train/game/engine/hint_finder.dart';
 import 'package:swipeout_last_train/game/presentation/board/board_layout.dart';
 import 'package:swipeout_last_train/game/presentation/board/board_view.dart';
 import 'package:swipeout_last_train/game/presentation/game/progress_store.dart';
@@ -407,6 +410,42 @@ void main() {
 
     testWidgets('levels that are not tutorials have no hand', (tester) async {
       await _app(tester, home: PulseGameScreen(level: wrongWayLevel()));
+      expect(find.byType(TutorialHand), findsNothing);
+    });
+  });
+
+  group('hint button', () {
+    Future<Hint> inline(
+      LevelDefinition level,
+      GameState state,
+      List<ControlAction?> history,
+    ) async => HintFinder(level).next(state, history);
+
+    testWidgets('tutorials have no hint button; the hand is enough', (
+      tester,
+    ) async {
+      await _app(tester, home: PulseGameScreen(level: ank01()));
+      expect(find.bySemanticsLabel('Hint'), findsNothing);
+    });
+
+    testWidgets('a hint shows the hand, which leaves after the move', (
+      tester,
+    ) async {
+      await _app(
+        tester,
+        home: PulseGameScreen(level: wrongWayLevel(), hintRunner: inline),
+      );
+      expect(find.byType(TutorialHand), findsNothing);
+
+      await tester.tap(find.bySemanticsLabel('Hint'));
+      await tester.pumpAndSettle();
+      // The train must first roll onto the switch: pull the lever.
+      expect(
+        tester.widget<TutorialHand>(find.byType(TutorialHand)).target,
+        const GuideLever(),
+      );
+
+      await _advance(tester);
       expect(find.byType(TutorialHand), findsNothing);
     });
   });

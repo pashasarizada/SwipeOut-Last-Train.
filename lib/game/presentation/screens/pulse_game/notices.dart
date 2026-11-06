@@ -42,20 +42,20 @@ extension _Notices on _PulseGameScreenState {
     });
   }
 
-  /// On tutorial levels, a drawn hand points at the next right tap.
+  /// A drawn hand points at the next right tap: always on tutorial
+  /// levels, and after the hint button elsewhere.
   Widget _tutorialHand() => ListenableBuilder(
-    listenable: _controller,
+    listenable: Listenable.merge([_controller, _hints]),
     builder: (context, _) {
-      final target = _controller.isAnimating
+      final target = _controller.isAnimating || _controller.isSolved
           ? null
           : TutorialGuide.next(
-              level: widget.level,
-              history: _controller.history,
-              pending: _controller.pending,
-            );
-      if (target == null || _controller.isSolved) {
-        return const SizedBox.shrink();
-      }
+                  level: widget.level,
+                  history: _controller.history,
+                  pending: _controller.pending,
+                ) ??
+                _hintTarget();
+      if (target == null) return const SizedBox.shrink();
       return TutorialHand(
         target: target,
         level: widget.level,
@@ -65,4 +65,13 @@ extension _Notices on _PulseGameScreenState {
       );
     },
   );
+
+  GuideTarget? _hintTarget() => switch (_hints?.hint) {
+    HintAction(:final action) => TutorialGuide.towards(
+      action,
+      _controller.pending,
+    ),
+    HintUndo() => const GuideUndo(),
+    null => null,
+  };
 }

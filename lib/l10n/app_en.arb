@@ -48,6 +48,7 @@
   },
   "labelSeparator": ". ",
   "showRulesAgain": "Show the rules again",
+  "hint": "Hint",
   "forecastWarning": "Warning: this minute will fail",
   "cancel": "Cancel",
   "undo": "UNDO",

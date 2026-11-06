@@ -206,6 +206,12 @@ abstract class AppLocalizations {
   /// **'Show the rules again'**
   String get showRulesAgain;
 
+  /// No description provided for @hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Hint'**
+  String get hint;
+
   /// No description provided for @forecastWarning.
   ///
   /// In en, this message translates to:

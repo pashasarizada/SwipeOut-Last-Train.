@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../../l10n/generated/app_localizations.dart';
+import '../game/hint_controller.dart';
 import '../game/pulse_controller.dart';
 import '../kit/advance_lever.dart';
 import '../kit/game_button.dart';
+import '../kit/game_icon.dart';
 import '../theme/app_colors.dart';
 import 'game_texts.dart';
 
@@ -15,6 +17,7 @@ final class PulseControls extends StatelessWidget {
     required this.controller,
     this.leverKey,
     this.undoKey,
+    this.hints,
   });
 
   final PulseController controller;
@@ -23,11 +26,14 @@ final class PulseControls extends StatelessWidget {
   final GlobalKey? leverKey;
   final GlobalKey? undoKey;
 
+  /// The hint button's state; none on tutorial levels (the hand guides).
+  final HintController? hints;
+
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     return ListenableBuilder(
-      listenable: controller,
+      listenable: Listenable.merge([controller, hints]),
       builder: (context, _) {
         final idle = !controller.isAnimating;
         final playing = idle && !controller.isSolved && !controller.isLost;
@@ -57,6 +63,10 @@ final class PulseControls extends StatelessWidget {
                     child: KeyedSubtree(key: undoKey, child: undo),
                   ),
                   const SizedBox(width: 12),
+                  if (hints case final hints?) ...[
+                    _HintButton(hints: hints, label: l.hint),
+                    const SizedBox(width: 12),
+                  ],
                   Expanded(child: restart),
                 ],
               ),
@@ -79,6 +89,32 @@ final class PulseControls extends StatelessWidget {
       },
     );
   }
+}
+
+/// A square bulb button: shows the next right move, at the cost of the
+/// run's third star.
+final class _HintButton extends StatelessWidget {
+  const _HintButton({required this.hints, required this.label});
+
+  final HintController hints;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) => SizedBox(
+    width: 60,
+    child: GameButton(
+      label: '',
+      semanticsLabel: label,
+      size: GameButtonSize.small,
+      color: AppColors.accentAmber,
+      icon: const GameIcon(
+        GameIconKind.bulb,
+        size: 22,
+        color: AppColors.background,
+      ),
+      onPressed: hints.canAsk ? hints.request : null,
+    ),
+  );
 }
 
 /// Short phones (the original iPhone SE, 568 pt) get a tighter platform so

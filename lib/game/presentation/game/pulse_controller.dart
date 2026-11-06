@@ -148,16 +148,27 @@ final class PulseController extends ChangeNotifier {
     _session.restart();
     _history.clear();
     _pending = null;
+    _hintUsed = false;
     _notify();
   }
+
+  /// A hint was shown in this run: a win keeps at most two stars. Undo
+  /// keeps the mark; only restarting clears it.
+  bool get hintUsed => _hintUsed;
+  bool _hintUsed = false;
+
+  void markHintUsed() => _hintUsed = true;
 
   LevelResult _result() => LevelResult(
     levelId: level.id,
     pulses: pulses,
-    rating: level.tutorial
-        ? null
-        : StarRating.forPulses(pulses: pulses, par: level.parPulses),
+    rating: level.tutorial ? null : _rating(),
   );
+
+  StarRating _rating() {
+    final earned = StarRating.forPulses(pulses: pulses, par: level.parPulses);
+    return _hintUsed && earned == StarRating.gold ? StarRating.silver : earned;
+  }
 
   void _emit(GameEvent event) {
     if (!_disposed) _events.add(event);

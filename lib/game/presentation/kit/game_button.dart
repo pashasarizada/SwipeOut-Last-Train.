@@ -65,6 +65,8 @@ class _GameButtonState extends State<GameButton> {
   @override
   Widget build(BuildContext context) {
     final color = widget.color;
+    // An icon with an empty label is a square icon button.
+    final iconOnly = widget.label.isEmpty && widget.icon != null;
     final base = Color.lerp(color, Colors.black, 0.55)!;
     final radius = BorderRadius.circular(18);
     // The decoration (and its shadow) never animates: lerping a shadow list
@@ -79,7 +81,7 @@ class _GameButtonState extends State<GameButton> {
       child: Container(
         key: GameButton.faceKey,
         height: widget.size.height,
-        padding: const EdgeInsets.symmetric(horizontal: 22),
+        padding: EdgeInsets.symmetric(horizontal: iconOnly ? 8 : 22),
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: radius,
@@ -101,22 +103,23 @@ class _GameButtonState extends State<GameButton> {
           children: [
             if (widget.icon case final icon?) ...[
               icon,
-              const SizedBox(width: 10),
+              if (!iconOnly) const SizedBox(width: 10),
             ],
-            Flexible(
-              child: Text(
-                widget.label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontFamily: GameFonts.display,
-                  fontSize: widget.size.fontSize,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 1.2,
-                  color: AppColors.background,
+            if (!iconOnly)
+              Flexible(
+                child: Text(
+                  widget.label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontFamily: GameFonts.display,
+                    fontSize: widget.size.fontSize,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 1.2,
+                    color: AppColors.background,
+                  ),
                 ),
               ),
-            ),
           ],
         ),
       ),

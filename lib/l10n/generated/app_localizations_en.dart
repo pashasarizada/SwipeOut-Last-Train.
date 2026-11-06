@@ -70,6 +70,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get showRulesAgain => 'Show the rules again';
 
   @override
+  String get hint => 'Hint';
+
+  @override
   String get forecastWarning => 'Warning: this minute will fail';
 
   @override

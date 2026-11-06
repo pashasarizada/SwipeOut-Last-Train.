@@ -14,6 +14,7 @@ enum GameIconKind {
   signal,
   horn,
   check,
+  bulb,
 }
 
 /// A small drawn icon, [size] pt square.
@@ -159,6 +160,13 @@ final class GameIcon extends StatelessWidget {
             ..lineTo(p(0.34, -0.26).dx, p(0.34, -0.26).dy),
           line,
         );
+      case GameIconKind.bulb:
+        // A light bulb: glass, a waist, two base rings.
+        canvas
+          ..drawCircle(p(0, -0.1), s * 0.26, line)
+          ..drawLine(p(-0.1, 0.17), p(0.1, 0.17), line)
+          ..drawLine(p(-0.08, 0.3), p(0.08, 0.3), line)
+          ..drawCircle(p(0, -0.1), s * 0.07, fill);
     }
   }
 }

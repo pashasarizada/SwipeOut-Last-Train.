@@ -70,6 +70,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get showRulesAgain => 'Kuralları yeniden göster';
 
   @override
+  String get hint => 'İpucu';
+
+  @override
   String get forecastWarning => 'Dikkat: bu dakika geçmez';
 
   @override
