@@ -221,4 +221,20 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get languageEnglish => 'ENGLISH';
+
+  @override
+  String goalGold(int minutes) {
+    return '3 YILDIZ ≤ $minutes DK';
+  }
+
+  @override
+  String get goalHintCapped => 'İPUCU: EN ÇOK 2 YILDIZ';
+
+  @override
+  String resultGoldNeeds(int minutes) {
+    return '3 yıldız için en fazla $minutes dakika';
+  }
+
+  @override
+  String get resultHintCapped => 'İpucu kullanıldı: en fazla 2 yıldız';
 }

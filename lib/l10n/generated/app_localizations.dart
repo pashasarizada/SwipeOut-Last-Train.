@@ -481,6 +481,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'ENGLISH'**
   String get languageEnglish;
+
+  /// No description provided for @goalGold.
+  ///
+  /// In en, this message translates to:
+  /// **'3 STARS ≤ {minutes} MIN'**
+  String goalGold(int minutes);
+
+  /// No description provided for @goalHintCapped.
+  ///
+  /// In en, this message translates to:
+  /// **'HINT: 2 STARS MAX'**
+  String get goalHintCapped;
+
+  /// No description provided for @resultGoldNeeds.
+  ///
+  /// In en, this message translates to:
+  /// **'3 stars: {minutes} minutes or fewer'**
+  String resultGoldNeeds(int minutes);
+
+  /// No description provided for @resultHintCapped.
+  ///
+  /// In en, this message translates to:
+  /// **'Hint used: 2 stars at most'**
+  String get resultHintCapped;
 }
 
 class _AppLocalizationsDelegate

@@ -23,9 +23,10 @@ extension GameTexts on AppLocalizations {
     CityId.moscow => greetingMoscow,
   };
 
-  /// The last service leaves at 23:50; every pulse is one minute.
-  static String clock(int pulses) {
-    final minutes = 23 * 60 + 50 + pulses;
+  /// Every pulse is one minute, and the run's last minute ends exactly at
+  /// midnight: the clock starts [max] minutes before 00:00.
+  static String clock(int pulses, {required int max}) {
+    final minutes = 24 * 60 - max + pulses;
     final h = (minutes ~/ 60) % 24;
     final m = minutes % 60;
     return '${h.toString().padLeft(2, '0')}:${m.toString().padLeft(2, '0')}';

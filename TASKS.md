@@ -72,12 +72,12 @@
 - [ ] Şehir haritası ekranını (bölüm seçimi) aynı metro diline taşımak (M).
 
 ## P1 — Oyun testi bulguları (AI oyuncu, 06.11.2026, `docs/playtest/2026-11-06-agent-playtest.md`)
-- [ ] 3★ hedefini görünür yap: bölüm başında ve bitiş ekranında "3★ için ≤ N dakika"; ipucu kullanıldıysa "ipucu: en fazla 2★" yaz (S).
-- [ ] RunMeter yıldız işaretleri kafa karıştırıyor (★ 9. sırada görünüyor, hedef 8 dakika) (S).
-- [ ] Saat her bölümde 23:50'den başlıyor; süre 10 dakikayı aşınca 00:00'ı geçiyor. Saati `00:00 − maxPulses`'tan başlat (S).
+- [x] 3★ hedefini görünür yap: bölüm başında ve bitiş ekranında "3★ için ≤ N dakika"; ipucu kullanıldıysa "ipucu: en fazla 2★" yaz (S).
+- [x] RunMeter yıldız işaretleri kafa karıştırıyor (★ 9. sırada görünüyor, hedef 8 dakika) (S).
+- [x] Saat her bölümde 23:50'den başlıyor; süre 10 dakikayı aşınca 00:00'ı geçiyor. Saati `00:00 − maxPulses`'tan başlat (S).
 - [ ] Londra 03, Londra 02 ile aynı harita; yeni bir yerleşim tasarla (M).
-- [ ] Kural kartının tabelaya dokununca geri geldiği keşfedilmiyor; görünür bir ipucu ekle (S).
-- [ ] Makas üstünde duran trene dokunmak makası seçmeli (dokunma alanı) (S).
+- [x] Kural kartının tabelaya dokununca geri geldiği keşfedilmiyor; görünür bir ipucu ekle (S).
+- [x] Makas üstünde duran trene dokunmak makası seçmeli (dokunma alanı) (S).
 - [ ] "Bekliyor" rozetinin nedeni (sinyal / makas / önde tren) belirsiz (M).
 - [ ] Zorluk eğrisi: Bakü ortasında tekrar hissi, Paris 05–06'da sıçrama; insan testiyle doğrula (M).
 - [ ] Gerçek metro ağlarından esinlenen bölüm topolojisi (bölüm tasarımı, birebir kopya değil) (L).

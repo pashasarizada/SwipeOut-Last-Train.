@@ -74,8 +74,8 @@ final class _RunMeterPainter extends CustomPainter {
               ..style = PaintingStyle.stroke
               ..strokeWidth = 1.4,
           );
-        case MeterStar():
-          _paintStar(canvas, c, pitch * 0.42);
+        case MeterStar(:final used):
+          _paintStar(canvas, c, pitch * 0.48, filled: used);
       }
     }
   }
@@ -108,17 +108,20 @@ final class _RunMeterPainter extends CustomPainter {
           canvas,
           Offset(bar.left + bar.width * mark / max, row.center.dy),
           6,
+          filled: used >= mark,
         );
       }
     }
   }
 
-  void _paintStar(Canvas canvas, Offset c, double r) => GameIcon.paint(
-    canvas,
-    GameIconKind.star,
-    Rect.fromCircle(center: c, radius: r),
-    AppColors.textSecondary,
-  );
+  /// Outlined until its minute is played, then amber like a used minute.
+  void _paintStar(Canvas canvas, Offset c, double r, {required bool filled}) =>
+      GameIcon.paint(
+        canvas,
+        filled ? GameIconKind.star : GameIconKind.starOutline,
+        Rect.fromCircle(center: c, radius: r),
+        filled ? AppColors.accentAmber : AppColors.textSecondary,
+      );
 
   @override
   bool shouldRepaint(_RunMeterPainter old) =>

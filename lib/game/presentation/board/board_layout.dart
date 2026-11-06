@@ -40,6 +40,17 @@ final class BoardLayout {
     return best;
   }
 
+  /// Controls (switches, signals) answer a little further out than other
+  /// stops, so a tap on a train standing on a switch still reaches it.
+  static const double controlHitRadius = 36;
+
+  /// The nearest switch or signal within [controlHitRadius] of [local].
+  String? controlAt(Offset local, Map<String, Node> nodes) => nodeAt(local, {
+    for (final MapEntry(:key, :value) in nodes.entries)
+      if (value.kind == NodeKind.junction || value.kind == NodeKind.signal)
+        key: value,
+  }, hitRadius: controlHitRadius);
+
   @override
   bool operator ==(Object other) =>
       other is BoardLayout && other.size == size && other.padding == padding;

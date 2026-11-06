@@ -84,3 +84,14 @@ Tasarım: `docs/superpowers/specs/2026-11-06-metro-map-look-design.md`, plan: `d
     - isim yazıları ve ray parçaları tahta başına bir kez hesaplanır (karede bir değil);
     - bir düğümden çıkan raylar en az ~29° ayrılır.
   - High Contrast: beyaz kalın raylar, koyu zeminli isimler.
+
+## Oyun testi düzeltmeleri (kullanıcı onayı "yapalım devam edelim", 06.11.2026)
+
+- **D-037 — Yıldız hedefi yazıyla, saat gece yarısında biter.**
+  - Tabelanın 2. satırında saat ve hedef yazar: "3 YILDIZ ≤ N DK". İpucu kullanılınca bu yazı "İPUCU: EN ÇOK 2 YILDIZ" olur. Tabela fontunda ★ olmadığı için yazıyla yazılır.
+  - Bitiş ekranı, 3. yıldızın neden kaçtığını söyler: dakika hedefi ya da ipucu.
+  - Sayaçta ★ artık par (ve par+2) dakikasının kendisidir. Önceden noktaların arasında duran bir işaretti ve oyuncu onu 9. dakika sanıyordu. Dakika oynanınca ★ dolar.
+  - Saat `00:00 − maxPulses`'tan başlar, süre bitince tam 00:00'ı gösterir. 23:50 sabit başlangıcı ve D-035'ten sonra gece yarısını geçmesi düzeltildi.
+  - Dokunma: 36 pt içindeki makas ve sinyal, daha yakın başka duraklara göre önceliklidir. Makasın üstünde duran trene dokunmak makası seçer.
+  - Kurallar gizliyken tabelanın köşesinde küçük bir "i" rozeti durur; tabelaya dokunmanın kuralları geri getirdiğini gösterir.
+

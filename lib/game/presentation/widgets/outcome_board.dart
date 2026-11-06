@@ -23,12 +23,32 @@ final class OutcomeBoard extends StatelessWidget {
     required this.actions,
     this.result,
     this.failed = false,
+    this.goldTarget,
+    this.hintUsed = false,
   });
 
   final String title;
   final List<OutcomeAction> actions;
   final LevelResult? result;
   final bool failed;
+
+  /// Par minutes: said when a win missed the third star, so the player
+  /// knows what earns it. Null on tutorial levels.
+  final int? goldTarget;
+
+  /// The run used a hint, which caps a win at two stars (D-033).
+  final bool hintUsed;
+
+  /// Why the third star was missed, if it was.
+  String? _missedGold(AppLocalizations l) {
+    final rating = result?.rating;
+    if (rating == null || rating == StarRating.gold) return null;
+    if (hintUsed) return l.resultHintCapped;
+    return switch (goldTarget) {
+      final par? => l.resultGoldNeeds(par),
+      null => null,
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +107,18 @@ final class OutcomeBoard extends StatelessWidget {
                     style: const TextStyle(
                       fontFamily: GameFonts.board,
                       color: AppColors.textSecondary,
+                    ),
+                  ),
+                ],
+                if (_missedGold(l) case final why?) ...[
+                  const SizedBox(height: 6),
+                  Text(
+                    why,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontFamily: GameFonts.body,
+                      fontSize: 13,
+                      color: AppColors.accentAmber,
                     ),
                   ),
                 ],

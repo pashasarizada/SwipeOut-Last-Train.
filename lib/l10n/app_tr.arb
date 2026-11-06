@@ -63,5 +63,9 @@
   "language": "Dil",
   "languagePhone": "TELEFON",
   "languageTurkish": "TÜRKÇE",
-  "languageEnglish": "ENGLISH"
+  "languageEnglish": "ENGLISH",
+  "goalGold": "3 YILDIZ ≤ {minutes} DK",
+  "goalHintCapped": "İPUCU: EN ÇOK 2 YILDIZ",
+  "resultGoldNeeds": "3 yıldız için en fazla {minutes} dakika",
+  "resultHintCapped": "İpucu kullanıldı: en fazla 2 yıldız"
 }

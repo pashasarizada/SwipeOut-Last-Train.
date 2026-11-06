@@ -14,26 +14,26 @@ final class TrainMark {
   final bool delivered;
 }
 
-/// A slot in the minute row.
+/// One minute in the meter row; [used] once played.
 sealed class MeterSlot {
-  const MeterSlot();
-}
-
-/// One minute of the run; [used] once played.
-final class MeterDot extends MeterSlot {
-  const MeterDot({required this.used});
+  const MeterSlot({required this.used});
 
   final bool used;
 }
 
-/// A star mark: playing past it costs a star.
+/// An ordinary minute.
+final class MeterDot extends MeterSlot {
+  const MeterDot({required super.used});
+}
+
+/// The par (or par+2) minute: finish on it or before to keep a star.
 final class MeterStar extends MeterSlot {
-  const MeterStar();
+  const MeterStar({required super.used});
 }
 
 /// The run at a glance, without words: a token per train (filled when
-/// delivered) and a dot per minute (filled when used), with star marks
-/// after par and par+2. Long runs become a bar. Screen readers get
+/// delivered) and a mark per minute (filled when used); the par and par+2
+/// minutes are drawn as stars. Long runs become a bar. Screen readers get
 /// [semanticsLabel].
 final class RunMeter extends StatelessWidget {
   const RunMeter({
@@ -66,11 +66,11 @@ final class RunMeter extends StatelessWidget {
     required int max,
     required int? par,
   }) => [
-    for (var i = 0; i < max; i++) ...[
-      if (par != null && i > 0 && (i == par || i == par + silverSlack))
-        const MeterStar(),
-      MeterDot(used: i < used),
-    ],
+    for (var i = 0; i < max; i++)
+      if (par != null && (i + 1 == par || i + 1 == par + silverSlack))
+        MeterStar(used: i < used)
+      else
+        MeterDot(used: i < used),
   ];
 
   @override

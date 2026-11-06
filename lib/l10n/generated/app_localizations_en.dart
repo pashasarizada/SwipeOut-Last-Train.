@@ -221,4 +221,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get languageEnglish => 'ENGLISH';
+
+  @override
+  String goalGold(int minutes) {
+    return '3 STARS ≤ $minutes MIN';
+  }
+
+  @override
+  String get goalHintCapped => 'HINT: 2 STARS MAX';
+
+  @override
+  String resultGoldNeeds(int minutes) {
+    return '3 stars: $minutes minutes or fewer';
+  }
+
+  @override
+  String get resultHintCapped => 'Hint used: 2 stars at most';
 }

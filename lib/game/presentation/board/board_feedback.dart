@@ -5,7 +5,8 @@ part of 'board_view.dart';
 extension _BoardFeedback on _BoardViewState {
   /// A tap picks the control nearest to it; a changed choice clacks.
   void _onTap(BoardLayout layout, Offset at) {
-    final id = layout.nodeAt(at, _controller.level.nodes);
+    final nodes = _controller.level.nodes;
+    final id = layout.controlAt(at, nodes) ?? layout.nodeAt(at, nodes);
     if (id == null) return;
     final before = _controller.pending;
     _controller.tapNode(id);

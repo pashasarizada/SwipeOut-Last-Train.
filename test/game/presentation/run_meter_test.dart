@@ -10,28 +10,30 @@ Future<void> _pump(WidgetTester tester, RunMeter meter) => tester.pumpWidget(
 );
 
 void main() {
-  test(
-    'one dot per minute, the used ones filled, stars after par and par+2',
-    () {
-      final slots = RunMeter.slotsFor(used: 3, max: 8, par: 4);
-      final dots = slots.whereType<MeterDot>().toList();
-      expect(dots, hasLength(8));
-      expect(dots.where((d) => d.used), hasLength(3));
-      // ●●●○ ★ ○○ ★ ○○
-      expect(slots[4], isA<MeterStar>());
-      expect(slots[7], isA<MeterStar>());
-      expect(slots.whereType<MeterStar>(), hasLength(2));
-    },
-  );
+  test('one mark per minute; the par and par+2 minutes are stars', () {
+    final slots = RunMeter.slotsFor(used: 3, max: 8, par: 4);
+    // ●●●○ ☆ ○ ☆ ○ — finish on the first star or before for three stars.
+    expect(slots, hasLength(8));
+    expect(slots[3], isA<MeterStar>());
+    expect(slots[5], isA<MeterStar>());
+    expect(slots.whereType<MeterStar>(), hasLength(2));
+    expect(slots.where((s) => s.used), hasLength(3));
+  });
+
+  test('a star fills once its minute is played', () {
+    final slots = RunMeter.slotsFor(used: 4, max: 8, par: 4);
+    expect((slots[3] as MeterStar).used, isTrue);
+    expect((slots[5] as MeterStar).used, isFalse);
+  });
 
   test('no star marks without a par (tutorials) or past the limit', () {
     expect(
       RunMeter.slotsFor(used: 0, max: 5, par: null).whereType<MeterStar>(),
       isEmpty,
     );
-    // par+2 == max: only the par mark fits inside the row.
+    // par+2 > max: only the par star fits inside the row.
     expect(
-      RunMeter.slotsFor(used: 0, max: 6, par: 4).whereType<MeterStar>(),
+      RunMeter.slotsFor(used: 0, max: 5, par: 4).whereType<MeterStar>(),
       hasLength(1),
     );
   });

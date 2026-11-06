@@ -138,7 +138,13 @@ class _PulseGameScreenState extends State<PulseGameScreen> {
     return GameScaffold(
       city: widget.level.city,
       backdropOpacity: 0.35,
-      header: PulseHud(controller: _controller, onBoardTap: _showRules),
+      header: PulseHud(
+        controller: _controller,
+        onBoardTap: _showRules,
+        rulesHidden:
+            widget.level.tutorialSteps.isNotEmpty &&
+            !(_message != null && _messageTone == AnnouncementTone.info),
+      ),
       body: Stack(
         children: [
           Column(

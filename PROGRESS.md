@@ -28,6 +28,13 @@ Kabaca **%85**: içerik, okunurluk, ipucu ve ses tamam; kalan oyuncu testi (zorl
 
 **Sıradaki küçük görev:** birkaç kişiye oynatıp zorluk eğrisini ayarlamak; gerçek iPhone'da ses/haptik kontrolü; mağaza hazırlığı.
 
+## 2026-11-06 (11) — Oyun testi düzeltmeleri (`main`)
+
+- D-037: tabelada "3 YILDIZ ≤ N DK" ya da "İPUCU: EN ÇOK 2 YILDIZ" yazıyor. Bitiş ekranı kaçan yıldızın sebebini söylüyor. Sayaçta ★ hedef dakikanın kendisi. Saat süre bitince tam 00:00. Makasa yakın dokunuş makası seçiyor. Kurallar gizliyken tabelada "i" rozeti var.
+- `scripts/check.sh` → No issues found! · **+474 All tests passed**.
+- Simülatör (iPhone 16, Türkçe): Bakü 02 ve Paris 06'da tabela yazısı, ipucu sonrası yazı, sayaç yıldızları ve rozet görüldü.
+- Kalanlar (TASKS P1): Londra 03'e yeni harita, "bekliyor" rozetinin nedeni, zorluk eğrisi.
+
 ## 2026-11-06 (10) — Oyun testi ve tanıtım PDF'i (`main`)
 
 - **AI oyuncu testi:** ajan yalnız ekrana dokunarak oynadı. 20/30 bölüm oynandı (Londra 03–06 ve Moskova bütçe yüzünden kalmadı).

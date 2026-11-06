@@ -145,5 +145,23 @@
   "language": "Language",
   "languagePhone": "PHONE",
   "languageTurkish": "TÜRKÇE",
-  "languageEnglish": "ENGLISH"
+  "languageEnglish": "ENGLISH",
+  "goalGold": "3 STARS ≤ {minutes} MIN",
+  "@goalGold": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "goalHintCapped": "HINT: 2 STARS MAX",
+  "resultGoldNeeds": "3 stars: {minutes} minutes or fewer",
+  "@resultGoldNeeds": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "resultHintCapped": "Hint used: 2 stars at most"
 }

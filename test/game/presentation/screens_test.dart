@@ -16,6 +16,7 @@ import 'package:swipeout_last_train/game/presentation/game/progress_store.dart';
 import 'package:swipeout_last_train/game/presentation/game/tutorial_guide.dart';
 import 'package:swipeout_last_train/game/presentation/kit/control_ticket.dart';
 import 'package:swipeout_last_train/game/presentation/kit/departure_board.dart';
+import 'package:swipeout_last_train/game/presentation/kit/game_icon.dart';
 import 'package:swipeout_last_train/game/presentation/kit/motion_settings.dart';
 import 'package:swipeout_last_train/game/presentation/kit/platform_announcement.dart';
 import 'package:swipeout_last_train/game/presentation/screens/city_map_screen.dart';
@@ -173,10 +174,17 @@ void main() {
       home: const CityMapScreen(city: CityId.ankara),
     );
     await _openLevelFromMap(tester, 'ANK-01', 'First Departure');
-    expect(find.textContaining('23:50'), findsOneWidget);
+    // ANK-01 allows 5 minutes: the clock runs out exactly at midnight.
+    expect(find.textContaining('23:55'), findsOneWidget);
+
+    bool rulesHint() => tester
+        .widgetList<GameIcon>(find.byType(GameIcon))
+        .any((i) => i.kind == GameIconKind.info);
+    expect(rulesHint(), isFalse, reason: 'the rules are on screen');
 
     await _advance(tester);
-    expect(find.textContaining('23:51'), findsOneWidget);
+    expect(find.textContaining('23:56'), findsOneWidget);
+    expect(rulesHint(), isTrue, reason: 'the board can bring them back');
     expect(store.progress.run!.actions, hasLength(1));
 
     await _tapNode(tester, ank01(), 'B');

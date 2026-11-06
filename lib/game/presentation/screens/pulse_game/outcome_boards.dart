@@ -29,6 +29,8 @@ extension _OutcomeBoards on _PulseGameScreenState {
       (close) => OutcomeBoard(
         title: l.levelComplete,
         result: result,
+        goldTarget: widget.level.tutorial ? null : widget.level.parPulses,
+        hintUsed: _controller.hintUsed,
         actions: [
           if (newStamp && store != null)
             (

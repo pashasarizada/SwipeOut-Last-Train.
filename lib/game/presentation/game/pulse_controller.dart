@@ -157,7 +157,11 @@ final class PulseController extends ChangeNotifier {
   bool get hintUsed => _hintUsed;
   bool _hintUsed = false;
 
-  void markHintUsed() => _hintUsed = true;
+  void markHintUsed() {
+    if (_hintUsed) return;
+    _hintUsed = true;
+    _notify();
+  }
 
   LevelResult _result() => LevelResult(
     levelId: level.id,
