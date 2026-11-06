@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../../l10n/generated/app_localizations.dart';
 import '../game/hint_controller.dart';
@@ -6,6 +7,7 @@ import '../game/pulse_controller.dart';
 import '../kit/advance_lever.dart';
 import '../kit/game_button.dart';
 import '../kit/game_icon.dart';
+import '../kit/motion_settings.dart';
 import '../theme/app_colors.dart';
 import 'game_texts.dart';
 
@@ -107,14 +109,35 @@ final class _HintButton extends StatelessWidget {
       semanticsLabel: label,
       size: GameButtonSize.small,
       color: AppColors.accentAmber,
-      icon: const GameIcon(
-        GameIconKind.bulb,
-        size: 22,
-        color: AppColors.background,
-      ),
-      onPressed: hints.canAsk ? hints.request : null,
+      icon: hints.thinking ? const _Thinking() : _bulb,
+      // While a big board is searched the button stays lit and busy.
+      onPressed: hints.thinking
+          ? () {}
+          : hints.canAsk
+          ? hints.request
+          : null,
     ),
   );
+
+  static const Widget _bulb = GameIcon(
+    GameIconKind.bulb,
+    size: 22,
+    color: AppColors.background,
+  );
+}
+
+/// The bulb blinking while the hint is worked out.
+final class _Thinking extends StatelessWidget {
+  const _Thinking();
+
+  @override
+  Widget build(BuildContext context) {
+    const bulb = _HintButton._bulb;
+    if (MotionSettings.reducedOf(context)) return bulb;
+    return bulb
+        .animate(onPlay: (c) => c.repeat(reverse: true))
+        .fade(begin: 1, end: 0.25, duration: 450.ms);
+  }
 }
 
 /// Short phones (the original iPhone SE, 568 pt) get a tighter platform so

@@ -48,14 +48,17 @@ final class HintController extends ChangeNotifier {
     final history = _game.history;
     _thinking = true;
     _notify();
+    // Off the UI thread or not at all: a failed search (or a platform
+    // without isolates) advises Undo rather than freezing the platform.
     Hint found;
     try {
       found = await _runner(_game.level, state, history);
     } on Object {
-      found = HintFinder(_game.level).next(state, history);
+      found = const HintUndo();
+    } finally {
+      _thinking = false;
     }
     if (_disposed) return;
-    _thinking = false;
     // The player may have moved on while the search ran.
     if (_game.state == state && _game.forecast != null) {
       _hint = (state, found);

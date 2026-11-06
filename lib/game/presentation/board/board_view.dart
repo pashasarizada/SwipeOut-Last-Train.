@@ -172,18 +172,7 @@ class _BoardViewState extends State<BoardView>
                       bumpNode: _bumpNode,
                     ),
                   ),
-                  if (_celebrated.isNotEmpty)
-                    Positioned.fill(
-                      child: CustomPaint(
-                        painter: CelebrationPainter(
-                          level: _controller.level,
-                          trainIds: _celebrated,
-                          layout: layout,
-                          reduced: _reduced,
-                          progress: _celebrate,
-                        ),
-                      ),
-                    ),
+                  if (_celebrated.isNotEmpty) _celebration(layout),
                   Positioned.fill(
                     child: CustomPaint(
                       painter: ForecastPainter(

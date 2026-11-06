@@ -66,7 +66,12 @@ class _PassportStampState extends State<PassportStamp>
     super.didChangeDependencies();
     if (_started || !widget.animateIn || !widget.stamp.earned) return;
     _started = true;
-    if (MotionSettings.reducedOf(context)) return;
+    if (MotionSettings.reducedOf(context)) {
+      // No press animation, but the stamp is still felt and heard.
+      GameHaptics.play(context, HapticKind.heavy);
+      GameSound.play(context, SoundCue.stamp);
+      return;
+    }
     _controller.forward(from: 0);
     Future<void>.delayed(PassportStamp.press, () {
       if (!mounted) return;

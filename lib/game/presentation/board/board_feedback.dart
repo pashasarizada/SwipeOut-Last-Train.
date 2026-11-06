@@ -68,4 +68,17 @@ extension _BoardFeedback on _BoardViewState {
     }
     _idle.repeat(count: kForecastLoops);
   }
+
+  /// The burst over the goals the last pulse delivered to.
+  Widget _celebration(BoardLayout layout) => Positioned.fill(
+    child: CustomPaint(
+      painter: CelebrationPainter(
+        level: _controller.level,
+        trainIds: _celebrated,
+        layout: layout,
+        reduced: _reduced,
+        progress: _celebrate,
+      ),
+    ),
+  );
 }

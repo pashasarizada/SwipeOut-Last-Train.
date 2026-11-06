@@ -35,7 +35,8 @@
 - [x] Çarpışma önizlemesi (çarpı + kırmızı ok + kırmızı kol), teslim parıltısı
 - [x] `RunMeter`: tren jetonları + dakika noktaları; "PULSE/Kontrol" ve bilet kalktı
 - [x] Kurallar sakin anons; öğretici bölümlerde çizilmiş el
-- [ ] Paket C: ipucu düğmesi (3. yıldız bedeli), ses + teslim kutlaması, günün bulmacası, ek görevler
+- [x] Paket C: ipucu düğmesi (3. yıldız bedeli), özgün sesler + ses ayarı, teslim kutlaması (06.11.2026)
+- [ ] Sonra: günün bulmacası, ek görevler (ör. "hiç beklemeden bitir")
 
 ## P1 — V2-B (Ankara + Bakü kabuğu)
 - [x] ANK-03 "İki Vagon" (S) — iki tren, iki makas, par 2; bekleme kafa kafaya çarpışma.

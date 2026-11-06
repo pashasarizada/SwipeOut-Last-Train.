@@ -33,7 +33,7 @@ Future<void> main() async {
     SwipeOutApp(
       store: store,
       settings: settings,
-      sounds: await AudioGameSounds.load(),
+      sounds: AudioGameSounds(),
       home: const TunnelIntroScreen(next: HomeScreen()),
     ),
   );

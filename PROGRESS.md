@@ -10,11 +10,22 @@
 | Ayarlar (titreşim, hareketi azalt, dil) | tamam |
 | Tahta okunurluğu (oklar, makas yönü, çarpışma önizlemesi, simge HUD, öğretici el) | tamam |
 | Küçük ekran (320×568) düzeni | tamam |
-| Ses efektleri, High Contrast | yok |
+| İpucu düğmesi (bedeli 3. yıldız), özgün sesler + ses ayarı, teslim kutlaması | tamam |
+| High Contrast, günün bulmacası | yok |
 | Gerçek cihaz / Android / insan oyuncu testi | yapılmadı |
 | Mağaza hazırlığı (logo hakları, bundle id, görseller) | yapılmadı |
 
-Kabaca **%80**: içerik ve ürün tamam, tahta artık yazısız okunuyor; kalan Paket C (ipucu, ses), oyuncu testi (zorluk eğrisi) ve yayın hazırlığı.
+Kabaca **%85**: içerik, okunurluk, ipucu ve ses tamam; kalan oyuncu testi (zorluk eğrisi), gerçek cihaz/Android ve yayın hazırlığı.
+
+## 2026-11-06 (6) — Paket C: ipucu, ses, kutlama (`main`)
+
+- **İpucu:** Geri Al ile Baştan arasında çizilmiş ampul. Bir sonraki doğru hamleyi el gösterir (kayıtlı çözüm → çözücü → Geri Al); çözücü ayrı isolate'te. Kullanılırsa kazanç en fazla 2 yıldız; Baştan sıfırlar (D-033). Öğretici bölümlerde yok.
+- **Ses:** 6 özgün sentetik ses (`tool/make_sounds.py`), `audioplayers` (D-032), iOS ambient (sessiz düğmesine uyar, müziği kesmez), Ayarlar'da Ses anahtarı. iOS hedefi 13.0.
+- **Kutlama:** teslimde trenin renginde parçacık patlaması; aynı dakikada iki teslimde daha büyük + çift çan.
+- `scripts/check.sh` → No issues found! · **+406 All tests passed**.
+- Simülatör: ipucu eli ANK-04'te doğrulandı (`docs/images/v2-ux/17`); sesler cihaz kayıtlarında yüklendi (duyma testi yapılamadı); kutlama 600 ms olduğundan ekran görüntüsü alınamadı, testle doğrulandı.
+
+**Sıradaki küçük görev:** birkaç kişiye oynatıp zorluk eğrisini ayarlamak; gerçek iPhone'da ses/haptik kontrolü; mağaza hazırlığı.
 
 ## 2026-11-06 (5) — tahta okunurluğu, Paket A + B (`main`)
 

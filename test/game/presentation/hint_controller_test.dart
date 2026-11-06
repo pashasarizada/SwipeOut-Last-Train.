@@ -104,4 +104,15 @@ void main() {
     game.restart();
     expect(game.hintUsed, isFalse);
   });
+
+  test('a failed search advises undo and frees the button', () async {
+    final (_, hints) = _start(
+      _scored(),
+      runner: (_, _, _) => Future.error(UnsupportedError('no isolates')),
+    );
+    await hints.request();
+    expect(hints.hint, const HintUndo());
+    expect(hints.thinking, isFalse);
+    expect(hints.canAsk, isTrue);
+  });
 }

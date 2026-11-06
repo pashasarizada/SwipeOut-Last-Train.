@@ -56,7 +56,8 @@ Bunun yanında oyunun henüz hiç sesi yok. Teslim anı da küçük bir titreşi
 - Hedef bir kontrolse el o düğümü gösterir.
 - Hedef bekleme ise el kolu gösterir.
 - Hedef Geri Al ise el Geri Al düğmesini gösterir.
-- Oyuncu bir hamle yapınca (dakika ilerletir ya da seçimi değiştirir) ipucu kaybolur.
+- İpucu tahta değişene (dakika, Geri Al, Baştan) kadar durur; seçim değişirse el, öğretici bölümlerdeki gibi seçilecek düğmeyi ya da kolu gösterir. *(Uygulamada değişti: ilk tasarımda seçim değişince kayboluyordu; inceleme sonrası bu daha yararlı bulunarak kabul edildi.)*
+- Çözücü sınıra takılırsa (MOS-06'da kayıtlı çözümden sapınca ~3 sn, çoğu zaman sınır) öneri Geri Al'dır: oyuncu kayıtlı yola döner. Arama sürerken ampul yanıp söner. İsolate yoksa (web) arama hiç yapılmaz, Geri Al önerilir.
 
 **Bedel:** `PulseController.hintUsed`, o koşu boyunca bir kez kullanılınca açık kalır. Bölüm kazanılırsa sonuç en fazla gümüş olur.
 - Geri Al bu bedeli kaldırmaz; Baştan kaldırır.
