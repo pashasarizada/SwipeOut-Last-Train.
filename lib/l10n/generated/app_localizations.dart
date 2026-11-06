@@ -173,7 +173,7 @@ abstract class AppLocalizations {
   /// No description provided for @pulseCounter.
   ///
   /// In en, this message translates to:
-  /// **'{current}/{max} PULSE'**
+  /// **'{current}/{max} MIN'**
   String pulseCounter(int current, int max);
 
   /// No description provided for @trainsDelivered.
@@ -181,12 +181,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{done}/{total} TRAINS'**
   String trainsDelivered(int done, int total);
-
-  /// No description provided for @controlsLeft.
-  ///
-  /// In en, this message translates to:
-  /// **'Control: {left}/1'**
-  String controlsLeft(int left);
 
   /// No description provided for @advance.
   ///
@@ -239,7 +233,7 @@ abstract class AppLocalizations {
   /// No description provided for @pulsesUsed.
   ///
   /// In en, this message translates to:
-  /// **'{count} pulses'**
+  /// **'{count} min'**
   String pulsesUsed(int count);
 
   /// No description provided for @levelLost.

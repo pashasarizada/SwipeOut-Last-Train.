@@ -47,17 +47,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String pulseCounter(int current, int max) {
-    return '$current/$max PULSE';
+    return '$current/$max MIN';
   }
 
   @override
   String trainsDelivered(int done, int total) {
     return '$done/$total TRAINS';
-  }
-
-  @override
-  String controlsLeft(int left) {
-    return 'Control: $left/1';
   }
 
   @override
@@ -90,7 +85,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String pulsesUsed(int count) {
-    return '$count pulses';
+    return '$count min';
   }
 
   @override

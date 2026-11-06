@@ -10,12 +10,14 @@ import 'package:swipeout_last_train/game/domain/progress.dart';
 import 'package:swipeout_last_train/game/presentation/board/board_layout.dart';
 import 'package:swipeout_last_train/game/presentation/board/board_view.dart';
 import 'package:swipeout_last_train/game/presentation/game/progress_store.dart';
+import 'package:swipeout_last_train/game/presentation/kit/control_ticket.dart';
 import 'package:swipeout_last_train/game/presentation/kit/motion_settings.dart';
 import 'package:swipeout_last_train/game/presentation/screens/city_map_screen.dart';
 import 'package:swipeout_last_train/game/presentation/screens/home_screen.dart';
 import 'package:swipeout_last_train/game/presentation/screens/pulse_game_screen.dart';
 import 'package:swipeout_last_train/game/presentation/screens/tunnel_intro_screen.dart';
 import 'package:swipeout_last_train/game/presentation/widgets/outcome_board.dart';
+import 'package:swipeout_last_train/game/presentation/widgets/run_meter.dart';
 
 import '../../support/graph_builders.dart';
 import '../../support/memory_progress_repository.dart';
@@ -171,7 +173,7 @@ void main() {
     expect(store.progress.run!.actions, hasLength(1));
 
     await _tapNode(tester, ank01(), 'B');
-    expect(find.text('Switch B'), findsOneWidget);
+    expect(find.bySemanticsLabel(RegExp('Switch B')), findsOneWidget);
     await _advance(tester);
 
     expect(find.text('LINE CLEARED'), findsOneWidget);
@@ -201,7 +203,7 @@ void main() {
 
     await tester.tap(find.text('CONTINUE'));
     await tester.pumpAndSettle();
-    expect(find.textContaining('1/5 PULSE'), findsOneWidget);
+    expect(find.bySemanticsLabel(RegExp('1/5 MIN')), findsOneWidget);
 
     await tester.tap(find.bySemanticsLabel('Back'));
     await tester.pump(const Duration(milliseconds: 200));
@@ -235,7 +237,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    expect(find.textContaining('0/10 PULSE'), findsOneWidget);
+    expect(find.bySemanticsLabel(RegExp('0/10 MIN')), findsOneWidget);
   });
 
   testWidgets('a jammed run is not kept for CONTINUE', (tester) async {
@@ -298,12 +300,27 @@ void main() {
       find.text('Trenler her dakikada bir durak ilerler.'),
       findsOneWidget,
     );
-    expect(find.textContaining('0/1 TREN'), findsOneWidget);
+    expect(find.bySemanticsLabel(RegExp('0/1 TREN')), findsOneWidget);
   });
 
-  testWidgets('the board says what its counters count', (tester) async {
+  testWidgets('the counters are drawn, and speak minutes, not pulses', (
+    tester,
+  ) async {
     await _app(tester, home: PulseGameScreen(level: ank01()));
-    expect(find.textContaining('0/5 PULSE · 0/1 TRAINS'), findsOneWidget);
+    expect(find.byType(RunMeter), findsOneWidget);
+    expect(find.bySemanticsLabel('0/5 MIN · 0/1 TRAINS'), findsOneWidget);
+    expect(find.textContaining('PULSE'), findsNothing);
+    expect(find.textContaining('Control'), findsNothing);
+  });
+
+  testWidgets('a picked control shows on the board, not on a ticket', (
+    tester,
+  ) async {
+    final level = ank01();
+    await _app(tester, home: PulseGameScreen(level: level));
+    await _tapNode(tester, level, 'B');
+    await tester.pumpAndSettle();
+    expect(find.byType(ControlTicket), findsNothing);
   });
 
   for (final scale in [1.0, 1.3]) {

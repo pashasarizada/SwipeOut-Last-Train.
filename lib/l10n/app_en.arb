@@ -12,7 +12,7 @@
   "cityParis": "PARIS",
   "cityLondon": "LONDON",
   "cityMoscow": "MOSCOW",
-  "pulseCounter": "{current}/{max} PULSE",
+  "pulseCounter": "{current}/{max} MIN",
   "@pulseCounter": {
     "placeholders": {
       "current": {
@@ -30,14 +30,6 @@
         "type": "int"
       },
       "total": {
-        "type": "int"
-      }
-    }
-  },
-  "controlsLeft": "Control: {left}/1",
-  "@controlsLeft": {
-    "placeholders": {
-      "left": {
         "type": "int"
       }
     }
@@ -64,7 +56,7 @@
     }
   },
   "levelComplete": "LINE CLEARED",
-  "pulsesUsed": "{count} pulses",
+  "pulsesUsed": "{count} min",
   "@pulsesUsed": {
     "placeholders": {
       "count": {
