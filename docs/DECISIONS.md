@@ -105,3 +105,12 @@ Tasarım: `docs/superpowers/specs/2026-11-06-metro-map-look-design.md`, plan: `d
     - Moskova 02: iç içe iki halka ve iki bağlantı. En kısa çözüm 11, sınır 14.
   - İstasyon isimleri artık hedefin çevresinde ikinci, biraz daha uzak bir halkada da yer arıyor. 360 pt tahtada 68/75, 260 pt'de 59/75 isim yerleşiyor.
 
+## Uygulama kimliği (kullanıcı kararı, 06.11.2026)
+
+- **D-039 — Paket ve bundle kimliği: `tr.com.pinet.lasttrain`.**
+  - Android `namespace` ve `applicationId` bu değerde; `MainActivity` aynı pakete taşındı.
+  - iOS `PRODUCT_BUNDLE_IDENTIFIER` da bu değerde; testlerde `tr.com.pinet.lasttrain.RunnerTests`.
+  - `com.example` hiçbir yerde kalmadı.
+  - Mağazaya çıktıktan sonra değiştirilemez; yeni kimlik yeni uygulama demektir.
+  - Not: Simülatörde eski `com.example.swipeoutLastTrain` kurulumu ayrı bir uygulama olarak duruyor; yeni kimlikle ilerleme kaydı sıfırdan başlar.
+

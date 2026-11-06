@@ -28,6 +28,13 @@ Kabaca **%85**: içerik, okunurluk, ipucu ve ses tamam; kalan oyuncu testi (zorl
 
 **Sıradaki küçük görev:** birkaç kişiye oynatıp zorluk eğrisini ayarlamak; gerçek iPhone'da ses/haptik kontrolü; mağaza hazırlığı.
 
+## 2026-11-06 (14) — Uygulama kimliği (`main`)
+
+- D-039: Android ve iOS kimliği `tr.com.pinet.lasttrain`.
+- `flutter build ios --simulator` başarılı; derlenen uygulamanın `CFBundleIdentifier` değeri `tr.com.pinet.lasttrain`.
+- `flutter build apk --debug` başarılı; APK manifestinde `tr.com.pinet.lasttrain` var, `com.example` yok.
+- `scripts/check.sh` → **+477 All tests passed**.
+
 ## 2026-11-06 (13) — Tekrarlanan haritalar bitti (`main`)
 
 - Londra 06 (sinyalli halka finali, par 10) ve Moskova 02 (iç içe iki halka, par 11) yeni haritalarla yapıldı. `level_assets_test` artık hiçbir harita tekrarına izin vermiyor.
