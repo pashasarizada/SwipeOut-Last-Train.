@@ -5,12 +5,16 @@ enum GameLanguage { system, tr, en }
 final class GameSettings {
   const GameSettings({
     this.vibration = true,
+    this.sound = true,
     this.reducedMotion = false,
     this.language = GameLanguage.system,
   });
 
   /// Haptic feedback on presses, pulses, crashes and stamps.
   final bool vibration;
+
+  /// Sound effects (switch, pulse, delivery, crash, win, stamp).
+  final bool sound;
 
   /// Forces Reduced Motion on, whatever the phone's setting.
   final bool reducedMotion;
@@ -19,10 +23,12 @@ final class GameSettings {
 
   GameSettings copyWith({
     bool? vibration,
+    bool? sound,
     bool? reducedMotion,
     GameLanguage? language,
   }) => GameSettings(
     vibration: vibration ?? this.vibration,
+    sound: sound ?? this.sound,
     reducedMotion: reducedMotion ?? this.reducedMotion,
     language: language ?? this.language,
   );
@@ -31,9 +37,10 @@ final class GameSettings {
   bool operator ==(Object other) =>
       other is GameSettings &&
       other.vibration == vibration &&
+      other.sound == sound &&
       other.reducedMotion == reducedMotion &&
       other.language == language;
 
   @override
-  int get hashCode => Object.hash(vibration, reducedMotion, language);
+  int get hashCode => Object.hash(vibration, sound, reducedMotion, language);
 }

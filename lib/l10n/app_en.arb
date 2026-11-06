@@ -49,6 +49,7 @@
   "labelSeparator": ". ",
   "showRulesAgain": "Show the rules again",
   "hint": "Hint",
+  "sound": "Sound",
   "forecastWarning": "Warning: this minute will fail",
   "cancel": "Cancel",
   "undo": "UNDO",

@@ -8,6 +8,7 @@ environment:
 
 dependencies:
   animations: ^2.1.1
+  audioplayers: ^6.6.0
   flutter:
     sdk: flutter
   flutter_animate: ^4.5.2
@@ -27,6 +28,7 @@ flutter:
   generate: true
   assets:
     - assets/levels/
+    - assets/sounds/
     - assets/branding/logo_512.png
   fonts:
     - family: Unbounded

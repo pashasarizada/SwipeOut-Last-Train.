@@ -10,6 +10,7 @@ import 'game/presentation/game/progress_store.dart';
 import 'game/presentation/game/settings_store.dart';
 import 'game/presentation/screens/home_screen.dart';
 import 'game/presentation/screens/tunnel_intro_screen.dart';
+import 'game/presentation/sound/audio_game_sounds.dart';
 
 /// Composition root: concrete dependencies are created only here. Levels and
 /// progress and settings load while the dark launch screen is showing.
@@ -32,6 +33,7 @@ Future<void> main() async {
     SwipeOutApp(
       store: store,
       settings: settings,
+      sounds: await AudioGameSounds.load(),
       home: const TunnelIntroScreen(next: HomeScreen()),
     ),
   );

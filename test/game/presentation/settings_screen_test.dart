@@ -58,6 +58,10 @@ void main() {
     await tester.pumpAndSettle();
     expect(repo.stored.vibration, isFalse);
 
+    await tester.tap(find.byType(SignalToggle).at(1));
+    await tester.pumpAndSettle();
+    expect(repo.stored.sound, isFalse);
+
     await tester.tap(find.text('TÜRKÇE'));
     await tester.pumpAndSettle();
     expect(repo.stored.language, GameLanguage.tr);

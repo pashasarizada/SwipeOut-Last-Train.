@@ -24,14 +24,15 @@ void main() {
     await repo.save(
       const GameSettings(
         vibration: false,
+        sound: false,
         reducedMotion: true,
         language: GameLanguage.tr,
       ),
     );
     final loaded = await (await PrefsSettingsRepository.open()).load();
     expect(
-      (loaded.vibration, loaded.reducedMotion, loaded.language),
-      (false, true, GameLanguage.tr),
+      (loaded.vibration, loaded.sound, loaded.reducedMotion, loaded.language),
+      (false, false, true, GameLanguage.tr),
     );
   });
 

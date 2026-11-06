@@ -28,6 +28,7 @@ final class PrefsSettingsRepository implements SettingsRepository {
         vibration: json['vibration'] is bool
             ? json['vibration']! as bool
             : defaults.vibration,
+        sound: json['sound'] is bool ? json['sound']! as bool : defaults.sound,
         reducedMotion: json['reducedMotion'] is bool
             ? json['reducedMotion']! as bool
             : defaults.reducedMotion,
@@ -45,6 +46,7 @@ final class PrefsSettingsRepository implements SettingsRepository {
     key,
     jsonEncode({
       'vibration': settings.vibration,
+      'sound': settings.sound,
       'reducedMotion': settings.reducedMotion,
       'language': settings.language.name,
     }),

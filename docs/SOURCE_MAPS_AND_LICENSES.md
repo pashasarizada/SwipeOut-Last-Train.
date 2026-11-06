@@ -46,3 +46,7 @@ Ses ve görsel asset'ler: yalnız kendi üretimimiz veya lisansı belgelenmiş k
 | Dosya | Kaynak | Not |
 |---|---|---|
 | `assets/branding/logo_source.png` | Proje sahibi tarafından sağlandı (05.11.2026) | Uygulama ikonu, açılış ve oyun içi logo bundan üretilir (`scripts/build_branding.sh`). Ticari kullanım hakkının (ör. üretildiği aracın koşulları) yayın öncesi teyit edilmesi gerekir. |
+
+## Ses efektleri
+
+`assets/sounds/*.wav` (switch_clack, pulse_tick, delivery, crash, level_won, stamp) **projenin kendi üretimidir**: `tool/make_sounds.py` sinüs/kare dalga ve tohumlu gürültüden sentezler; hiçbir örnek, kayıt veya resmî metro anonsu kullanılmaz. Yeniden üretmek için: `python3 tool/make_sounds.py`. Oynatma eklentisi `audioplayers` MIT lisanslıdır (D-032).

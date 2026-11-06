@@ -18,6 +18,7 @@ import '../game/tutorial_guide.dart';
 import '../kit/game_scaffold.dart';
 import '../kit/platform_announcement.dart';
 import '../passport/passport_screen.dart';
+import '../sound/game_sounds.dart';
 import '../widgets/game_texts.dart';
 import '../widgets/outcome_board.dart';
 import '../widgets/pulse_controls.dart';
@@ -109,6 +110,7 @@ class _PulseGameScreenState extends State<PulseGameScreen> {
         if (!mounted) return;
         _showMessage(AppLocalizations.of(context).failureMessage(reason));
       case LevelWon(:final result):
+        if (mounted) GameSound.play(context, SoundCue.levelWon);
         final fresh = await _store?.recordWin(result) ?? const [];
         if (_inFront) {
           _showWin(result, newStamp: fresh.contains(widget.level.city));

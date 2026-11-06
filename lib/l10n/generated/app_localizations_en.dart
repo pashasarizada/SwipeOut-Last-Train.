@@ -73,6 +73,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hint => 'Hint';
 
   @override
+  String get sound => 'Sound';
+
+  @override
   String get forecastWarning => 'Warning: this minute will fail';
 
   @override

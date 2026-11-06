@@ -212,6 +212,12 @@ abstract class AppLocalizations {
   /// **'Hint'**
   String get hint;
 
+  /// No description provided for @sound.
+  ///
+  /// In en, this message translates to:
+  /// **'Sound'**
+  String get sound;
+
   /// No description provided for @forecastWarning.
   ///
   /// In en, this message translates to:

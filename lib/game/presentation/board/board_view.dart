@@ -7,6 +7,7 @@ import '../game/game_event.dart';
 import '../game/pulse_controller.dart';
 import '../kit/game_haptics.dart';
 import '../kit/motion_settings.dart';
+import '../sound/game_sounds.dart';
 import '../theme/motion.dart';
 import 'board_layout.dart';
 import 'forecast_painter.dart';
@@ -91,7 +92,8 @@ class _BoardViewState extends State<BoardView>
     switch (event) {
       case PulseCommitted(:final delivered):
         _pulse.forward(from: 0);
-        if (delivered.isNotEmpty) _deliveryTaps();
+        GameSound.play(context, SoundCue.pulseTick);
+        if (delivered.isNotEmpty) _deliveryTaps(delivered.length);
       case PulseRejected(:final trainIds, :final nodeId):
         setState(() {
           _flashNode = nodeId;
@@ -101,17 +103,22 @@ class _BoardViewState extends State<BoardView>
         _flash.forward(from: 0).then((_) => _flash.reverse());
         if (!_reduced) _bump.forward(from: 0);
         GameHaptics.play(context, HapticKind.heavy);
+        GameSound.play(context, SoundCue.crash);
       case LevelWon() || LevelLost():
         break;
     }
   }
 
   /// Delivery speaks in two light taps (docs/UI_UX_GUIDELINES.md §9).
-  void _deliveryTaps() {
+  /// Several trains home in one minute chime twice.
+  void _deliveryTaps(int count) {
     GameHaptics.play(context, HapticKind.light);
+    GameSound.play(context, SoundCue.delivery);
     _secondTap?.cancel();
     _secondTap = Timer(kDeliveryTapGap, () {
-      if (mounted) GameHaptics.play(context, HapticKind.light);
+      if (!mounted) return;
+      GameHaptics.play(context, HapticKind.light);
+      if (count > 1) GameSound.play(context, SoundCue.delivery);
     });
   }
 
@@ -157,7 +164,12 @@ class _BoardViewState extends State<BoardView>
           behavior: HitTestBehavior.opaque,
           onTapUp: (d) {
             final id = layout.nodeAt(d.localPosition, _controller.level.nodes);
-            if (id != null) _controller.tapNode(id);
+            if (id == null) return;
+            final before = _controller.pending;
+            _controller.tapNode(id);
+            if (_controller.pending != before) {
+              GameSound.play(context, SoundCue.switchClack);
+            }
           },
           child: ListenableBuilder(
             listenable: Listenable.merge([_controller, _wave, _flash, _bump]),

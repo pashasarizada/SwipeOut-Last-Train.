@@ -7,6 +7,7 @@ import '../city/city_theme.dart';
 import '../kit/game_fonts.dart';
 import '../kit/game_haptics.dart';
 import '../kit/motion_settings.dart';
+import '../sound/game_sounds.dart';
 import '../theme/app_colors.dart';
 
 /// One city's stamp. Earned stamps are pressed in at a slight angle with a
@@ -68,7 +69,9 @@ class _PassportStampState extends State<PassportStamp>
     if (MotionSettings.reducedOf(context)) return;
     _controller.forward(from: 0);
     Future<void>.delayed(PassportStamp.press, () {
-      if (mounted) GameHaptics.play(context, HapticKind.heavy);
+      if (!mounted) return;
+      GameHaptics.play(context, HapticKind.heavy);
+      GameSound.play(context, SoundCue.stamp);
     });
   }
 

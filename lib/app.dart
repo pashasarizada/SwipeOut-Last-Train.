@@ -4,6 +4,7 @@ import 'game/presentation/game/game_scope.dart';
 import 'game/presentation/game/progress_store.dart';
 import 'game/presentation/game/settings_store.dart';
 import 'game/presentation/kit/motion_settings.dart';
+import 'game/presentation/sound/game_sounds.dart';
 import 'game/presentation/theme/app_theme.dart';
 import 'l10n/generated/app_localizations.dart';
 
@@ -14,6 +15,7 @@ class SwipeOutApp extends StatelessWidget {
     this.locale,
     this.store,
     this.settings,
+    this.sounds,
   });
 
   final Widget home;
@@ -26,6 +28,9 @@ class SwipeOutApp extends StatelessWidget {
 
   /// Player settings shared by all screens (injected at the root).
   final SettingsStore? settings;
+
+  /// Sound effects (the real player in the app, a fake in tests).
+  final GameSounds? sounds;
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +52,9 @@ class SwipeOutApp extends StatelessWidget {
     home: home,
     builder: (context, child) {
       var scoped = child!;
+      if (sounds case final sounds?) {
+        scoped = SoundScope(sounds: sounds, child: scoped);
+      }
       if (store case final store?) {
         scoped = GameScope(store: store, child: scoped);
       }

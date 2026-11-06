@@ -46,6 +46,11 @@ final class SettingsScreen extends StatelessWidget {
             onChanged: (v) => set(settings.copyWith(vibration: v)),
           ),
           _SwitchRow(
+            label: l.sound,
+            value: settings.sound,
+            onChanged: (v) => set(settings.copyWith(sound: v)),
+          ),
+          _SwitchRow(
             label: l.reduceMotion,
             value: settings.reducedMotion,
             onChanged: (v) => set(settings.copyWith(reducedMotion: v)),

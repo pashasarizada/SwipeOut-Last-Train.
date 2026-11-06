@@ -73,6 +73,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get hint => 'İpucu';
 
   @override
+  String get sound => 'Ses';
+
+  @override
   String get forecastWarning => 'Dikkat: bu dakika geçmez';
 
   @override
