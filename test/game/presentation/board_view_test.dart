@@ -3,9 +3,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:swipeout_last_train/game/domain/control_action.dart';
 import 'package:swipeout_last_train/game/domain/level_definition.dart';
 import 'package:swipeout_last_train/game/domain/node.dart';
+import 'package:swipeout_last_train/game/domain/pulse_forecast.dart';
 import 'package:swipeout_last_train/game/presentation/board/board_layout.dart';
 import 'package:swipeout_last_train/game/presentation/board/board_view.dart';
-import 'package:swipeout_last_train/game/presentation/board/ghost_painter.dart';
+import 'package:swipeout_last_train/game/presentation/board/forecast_painter.dart';
 import 'package:swipeout_last_train/game/presentation/board/network_painter.dart';
 import 'package:swipeout_last_train/game/presentation/board/train_sprite.dart';
 import 'package:swipeout_last_train/game/presentation/game/pulse_controller.dart';
@@ -122,22 +123,70 @@ void main() {
     expect(find.byType(TrainSprite), findsOneWidget);
   });
 
-  testWidgets('the board draws the next pulse as ghosts, not while moving', (
+  testWidgets('the board draws the next pulse as arrows, not while moving', (
     tester,
   ) async {
     final level = ank01();
     final c = await _pump(tester, level);
-    GhostPainter painter() => tester
+    ForecastPainter painter() => tester
         .widgetList<CustomPaint>(find.byType(CustomPaint))
         .map((p) => p.painter)
-        .whereType<GhostPainter>()
+        .whereType<ForecastPainter>()
         .single;
 
-    expect(painter().ghost?.trainById('red_1')!.nodeId, 'B');
+    expect(painter().forecast?.moveOf('red_1')!.to, 'B');
     c.advance();
     await tester.pump();
-    expect(painter().ghost, isNull);
+    expect(painter().forecast, isNull);
     await tester.pumpAndSettle();
-    expect(painter().ghost?.trainById('red_1')!.nodeId, 'D');
+    expect(painter().forecast?.moveOf('red_1')!.to, 'D');
+    c.tapNode('B');
+    await tester.pump();
+    expect(painter().forecast?.moveOf('red_1')!.to, 'C');
+  });
+
+  test('a moving train gets an arrow, a standing one the waiting badge', () {
+    expect(
+      ForecastPainter.markOf(const TrainMove(trainId: 'a', from: 'A', to: 'B')),
+      ForecastMark.arrow,
+    );
+    expect(
+      ForecastPainter.markOf(const TrainMove(trainId: 'a', from: 'A')),
+      ForecastMark.waiting,
+    );
+  });
+
+  test('the arrow runs along the edge towards the next node', () {
+    final level = ank01();
+    final layout = BoardLayout(size: const Size(400, 400));
+    final painter = ForecastPainter(
+      level: level,
+      forecast: null,
+      layout: layout,
+    );
+    final (start, end) = painter.arrowFor(
+      const TrainMove(trainId: 'red_1', from: 'A', to: 'B'),
+    );
+    final a = layout.toScreen(level.nodes['A']!.position);
+    final b = layout.toScreen(level.nodes['B']!.position);
+    expect((start - a).distance, lessThan((end - a).distance));
+    expect((end - b).distance, lessThan((start - b).distance));
+  });
+
+  test('the open switch arm follows the pending control', () {
+    final level = ank01();
+    NetworkPainter network(ControlAction? pending) => NetworkPainter(
+      level: level,
+      state: level.initialState,
+      layout: BoardLayout(size: const Size(400, 400)),
+      pending: pending,
+    );
+
+    // B starts on branch b (towards the terminal D).
+    expect(network(null).isOpen('BD'), isTrue);
+    expect(network(null).isOpen('BC'), isFalse);
+    expect(network(const ToggleSwitch('B')).isOpen('BC'), isTrue);
+    expect(network(const ToggleSwitch('B')).isOpen('BD'), isFalse);
+    expect(network(null).isOpen('AB'), isTrue, reason: 'trunk is always on');
   });
 }

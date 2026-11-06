@@ -9,7 +9,7 @@ import '../kit/game_haptics.dart';
 import '../kit/motion_settings.dart';
 import '../theme/motion.dart';
 import 'board_layout.dart';
-import 'ghost_painter.dart';
+import 'forecast_painter.dart';
 import 'network_painter.dart';
 import 'train_layer.dart';
 
@@ -46,6 +46,13 @@ class _BoardViewState extends State<BoardView>
     vsync: this,
     duration: kCollisionBump,
   );
+
+  /// Loops the forecast arrows' running dots a few times after the board
+  /// changes, then rests, so an idle phone is not kept busy.
+  late final AnimationController _idle = AnimationController(
+    vsync: this,
+    duration: kForecastLoop,
+  );
   late final StreamSubscription<GameEvent> _events;
   String? _flashNode;
   Set<String> _bumped = const {};
@@ -60,12 +67,24 @@ class _BoardViewState extends State<BoardView>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _events = _controller.events.listen(_onEvent);
+    _controller.addListener(_wakeIdle);
+  }
+
+  /// Plays the idle loop when there is a forecast to animate.
+  void _wakeIdle() {
+    if (_reduced || _controller.forecast == null) {
+      _idle.value = 0;
+      _idle.stop();
+      return;
+    }
+    _idle.repeat(count: kForecastLoops);
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _reduced = MotionSettings.reducedOf(context);
+    _wakeIdle();
   }
 
   void _onEvent(GameEvent event) {
@@ -113,12 +132,15 @@ class _BoardViewState extends State<BoardView>
     if (state != AppLifecycleState.resumed && _pulse.isAnimating) {
       _pulse.value = 1;
     }
+    if (state != AppLifecycleState.resumed) _idle.stop();
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _events.cancel();
+    _controller.removeListener(_wakeIdle);
+    _idle.dispose();
     _pulse.dispose();
     _flash.dispose();
     _bump.dispose();
@@ -162,11 +184,11 @@ class _BoardViewState extends State<BoardView>
                   ),
                   Positioned.fill(
                     child: CustomPaint(
-                      painter: GhostPainter(
+                      painter: ForecastPainter(
                         level: _controller.level,
-                        state: _controller.state,
-                        ghost: _controller.ghost,
+                        forecast: _controller.forecast,
                         layout: layout,
+                        flow: _idle,
                       ),
                     ),
                   ),

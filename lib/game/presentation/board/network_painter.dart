@@ -57,11 +57,26 @@ final class NetworkPainter extends CustomPainter {
     }
   }
 
+  /// Closed switch arms with the pending control applied, so the board
+  /// shows the track as it will be when the lever is pulled.
+  late final Set<String> _closedArms = {
+    for (final sw in level.switches.values)
+      sw.edgeFor(
+        pending == ToggleSwitch(sw.nodeId)
+            ? state.switches[sw.nodeId]!
+            : state.switches[sw.nodeId]!.toggled,
+      ),
+  };
+
+  /// Whether a train can use [edgeId] next pulse: everything except the
+  /// closed arm of each switch.
+  bool isOpen(String edgeId) => !_closedArms.contains(edgeId);
+
+  /// How far a closed arm stops short of its switch, so the gap reads as
+  /// "this way is shut" (D-030).
+  static const double closedGap = 30;
+
   void _paintRails(Canvas canvas) {
-    final passive = {
-      for (final sw in level.switches.values)
-        sw.edgeFor(state.switches[sw.nodeId]!.toggled),
-    };
     final preview = switch (pending) {
       ToggleSwitch(:final nodeId) => level.switches[nodeId]!.edgeFor(
         state.switches[nodeId]!.toggled,
@@ -69,8 +84,8 @@ final class NetworkPainter extends CustomPainter {
       _ => null,
     };
     for (final edge in level.edges.values) {
-      final from = _at(edge.a);
-      final to = _at(edge.b);
+      var from = _at(edge.a);
+      var to = _at(edge.b);
       if (edge.id == preview) {
         canvas.drawLine(
           from,
@@ -78,12 +93,27 @@ final class NetworkPainter extends CustomPainter {
           _stroke(AppColors.accentTurquoise.withValues(alpha: 0.45), 14),
         );
       }
-      final base = passive.contains(edge.id)
-          ? AppColors.trackInactive
-          : AppColors.track;
-      final lit = Color.lerp(base, AppColors.textPrimary, wave * 0.6)!;
+      if (!isOpen(edge.id)) {
+        (from, to) = _shortenAtSwitch(edge.a, from, to);
+        (to, from) = _shortenAtSwitch(edge.b, to, from);
+        canvas.drawLine(from, to, _stroke(AppColors.trackInactive, 4));
+        continue;
+      }
+      final lit = Color.lerp(
+        AppColors.track,
+        AppColors.textPrimary,
+        wave * 0.6,
+      )!;
       canvas.drawLine(from, to, _stroke(lit, 6));
     }
+  }
+
+  /// Pulls [end] away from [nodeId] by [closedGap] when it is a switch.
+  (Offset, Offset) _shortenAtSwitch(String nodeId, Offset end, Offset other) {
+    if (!level.switches.containsKey(nodeId)) return (end, other);
+    final delta = other - end;
+    final gap = closedGap.clamp(0, delta.distance * 0.45);
+    return (end + delta / delta.distance * gap.toDouble(), other);
   }
 
   void _paintNode(Canvas canvas, Node node) {
