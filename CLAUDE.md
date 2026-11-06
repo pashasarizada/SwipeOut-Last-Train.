@@ -39,7 +39,7 @@ Sonra en yüksek öncelikli **tek küçük görevi** seç, gerekiyorsa önce tes
 - Her yeni ekran iOS simülatörde ekran görüntüsüyle doğrulanır.
 
 ## Güvenlik sınırları
-- Tek branch: `main` (D-028). Her küçük iş odaklı bir commit; `scripts/check.sh` geçmeden commit yok. Commit sonrası doğrudan `git push origin main` (kullanıcı kalıcı onay verdi). Force push, history yeniden yazma, branch silme yok.
+- Tek branch: `main` (D-028). Her küçük iş odaklı bir commit; `scripts/check.sh` geçmeden commit yok. Commit sonrası doğrudan `git push origin main` (kullanıcı kalıcı onay verdi). Yeni branch açılmaz; eski `claude/*` branch'leri kullanıcı onayıyla silindi (06.11.2026). Force push ve history yeniden yazma yok; branch silme yalnız kullanıcının açık onayıyla.
 - Gizli anahtar/token commit'leme veya stdout'a yazma yok.
 - Store'a sürüm gönderme, ödeme, abonelik, API anahtarı üretme, veri silme — kullanıcı onayı olmadan asla.
 - Firebase, sunucu, reklam, analytics, ağ isteği yok (MVP).
