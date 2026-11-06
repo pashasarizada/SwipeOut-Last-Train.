@@ -44,7 +44,7 @@
 - [x] Bakü 6 bölüm (L) — BAK-01 karşı yönlü tek hat · 02 ortak ray + yan hat tuzağı · 03 aktarma öncesi çevre yol · 04 bekletme makası · 05 bekleme dakikası · 06 dar limitli final (06.11.2026).
 - [x] Bölümlerin sırayla açılması (S, ←U6) — U8'de yapıldı.
 - [x] Ayarlar: titreşim, Reduced Motion, dil (M) — ana ekrandaki çizilmiş dişliden; sinyal anahtarları; dil anında değişir; tüm haptikler tek kapıdan (06.11.2026).
-- [ ] Ayarlar: ses (ses efektleri gelince), High Contrast (S).
+- [x] Ayarlar: ses, High Contrast (S).
 - [x] Sonraki pulse "hayalet tren" önizlemesi (S) — yer değiştirecek trenin varacağı düğümde soluk halka; yalnız bir pulse ileri (§3.2/5).
 
 ## P1 — Küçük ekran (320×568) kompakt oyun düzeni — tamamlandı 06.11.2026
@@ -66,5 +66,7 @@
 - [x] Londra 6 — LON-01 halka girişi · 02 üç tren tek halka · 03 tam tur · 04 paralel koridorlar · 05 halka kapısında sinyal · 06 final, par = max (06.11.2026).
 - [x] Moskova 6 — MOS-01 köprülü çift halka · 02 iç halka · 03 köprüde sinyal · 04 ilk dört tren, merkez kilidi · 05 dört tren + sinyal, par = max · 06 SON TREN: 19 düğüm, 4 tren, 10 makasın hepsi (06.11.2026). **30/30 bölüm.**
 - [ ] Pasaport/rozet için Rive animasyonları değerlendirmesi (U7 sonrası).
-- [ ] Ses efektleri (özgün sentetik), haptik paternleri.
+- [x] Ses efektleri (özgün sentetik), haptik paternleri.
+- [x] Süre sınırı affedici: her bölümde en az par + 3 dakika (D-035), doğrulayıcı zorlar.
+- [ ] Gerçek metro ağlarından esinlenen hat şekilleri (bölüm tasarımı, birebir kopya değil).
 - [ ] Yayın hazırlığı (`docs/RELEASE_CHECKLIST.md`).

@@ -4,7 +4,7 @@
   "number": 5,
   "tutorial": false,
   "title": {"tr": "Gece Yarısı Sinyali", "en": "Signal at Midnight"},
-  "maxPulses": 10,
+  "maxPulses": 11,
   "parPulses": 8,
   "maxChangesPerPulse": 1,
   "nodes": [

@@ -75,14 +75,16 @@ void main() {
     expect((second as PulseFailed).reason, PulseFailure.blockedByStanding);
   });
 
-  test('ANK-05: the clock is tight, a wasted first minute loses', () {
+  test('ANK-05: a wasted first minute still finishes, but not for gold', () {
     final level = levels.firstWhere((l) => l.id == 'ANK-05');
-    expect((level.parPulses, level.maxPulses), (4, 4));
+    expect((level.parPulses, level.maxPulses), (4, 7));
     final waited = PulseEngine(level).simulatePulse(level.initialState, null);
-    expect(
-      const PulseSolver().solve(level, from: (waited as PulseApplied).state),
-      isA<Unsolvable>(),
+    final rest = const PulseSolver().solve(
+      level,
+      from: (waited as PulseApplied).state,
     );
+    expect(rest, isA<Solved>());
+    expect(1 + (rest as Solved).plan.length, greaterThan(level.parPulses));
   });
 
   test('Ankara is complete: six levels, the finale has a corridor', () {
@@ -156,10 +158,10 @@ void main() {
     expect((result as PulseFailed).reason, PulseFailure.headOn);
   });
 
-  test('Baku is complete: six levels, the finale has no spare minute', () {
+  test('Baku is complete: six levels, the finale has three spare minutes', () {
     final baku = levels.where((l) => l.city == CityId.baku).toList();
     expect(baku.map((l) => l.number), [1, 2, 3, 4, 5, 6]);
-    expect((baku.last.parPulses, baku.last.maxPulses), (8, 8));
+    expect((baku.last.parPulses, baku.last.maxPulses), (8, 11));
   });
 
   test('PAR-01: Paris opens with crossing routes through one transfer', () {
@@ -193,7 +195,7 @@ void main() {
     final level = levels.firstWhere((l) => l.id == 'PAR-05');
     expect(level.trains, hasLength(3));
     expect(level.initialSignals.values.toSet(), {SignalAspect.red});
-    expect((level.parPulses, level.maxPulses), (8, 9));
+    expect((level.parPulses, level.maxPulses), (8, 11));
   });
 
   test('Paris is complete: the finale uses every switch and signal', () {
@@ -259,10 +261,10 @@ void main() {
     expect(level.solution, contains(const ToggleSignal('G')));
   });
 
-  test('London is complete: the finale leaves no spare minute', () {
+  test('London is complete: the finale leaves three spare minutes', () {
     final london = levels.where((l) => l.city == CityId.london).toList();
     expect(london.map((l) => l.number), [1, 2, 3, 4, 5, 6]);
-    expect((london.last.parPulses, london.last.maxPulses), (9, 9));
+    expect((london.last.parPulses, london.last.maxPulses), (9, 12));
   });
 
   test('MOS-01: red crosses the bridge from one ring to the other', () {
@@ -315,11 +317,11 @@ void main() {
     expect(throughCentre, hasLength(4));
   });
 
-  test('MOS-05: four trains, a red signal, not one spare minute', () {
+  test('MOS-05: four trains, a red signal, the fewest spare minutes', () {
     final level = levels.firstWhere((l) => l.id == 'MOS-05');
     expect(level.trains, hasLength(4));
     expect(level.initialSignals, {'G': SignalAspect.red});
-    expect(level.parPulses, level.maxPulses);
+    expect(level.maxPulses, level.parPulses + LevelValidator.minSpareMinutes);
   });
 
   test('MOS-06 LAST TRAIN: four trains, two rings, every switch matters', () {

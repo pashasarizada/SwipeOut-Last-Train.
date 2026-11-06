@@ -4,7 +4,7 @@
   "number": 4,
   "tutorial": false,
   "title": {"tr": "Paralel Hatlar", "en": "Parallel Lines"},
-  "maxPulses": 9,
+  "maxPulses": 10,
   "parPulses": 7,
   "maxChangesPerPulse": 1,
   "nodes": [

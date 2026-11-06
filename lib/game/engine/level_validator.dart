@@ -16,6 +16,7 @@ enum LevelIssueCode {
   goalNotGoalNode,
   sharedGoalOrStart,
   parExceedsMax,
+  tightLimit,
   solutionFails,
   parAboveOptimum,
   unsolvable,
@@ -55,6 +56,10 @@ final class LevelValidator {
 
   final PulseSolver solver;
 
+  /// Minutes the limit leaves beyond par, so one or two slips still finish
+  /// the level: the limit forgives, the stars reward precision (D-035).
+  static const int minSpareMinutes = 3;
+
   ValidationResult validate(LevelDefinition level) {
     final structural = [
       ..._references(level),
@@ -71,6 +76,11 @@ final class LevelValidator {
 
     final solve = solver.solve(level);
     return ValidationResult([
+      if (level.maxPulses < level.parPulses + minSpareMinutes)
+        LevelIssue(
+          LevelIssueCode.tightLimit,
+          detail: 'par ${level.parPulses}, max ${level.maxPulses}',
+        ),
       ..._replay(level),
       ...switch (solve) {
         Solved(:final plan) when plan.length < level.parPulses => [

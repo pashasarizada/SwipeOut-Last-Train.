@@ -145,6 +145,17 @@ void main() {
     );
   });
 
+  test('a limit with less than three spare minutes is too tight', () {
+    expect(
+      _codes(_ank01With(maxPulses: 4)),
+      contains(LevelIssueCode.tightLimit),
+    );
+    expect(
+      _codes(_ank01With(maxPulses: 5)),
+      isNot(contains(LevelIssueCode.tightLimit)),
+    );
+  });
+
   test('a recorded solution that does not solve the level', () {
     expect(_codes(_ank01With(solution: const [null, null])), {
       LevelIssueCode.solutionFails,

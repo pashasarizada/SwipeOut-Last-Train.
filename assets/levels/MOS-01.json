@@ -4,7 +4,7 @@
   "number": 1,
   "tutorial": false,
   "title": {"tr": "Soğuk Başlangıç", "en": "Cold Start"},
-  "maxPulses": 11,
+  "maxPulses": 12,
   "parPulses": 9,
   "maxChangesPerPulse": 1,
   "nodes": [

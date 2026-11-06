@@ -4,7 +4,7 @@
   "number": 3,
   "tutorial": false,
   "title": {"tr": "Memar Əcəmi", "en": "Memar Ajami"},
-  "maxPulses": 6,
+  "maxPulses": 7,
   "parPulses": 4,
   "maxChangesPerPulse": 1,
   "nodes": [

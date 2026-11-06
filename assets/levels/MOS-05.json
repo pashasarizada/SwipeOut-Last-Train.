@@ -4,7 +4,7 @@
   "number": 5,
   "tutorial": false,
   "title": {"tr": "Son Sinyal", "en": "Last Signal"},
-  "maxPulses": 12,
+  "maxPulses": 15,
   "parPulses": 12,
   "maxChangesPerPulse": 1,
   "nodes": [

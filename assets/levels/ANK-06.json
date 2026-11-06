@@ -4,7 +4,7 @@
   "number": 6,
   "tutorial": false,
   "title": {"tr": "Başkent Finali", "en": "Capital Finale"},
-  "maxPulses": 6,
+  "maxPulses": 8,
   "parPulses": 5,
   "maxChangesPerPulse": 1,
   "nodes": [

@@ -4,7 +4,7 @@
   "number": 5,
   "tutorial": false,
   "title": {"tr": "Bir Dakika Daha", "en": "One More Minute"},
-  "maxPulses": 4,
+  "maxPulses": 7,
   "parPulses": 4,
   "maxChangesPerPulse": 1,
   "nodes": [

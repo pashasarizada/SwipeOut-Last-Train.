@@ -4,7 +4,7 @@
   "number": 4,
   "tutorial": false,
   "title": {"tr": "Son Aktarma", "en": "Last Transfer"},
-  "maxPulses": 6,
+  "maxPulses": 7,
   "parPulses": 4,
   "maxChangesPerPulse": 1,
   "nodes": [

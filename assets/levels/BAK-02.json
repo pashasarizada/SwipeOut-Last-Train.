@@ -4,7 +4,7 @@
   "number": 2,
   "tutorial": false,
   "title": {"tr": "28 May", "en": "28 May"},
-  "maxPulses": 7,
+  "maxPulses": 8,
   "parPulses": 5,
   "maxChangesPerPulse": 1,
   "nodes": [

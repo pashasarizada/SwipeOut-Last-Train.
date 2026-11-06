@@ -4,7 +4,7 @@
   "number": 2,
   "tutorial": false,
   "title": {"tr": "Bir Tur Daha", "en": "One More Loop"},
-  "maxPulses": 9,
+  "maxPulses": 10,
   "parPulses": 7,
   "maxChangesPerPulse": 1,
   "nodes": [

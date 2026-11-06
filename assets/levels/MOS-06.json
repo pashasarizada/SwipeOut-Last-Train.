@@ -4,7 +4,7 @@
   "number": 6,
   "tutorial": false,
   "title": {"tr": "SON TREN", "en": "LAST TRAIN"},
-  "maxPulses": 14,
+  "maxPulses": 16,
   "parPulses": 13,
   "maxChangesPerPulse": 1,
   "nodes": [

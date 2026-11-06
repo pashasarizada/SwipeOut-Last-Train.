@@ -4,7 +4,7 @@
   "number": 4,
   "tutorial": false,
   "title": {"tr": "République Önceliği", "en": "République Priority"},
-  "maxPulses": 12,
+  "maxPulses": 13,
   "parPulses": 10,
   "maxChangesPerPulse": 1,
   "nodes": [

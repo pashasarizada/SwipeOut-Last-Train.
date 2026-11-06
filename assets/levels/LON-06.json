@@ -4,7 +4,7 @@
   "number": 6,
   "tutorial": false,
   "title": {"tr": "Son Halka", "en": "Final Circle"},
-  "maxPulses": 9,
+  "maxPulses": 12,
   "parPulses": 9,
   "maxChangesPerPulse": 1,
   "nodes": [

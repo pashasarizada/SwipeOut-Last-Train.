@@ -4,7 +4,7 @@
   "number": 3,
   "tutorial": false,
   "title": {"tr": "İki Vagon", "en": "Two Cars"},
-  "maxPulses": 4,
+  "maxPulses": 5,
   "parPulses": 2,
   "maxChangesPerPulse": 1,
   "nodes": [

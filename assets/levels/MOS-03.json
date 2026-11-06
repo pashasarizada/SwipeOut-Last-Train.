@@ -4,7 +4,7 @@
   "number": 3,
   "tutorial": false,
   "title": {"tr": "Dış Halka", "en": "Outer Ring"},
-  "maxPulses": 13,
+  "maxPulses": 14,
   "parPulses": 11,
   "maxChangesPerPulse": 1,
   "nodes": [

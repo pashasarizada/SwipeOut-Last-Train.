@@ -4,7 +4,7 @@
   "number": 1,
   "tutorial": false,
   "title": {"tr": "Gece Aktarması", "en": "Night Transfer"},
-  "maxPulses": 8,
+  "maxPulses": 9,
   "parPulses": 6,
   "maxChangesPerPulse": 1,
   "nodes": [

@@ -28,6 +28,12 @@ Kabaca **%85**: içerik, okunurluk, ipucu ve ses tamam; kalan oyuncu testi (zorl
 
 **Sıradaki küçük görev:** birkaç kişiye oynatıp zorluk eğrisini ayarlamak; gerçek iPhone'da ses/haptik kontrolü; mağaza hazırlığı.
 
+## 2026-11-06 (8) — Affedici süre sınırı (`main`)
+
+- Zorluk ölçümü: her bölümü "kırmızı kolu atlayan" rastgele oyuncuyla 3000 kez oynatan geçici betik. Ankara %25–94, Bakü 01–04 %15–26, Bakü 05'ten sonra ~%0–2, Londra/Moskova ~%0 kazanma. Kırmızı kol hamlelerin çok azını yasaklıyor; zorluk ileriyi düşünmekte.
+- Karar D-035: süre sınırı en az par + 3. Doğrulayıcıya `tightLimit` eklendi; 27 bölümün `maxPulses` değeri yükseldi. `dart run tool/solve_levels.dart` → 30/30 `issues=0`, optimumlar aynı.
+- `scripts/check.sh` → No issues found! · **+412 All tests passed**.
+
 ## 2026-11-06 (7) — Yüksek kontrast (`main`)
 
 - `ContrastSettings` + Ayarlar'da "Yüksek kontrast" (D-034): beyaz kalın raylar, görünür kapalı kollar, kenarlı oklar, sönük şehir. `scripts/check.sh` → **+411 All tests passed**. Simülatörde BAK-02'de doğrulandı (`docs/images/v2-ux/18`).

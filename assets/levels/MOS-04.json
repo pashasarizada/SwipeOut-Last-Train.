@@ -4,7 +4,7 @@
   "number": 4,
   "tutorial": false,
   "title": {"tr": "Merkez Kilidi", "en": "Central Lock"},
-  "maxPulses": 14,
+  "maxPulses": 15,
   "parPulses": 12,
   "maxChangesPerPulse": 1,
   "nodes": [

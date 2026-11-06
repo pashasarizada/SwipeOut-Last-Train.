@@ -4,7 +4,7 @@
   "number": 1,
   "tutorial": false,
   "title": {"tr": "Hazar Gecesi", "en": "Caspian Night"},
-  "maxPulses": 7,
+  "maxPulses": 8,
   "parPulses": 5,
   "maxChangesPerPulse": 1,
   "nodes": [

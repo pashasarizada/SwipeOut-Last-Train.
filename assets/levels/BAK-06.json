@@ -4,7 +4,7 @@
   "number": 6,
   "tutorial": false,
   "title": {"tr": "Son Bakı Seferi", "en": "Last Baku Service"},
-  "maxPulses": 8,
+  "maxPulses": 11,
   "parPulses": 8,
   "maxChangesPerPulse": 1,
   "nodes": [

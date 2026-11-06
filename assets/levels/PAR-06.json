@@ -4,7 +4,7 @@
   "number": 6,
   "tutorial": false,
   "title": {"tr": "Paris Gece Finali", "en": "Paris Night Finale"},
-  "maxPulses": 11,
+  "maxPulses": 13,
   "parPulses": 10,
   "maxChangesPerPulse": 1,
   "nodes": [
