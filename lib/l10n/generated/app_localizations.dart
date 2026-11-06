@@ -218,6 +218,12 @@ abstract class AppLocalizations {
   /// **'Sound'**
   String get sound;
 
+  /// No description provided for @highContrast.
+  ///
+  /// In en, this message translates to:
+  /// **'High contrast'**
+  String get highContrast;
+
   /// No description provided for @forecastWarning.
   ///
   /// In en, this message translates to:

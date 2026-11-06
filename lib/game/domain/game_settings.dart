@@ -7,6 +7,7 @@ final class GameSettings {
     this.vibration = true,
     this.sound = true,
     this.reducedMotion = false,
+    this.highContrast = false,
     this.language = GameLanguage.system,
   });
 
@@ -19,17 +20,22 @@ final class GameSettings {
   /// Forces Reduced Motion on, whatever the phone's setting.
   final bool reducedMotion;
 
+  /// Forces High Contrast on, whatever the phone's setting.
+  final bool highContrast;
+
   final GameLanguage language;
 
   GameSettings copyWith({
     bool? vibration,
     bool? sound,
     bool? reducedMotion,
+    bool? highContrast,
     GameLanguage? language,
   }) => GameSettings(
     vibration: vibration ?? this.vibration,
     sound: sound ?? this.sound,
     reducedMotion: reducedMotion ?? this.reducedMotion,
+    highContrast: highContrast ?? this.highContrast,
     language: language ?? this.language,
   );
 
@@ -39,8 +45,10 @@ final class GameSettings {
       other.vibration == vibration &&
       other.sound == sound &&
       other.reducedMotion == reducedMotion &&
+      other.highContrast == highContrast &&
       other.language == language;
 
   @override
-  int get hashCode => Object.hash(vibration, sound, reducedMotion, language);
+  int get hashCode =>
+      Object.hash(vibration, sound, reducedMotion, highContrast, language);
 }

@@ -26,6 +26,7 @@ void main() {
         vibration: false,
         sound: false,
         reducedMotion: true,
+        highContrast: true,
         language: GameLanguage.tr,
       ),
     );
@@ -34,6 +35,7 @@ void main() {
       (loaded.vibration, loaded.sound, loaded.reducedMotion, loaded.language),
       (false, false, true, GameLanguage.tr),
     );
+    expect(loaded.highContrast, isTrue);
   });
 
   test('missing or broken settings fall back to the defaults', () async {

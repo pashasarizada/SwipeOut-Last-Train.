@@ -25,6 +25,7 @@ final class NetworkPainter extends CustomPainter {
     this.wave = 0,
     this.flashNode,
     this.flash = 0,
+    this.highContrast = false,
   }) : arrivals = arrivals ?? state;
 
   final LevelDefinition level;
@@ -38,6 +39,18 @@ final class NetworkPainter extends CustomPainter {
   /// 0–1 brightness boost of the rails right after a pulse.
   final double wave;
   final String? flashNode;
+
+  /// Brighter, thicker rails (High Contrast).
+  final bool highContrast;
+
+  /// Colour and width of a rail: open or a closed switch arm.
+  static (Color, double) railStyle({required bool open, required bool high}) =>
+      switch ((open, high)) {
+        (true, false) => (AppColors.track, 6),
+        (true, true) => (AppColors.textPrimary, 8),
+        (false, false) => (AppColors.trackInactive, 4),
+        (false, true) => (AppColors.textSecondary, 3),
+      };
 
   /// 0–1 opacity of the red collision flash at [flashNode].
   final double flash;
@@ -98,15 +111,13 @@ final class NetworkPainter extends CustomPainter {
       if (!isOpen(edge.id)) {
         (from, to) = _shortenAtSwitch(edge.a, from, to);
         (to, from) = _shortenAtSwitch(edge.b, to, from);
-        canvas.drawLine(from, to, _stroke(AppColors.trackInactive, 4));
+        final (closed, width) = railStyle(open: false, high: highContrast);
+        canvas.drawLine(from, to, _stroke(closed, width));
         continue;
       }
-      final lit = Color.lerp(
-        AppColors.track,
-        AppColors.textPrimary,
-        wave * 0.6,
-      )!;
-      canvas.drawLine(from, to, _stroke(lit, 6));
+      final (rail, width) = railStyle(open: true, high: highContrast);
+      final lit = Color.lerp(rail, AppColors.textPrimary, wave * 0.6)!;
+      canvas.drawLine(from, to, _stroke(lit, width));
     }
   }
 
@@ -189,5 +200,6 @@ final class NetworkPainter extends CustomPainter {
       old.flash != flash ||
       old.flashNode != flashNode ||
       old.layout != layout ||
-      old.level != level;
+      old.level != level ||
+      old.highContrast != highContrast;
 }

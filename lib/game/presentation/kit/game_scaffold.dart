@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../domain/city.dart';
 import '../city/city_backdrop.dart';
 import '../city/city_theme.dart';
+import 'contrast_settings.dart';
 
 /// Every player-facing screen sits on its city's platform: themed
 /// background with its living artwork, safe area, optional header.
@@ -45,7 +46,10 @@ final class GameScaffold extends StatelessWidget {
             if (backdrop)
               Positioned.fill(
                 child: Opacity(
-                  opacity: backdropOpacity,
+                  // High Contrast quiets the city behind the board.
+                  opacity: ContrastSettings.highOf(context)
+                      ? backdropOpacity * 0.4
+                      : backdropOpacity,
                   child: CityBackdrop(city: city),
                 ),
               ),

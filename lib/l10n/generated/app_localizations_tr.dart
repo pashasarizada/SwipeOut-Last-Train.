@@ -76,6 +76,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get sound => 'Ses';
 
   @override
+  String get highContrast => 'Yüksek kontrast';
+
+  @override
   String get forecastWarning => 'Dikkat: bu dakika geçmez';
 
   @override

@@ -11,7 +11,8 @@
 | Tahta okunurluğu (oklar, makas yönü, çarpışma önizlemesi, simge HUD, öğretici el) | tamam |
 | Küçük ekran (320×568) düzeni | tamam |
 | İpucu düğmesi (bedeli 3. yıldız), özgün sesler + ses ayarı, teslim kutlaması | tamam |
-| High Contrast, günün bulmacası | yok |
+| Yüksek kontrast (telefon ayarı + Ayarlar anahtarı) | tamam |
+| Günün bulmacası, ek görevler | yok |
 | Gerçek cihaz / Android / insan oyuncu testi | yapılmadı |
 | Mağaza hazırlığı (logo hakları, bundle id, görseller) | yapılmadı |
 
@@ -26,6 +27,10 @@ Kabaca **%85**: içerik, okunurluk, ipucu ve ses tamam; kalan oyuncu testi (zorl
 - Simülatör: ipucu eli ANK-04'te doğrulandı (`docs/images/v2-ux/17`); sesler cihaz kayıtlarında yüklendi (duyma testi yapılamadı); kutlama 600 ms olduğundan ekran görüntüsü alınamadı, testle doğrulandı.
 
 **Sıradaki küçük görev:** birkaç kişiye oynatıp zorluk eğrisini ayarlamak; gerçek iPhone'da ses/haptik kontrolü; mağaza hazırlığı.
+
+## 2026-11-06 (7) — Yüksek kontrast (`main`)
+
+- `ContrastSettings` + Ayarlar'da "Yüksek kontrast" (D-034): beyaz kalın raylar, görünür kapalı kollar, kenarlı oklar, sönük şehir. `scripts/check.sh` → **+411 All tests passed**. Simülatörde BAK-02'de doğrulandı (`docs/images/v2-ux/18`).
 
 ## 2026-11-06 (5) — tahta okunurluğu, Paket A + B (`main`)
 

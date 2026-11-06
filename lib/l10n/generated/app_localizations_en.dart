@@ -76,6 +76,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sound => 'Sound';
 
   @override
+  String get highContrast => 'High contrast';
+
+  @override
   String get forecastWarning => 'Warning: this minute will fail';
 
   @override

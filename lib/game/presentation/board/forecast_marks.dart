@@ -46,12 +46,23 @@ extension _ForecastMarks on ForecastPainter {
     const head = 11.0;
     final neck = end - unit * head;
 
+    final width = ForecastPainter.shaftWidth(high: highContrast);
+    if (highContrast) {
+      canvas.drawLine(
+        start,
+        neck,
+        Paint()
+          ..color = AppColors.background
+          ..strokeWidth = width + 4
+          ..strokeCap = StrokeCap.round,
+      );
+    }
     canvas.drawLine(
       start,
       neck,
       Paint()
-        ..color = color.withValues(alpha: 0.75)
-        ..strokeWidth = 5
+        ..color = color.withValues(alpha: highContrast ? 1 : 0.75)
+        ..strokeWidth = width
         ..strokeCap = StrokeCap.round,
     );
     canvas.drawPath(

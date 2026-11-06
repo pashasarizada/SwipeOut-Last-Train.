@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'game/presentation/game/game_scope.dart';
 import 'game/presentation/game/progress_store.dart';
 import 'game/presentation/game/settings_store.dart';
+import 'game/presentation/kit/contrast_settings.dart';
 import 'game/presentation/kit/motion_settings.dart';
 import 'game/presentation/sound/game_sounds.dart';
 import 'game/presentation/theme/app_theme.dart';
@@ -65,7 +66,12 @@ class SwipeOutApp extends StatelessWidget {
             reduced:
                 settings.settings.reducedMotion ||
                 (MediaQuery.maybeDisableAnimationsOf(context) ?? false),
-            child: scoped,
+            child: ContrastSettings(
+              high:
+                  settings.settings.highContrast ||
+                  (MediaQuery.maybeHighContrastOf(context) ?? false),
+              child: scoped,
+            ),
           ),
         );
       }

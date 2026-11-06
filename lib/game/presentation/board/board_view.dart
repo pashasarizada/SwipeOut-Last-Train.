@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../game/game_event.dart';
 import '../game/pulse_controller.dart';
+import '../kit/contrast_settings.dart';
 import '../kit/game_haptics.dart';
 import '../kit/motion_settings.dart';
 import '../sound/game_sounds.dart';
@@ -71,6 +72,7 @@ class _BoardViewState extends State<BoardView>
   String? _bumpNode;
   Timer? _secondTap;
   bool _reduced = false;
+  bool _highContrast = false;
 
   PulseController get _controller => widget.controller;
 
@@ -86,6 +88,7 @@ class _BoardViewState extends State<BoardView>
   void didChangeDependencies() {
     super.didChangeDependencies();
     _reduced = MotionSettings.reducedOf(context);
+    _highContrast = ContrastSettings.highOf(context);
     _wakeIdle();
   }
 
@@ -143,6 +146,7 @@ class _BoardViewState extends State<BoardView>
                             ? _controller.animationStart
                             : _controller.state,
                         layout: layout,
+                        highContrast: _highContrast,
                         pending: _controller.pending,
                         wave: _pulse.isAnimating ? 1 - _wave.value : 0,
                         flashNode: _flashNode,
@@ -156,6 +160,7 @@ class _BoardViewState extends State<BoardView>
                         level: _controller.level,
                         forecast: _controller.forecast,
                         layout: layout,
+                        highContrast: _highContrast,
                         flow: _idle,
                       ),
                     ),

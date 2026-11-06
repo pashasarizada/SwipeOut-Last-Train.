@@ -32,6 +32,9 @@ final class PrefsSettingsRepository implements SettingsRepository {
         reducedMotion: json['reducedMotion'] is bool
             ? json['reducedMotion']! as bool
             : defaults.reducedMotion,
+        highContrast: json['highContrast'] is bool
+            ? json['highContrast']! as bool
+            : defaults.highContrast,
         language:
             GameLanguage.values.asNameMap()[json['language']] ??
             defaults.language,
@@ -48,6 +51,7 @@ final class PrefsSettingsRepository implements SettingsRepository {
       'vibration': settings.vibration,
       'sound': settings.sound,
       'reducedMotion': settings.reducedMotion,
+      'highContrast': settings.highContrast,
       'language': settings.language.name,
     }),
   );

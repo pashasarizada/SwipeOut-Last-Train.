@@ -29,6 +29,7 @@ final class ForecastPainter extends CustomPainter {
     required this.forecast,
     required this.layout,
     this.layer = ForecastLayer.underTrains,
+    this.highContrast = false,
     Animation<double> flow = kAlwaysDismissedAnimation,
   }) : _flow = flow,
        super(repaint: flow);
@@ -39,6 +40,11 @@ final class ForecastPainter extends CustomPainter {
   final PulseForecast? forecast;
   final BoardLayout layout;
   final ForecastLayer layer;
+
+  /// Thicker, fully opaque arrows with a dark outline (High Contrast).
+  final bool highContrast;
+
+  static double shaftWidth({required bool high}) => high ? 7 : 5;
   final Animation<double> _flow;
 
   /// Where along its edge an arrow starts and ends.
@@ -123,5 +129,6 @@ final class ForecastPainter extends CustomPainter {
       old.forecast != forecast ||
       old.layout != layout ||
       old.level != level ||
-      old.layer != layer;
+      old.layer != layer ||
+      old.highContrast != highContrast;
 }

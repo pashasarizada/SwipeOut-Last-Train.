@@ -55,6 +55,11 @@ final class SettingsScreen extends StatelessWidget {
             value: settings.reducedMotion,
             onChanged: (v) => set(settings.copyWith(reducedMotion: v)),
           ),
+          _SwitchRow(
+            label: l.highContrast,
+            value: settings.highContrast,
+            onChanged: (v) => set(settings.copyWith(highContrast: v)),
+          ),
           const SizedBox(height: 24),
           Text(l.language, style: _labelStyle),
           const SizedBox(height: 12),
