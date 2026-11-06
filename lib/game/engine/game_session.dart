@@ -1,6 +1,7 @@
 import '../domain/control_action.dart';
 import '../domain/game_state.dart';
 import '../domain/level_definition.dart';
+import '../domain/pulse_forecast.dart';
 import '../domain/pulse_result.dart';
 import 'pulse_engine.dart';
 import 'undo_history.dart';
@@ -29,6 +30,11 @@ final class GameSession {
   /// What [pulse] would do with [action], without playing it.
   PulseResult preview(ControlAction? action) =>
       _engine.simulatePulse(_state, action);
+
+  /// Every train's intent for the next pulse with [action], plus the
+  /// conflict that would reject it.
+  PulseForecast forecast(ControlAction? action) =>
+      _engine.forecast(_state, action);
 
   PulseResult pulse(ControlAction? action) {
     final result = _engine.simulatePulse(_state, action);

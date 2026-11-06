@@ -7,6 +7,7 @@ import '../../domain/game_state.dart';
 import '../../domain/level_definition.dart';
 import '../../domain/level_result.dart';
 import '../../domain/node.dart';
+import '../../domain/pulse_forecast.dart';
 import '../../domain/pulse_result.dart';
 import '../../domain/star_rating.dart';
 import '../../engine/game_session.dart';
@@ -72,6 +73,12 @@ final class PulseController extends ChangeNotifier {
       PulseFailed() => null,
     };
   }
+
+  /// Every train's intent for the next pulse with the pending control,
+  /// including the conflict that would reject it, so the board can warn
+  /// before the lever is pulled. Null while a pulse plays and once the run
+  /// is over.
+  PulseForecast? get forecast => _canPlan ? _session.forecast(_pending) : null;
 
   /// True between a committed pulse and [finishAnimation].
   bool get isAnimating => _animatingFrom != null;

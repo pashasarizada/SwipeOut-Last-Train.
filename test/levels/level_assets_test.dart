@@ -341,4 +341,22 @@ void main() {
       );
     }
   });
+
+  for (final level in levels) {
+    test('${level.id}: the forecast matches every step of the solution', () {
+      final engine = PulseEngine(level);
+      var state = level.initialState;
+      for (final action in level.solution) {
+        final forecast = engine.forecast(state, action);
+        final result = engine.simulatePulse(state, action);
+        expect(forecast.ok, isTrue, reason: '${forecast.conflict}');
+        final next = (result as PulseApplied).state;
+        for (final move in forecast.moves) {
+          expect(next.trainById(move.trainId)!.nodeId, move.to ?? move.from);
+        }
+        expect(forecast.delivers, result.delivered.toSet());
+        state = next;
+      }
+    });
+  }
 }

@@ -3,6 +3,7 @@ import '../domain/edge.dart';
 import '../domain/game_state.dart';
 import '../domain/level_definition.dart';
 import '../domain/node.dart';
+import '../domain/pulse_forecast.dart';
 import '../domain/pulse_result.dart';
 import '../domain/signal_aspect.dart';
 import '../domain/train_state.dart';
@@ -53,23 +54,66 @@ final class PulseEngine {
   String? nextNodeOf(GameState state, TrainState train) =>
       _exitEdge(state, train)?.other(train.nodeId);
 
-  PulseResult simulatePulse(GameState state, ControlAction? action) {
-    if (isSolved(state)) return const PulseFailed(PulseFailure.alreadySolved);
-    if (state.pulse >= level.maxPulses) {
-      return const PulseFailed(PulseFailure.outOfPulses);
-    }
-    if (!_isValid(state, action)) {
-      return PulseFailed(PulseFailure.invalidControl, nodeId: action?.nodeId);
-    }
+  PulseResult simulatePulse(GameState state, ControlAction? action) =>
+      switch (_plan(state, action)) {
+        (failure: final failure?, controlled: _, exits: _) => failure,
+        (failure: null, :final controlled, :final exits) => _commit(
+          controlled,
+          exits,
+        ),
+      };
 
+  /// What [simulatePulse] would do, including every train's intent when
+  /// the pulse would be rejected. Both share [_plan], so they never differ.
+  PulseForecast forecast(GameState state, ControlAction? action) {
+    final (:failure, :controlled, :exits) = _plan(state, action);
+    final moves = [
+      for (final train in controlled.activeTrains)
+        TrainMove(
+          trainId: train.id,
+          from: train.nodeId,
+          to: exits[train.id]?.other(train.nodeId),
+        ),
+    ];
+    return PulseForecast(
+      moves: moves,
+      conflict: failure,
+      delivers: failure != null
+          ? const {}
+          : {
+              for (final move in moves)
+                if (move.to != null &&
+                    level.trainDef(move.trainId)!.goalNode == move.to)
+                  move.trainId,
+            },
+    );
+  }
+
+  ({PulseFailed? failure, GameState controlled, Map<String, Edge> exits}) _plan(
+    GameState state,
+    ControlAction? action,
+  ) {
+    PulseFailed? early;
+    if (isSolved(state)) {
+      early = const PulseFailed(PulseFailure.alreadySolved);
+    } else if (state.pulse >= level.maxPulses) {
+      early = const PulseFailed(PulseFailure.outOfPulses);
+    } else if (!_isValid(state, action)) {
+      early = PulseFailed(PulseFailure.invalidControl, nodeId: action?.nodeId);
+    }
+    if (early != null) {
+      return (failure: early, controlled: state, exits: const {});
+    }
     final controlled = applyAction(state, action);
     final exits = <String, Edge>{
       for (final train in controlled.activeTrains)
         if (_exitEdge(controlled, train) case final edge?) train.id: edge,
     };
-    final failure = _conflict(controlled, exits);
-    if (failure != null) return failure;
-    return _commit(controlled, exits);
+    return (
+      failure: _conflict(controlled, exits),
+      controlled: controlled,
+      exits: exits,
+    );
   }
 
   bool _isValid(GameState state, ControlAction? action) => switch (action) {

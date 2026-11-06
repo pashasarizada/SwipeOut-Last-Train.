@@ -251,4 +251,31 @@ void main() {
       },
     );
   });
+
+  group('forecast', () {
+    test('follows the pending control', () async {
+      final (c, _) = await _start(ank01());
+      expect(c.forecast!.moveOf('red_1')!.to, 'B');
+      await _advanceAndSettle(c);
+      expect(c.forecast!.moveOf('red_1')!.to, 'D');
+      c.tapNode('B');
+      expect(c.forecast!.delivers, {'red_1'});
+    });
+
+    test('keeps a rejected pulse, so the board can warn', () async {
+      final (c, _) = await _start(wrongWayLevel());
+      await _advanceAndSettle(c);
+      expect(c.forecast!.conflict!.reason, PulseFailure.wrongGoal);
+      c.tapNode('J');
+      expect(c.forecast!.ok, isTrue);
+    });
+
+    test('is empty while a pulse plays and once the run is over', () async {
+      final (c, _) = await _start(jamLevel());
+      c.advance();
+      expect(c.forecast, isNull, reason: 'animating');
+      c.finishAnimation();
+      expect(c.forecast, isNull, reason: 'the line is jammed');
+    });
+  });
 }
