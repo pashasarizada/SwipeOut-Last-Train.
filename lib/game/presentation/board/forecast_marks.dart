@@ -81,23 +81,48 @@ extension _ForecastMarks on ForecastPainter {
     }
   }
 
-  void _paintWaiting(Canvas canvas, Offset c) {
+  void _paintWaiting(Canvas canvas, Offset c, WaitBadge badge) {
+    final fork = badge == WaitBadge.switchFork;
     canvas
       ..drawCircle(c, 9, Paint()..color = AppColors.surface)
       ..drawCircle(
         c,
         9,
         Paint()
-          ..color = AppColors.textSecondary
+          ..color = fork ? AppColors.accentAmber : AppColors.textSecondary
           ..style = PaintingStyle.stroke
           ..strokeWidth = 1.5,
       );
-    final bar = Paint()
-      ..color = AppColors.textPrimary
-      ..strokeWidth = 2.4
+    final ink = Paint()
+      ..color = fork ? AppColors.accentAmber : AppColors.textPrimary
+      ..strokeWidth = 2.2
       ..strokeCap = StrokeCap.round;
-    for (final dx in [-2.6, 2.6]) {
-      canvas.drawLine(c + Offset(dx, -3.6), c + Offset(dx, 3.6), bar);
+    if (fork) {
+      // A switch fork: the way on is set to the other arm.
+      canvas
+        ..drawLine(c + const Offset(0, 4.2), c, ink)
+        ..drawLine(c, c + const Offset(-3.6, -3.8), ink)
+        ..drawLine(c, c + const Offset(3.6, -3.8), ink);
+      return;
     }
+    for (final dx in [-2.6, 2.6]) {
+      canvas.drawLine(c + Offset(dx, -3.6), c + Offset(dx, 3.6), ink);
+    }
+  }
+
+  /// A train held by a red signal: its lamp head pulses, so the reason is
+  /// the signal itself rather than a second badge beside it.
+  void _paintLampGlow(Canvas canvas, Offset head) {
+    final box = RRect.fromRectAndRadius(
+      Rect.fromCenter(center: head, width: 24, height: 32),
+      const Radius.circular(9),
+    );
+    canvas.drawRRect(
+      box.inflate(2 * _beat),
+      Paint()
+        ..color = AppColors.danger.withValues(alpha: 0.45 + 0.35 * _beat)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2.5,
+    );
   }
 }

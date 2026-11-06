@@ -75,6 +75,9 @@ final class PulseEngine {
           trainId: train.id,
           from: train.nodeId,
           to: exits[train.id]?.other(train.nodeId),
+          waitReason: exits.containsKey(train.id)
+              ? null
+              : _waitReason(controlled, train),
         ),
     ];
     return PulseForecast(
@@ -145,6 +148,15 @@ final class PulseEngine {
         return candidates.length == 1 ? candidates.single : null;
     }
   }
+
+  /// Why [train] has no exit (see [_exitEdge]).
+  WaitReason _waitReason(GameState state, TrainState train) =>
+      switch (level.nodes[train.nodeId]!.kind) {
+        NodeKind.signal when state.signals[train.nodeId] == SignalAspect.red =>
+          WaitReason.redSignal,
+        NodeKind.junction => WaitReason.switchAgainst,
+        _ => WaitReason.deadEnd,
+      };
 
   Edge? _junctionExit(GameState state, String nodeId, String? incoming) {
     final sw = level.switches[nodeId]!;

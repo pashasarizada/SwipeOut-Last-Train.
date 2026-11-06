@@ -1,13 +1,31 @@
 import 'pulse_result.dart';
 
+/// Why a train stays put this pulse.
+enum WaitReason {
+  /// It stands at a red signal.
+  redSignal,
+
+  /// It came in on a switch arm the switch is not set to.
+  switchAgainst,
+
+  /// There is no way on from here.
+  deadEnd,
+}
+
 /// Where one active train goes in the next pulse: [to] is null when it
-/// stays (red signal, dead end, closed switch arm).
+/// stays, and [waitReason] then says why.
 final class TrainMove {
-  const TrainMove({required this.trainId, required this.from, this.to});
+  const TrainMove({
+    required this.trainId,
+    required this.from,
+    this.to,
+    this.waitReason,
+  });
 
   final String trainId;
   final String from;
   final String? to;
+  final WaitReason? waitReason;
 
   bool get moves => to != null;
 
@@ -16,10 +34,11 @@ final class TrainMove {
       other is TrainMove &&
       other.trainId == trainId &&
       other.from == from &&
-      other.to == to;
+      other.to == to &&
+      other.waitReason == waitReason;
 
   @override
-  int get hashCode => Object.hash(trainId, from, to);
+  int get hashCode => Object.hash(trainId, from, to, waitReason);
 
   @override
   String toString() => 'TrainMove($trainId $from→$to)';

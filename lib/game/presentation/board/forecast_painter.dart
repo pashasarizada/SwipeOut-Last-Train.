@@ -8,12 +8,18 @@ import '../../domain/train_def.dart';
 import '../kit/game_icon.dart';
 import '../theme/app_colors.dart';
 import 'board_layout.dart';
+import 'network_painter.dart';
 import 'rail_geometry.dart';
 
 part 'forecast_marks.dart';
 
 /// What a train shows for the next pulse.
 enum ForecastMark { arrow, waiting }
+
+/// How a waiting train shows why it waits: its red signal lamp lit up, a
+/// badge with a switch fork (the switch is set against it), or a pause
+/// badge (dead end).
+enum WaitBadge { signalLamp, switchFork, pause }
 
 /// The forecast is painted twice: under the trains (arrows, badges, goal
 /// glow) and above them (the conflict cross, which often sits on a train).
@@ -60,6 +66,14 @@ final class ForecastPainter extends CustomPainter {
 
   /// Offset of the waiting badge from the train's node.
   static const Offset badgeOffset = Offset(20, -20);
+
+  static WaitBadge? badgeFor(TrainMove move) => move.moves
+      ? null
+      : switch (move.waitReason) {
+          WaitReason.redSignal => WaitBadge.signalLamp,
+          WaitReason.switchAgainst => WaitBadge.switchFork,
+          WaitReason.deadEnd || null => WaitBadge.pause,
+        };
 
   static ForecastMark markOf(TrainMove move) =>
       move.moves ? ForecastMark.arrow : ForecastMark.waiting;
@@ -127,7 +141,15 @@ final class ForecastPainter extends CustomPainter {
         case ForecastMark.arrow:
           _paintArrow(canvas, move);
         case ForecastMark.waiting:
-          _paintWaiting(canvas, _at(move.from) + badgeOffset);
+          switch (badgeFor(move)!) {
+            case WaitBadge.signalLamp:
+              _paintLampGlow(
+                canvas,
+                _at(move.from) + NetworkPainter.signalLampOffset,
+              );
+            case final badge:
+              _paintWaiting(canvas, _at(move.from) + badgeOffset, badge);
+          }
       }
     }
     for (final id in f.delivers) {

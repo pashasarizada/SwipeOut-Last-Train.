@@ -201,6 +201,29 @@ void main() {
     expect(network(null).isOpen('AB'), isTrue, reason: 'trunk is always on');
   });
 
+  test('a waiting train shows why: lit lamp, switch fork or pause', () {
+    TrainMove waiting(WaitReason why) =>
+        TrainMove(trainId: 'a', from: 'J', waitReason: why);
+    expect(
+      ForecastPainter.badgeFor(waiting(WaitReason.redSignal)),
+      WaitBadge.signalLamp,
+    );
+    expect(
+      ForecastPainter.badgeFor(waiting(WaitReason.switchAgainst)),
+      WaitBadge.switchFork,
+    );
+    expect(
+      ForecastPainter.badgeFor(waiting(WaitReason.deadEnd)),
+      WaitBadge.pause,
+    );
+    expect(
+      ForecastPainter.badgeFor(
+        const TrainMove(trainId: 'a', from: 'J', to: 'G'),
+      ),
+      isNull,
+    );
+  });
+
   test('trains in a conflict turn red and the conflict node is crossed', () {
     final level = wrongWayLevel();
     final painter = ForecastPainter(

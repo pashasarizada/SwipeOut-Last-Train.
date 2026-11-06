@@ -4,44 +4,51 @@
   "number": 3,
   "tutorial": false,
   "title": {"tr": "Son Aktarma", "en": "Last Transfer"},
-  "maxPulses": 11,
-  "parPulses": 8,
+  "maxPulses": 12,
+  "parPulses": 9,
   "maxChangesPerPulse": 1,
   "nodes": [
-    {"id": "A", "kind": "depot", "x": 0.06, "y": 0.14},
-    {"id": "E", "kind": "switch", "x": 0.28, "y": 0.30},
-    {"id": "V", "kind": "switch", "x": 0.55, "y": 0.16},
-    {"id": "Y", "kind": "switch", "x": 0.80, "y": 0.30},
-    {"id": "D", "kind": "depot", "x": 0.96, "y": 0.10},
-    {"id": "X", "kind": "switch", "x": 0.82, "y": 0.66},
-    {"id": "R", "kind": "goal", "label": "Brixton", "x": 0.96, "y": 0.86},
-    {"id": "Z", "kind": "switch", "x": 0.55, "y": 0.82},
-    {"id": "B", "kind": "goal", "label": "Camden Town", "x": 0.34, "y": 0.98},
-    {"id": "W", "kind": "switch", "x": 0.28, "y": 0.66},
-    {"id": "F", "kind": "depot", "x": 0.04, "y": 0.56},
-    {"id": "L", "kind": "goal", "label": "Moorgate", "x": 0.55, "y": 0.44}
+    {"id": "A", "kind": "depot", "x": 0.04, "y": 0.5},
+    {"id": "W", "kind": "switch", "x": 0.22, "y": 0.5},
+    {"id": "NW", "kind": "switch", "x": 0.3, "y": 0.22},
+    {"id": "D", "kind": "depot", "x": 0.16, "y": 0.06},
+    {"id": "N", "kind": "switch", "x": 0.5, "y": 0.14},
+    {"id": "NE", "kind": "switch", "x": 0.7, "y": 0.22},
+    {"id": "F", "kind": "depot", "x": 0.84, "y": 0.06},
+    {"id": "E", "kind": "switch", "x": 0.8, "y": 0.5},
+    {"id": "R", "kind": "goal", "label": "Brixton", "x": 0.98, "y": 0.5},
+    {"id": "SE", "kind": "switch", "x": 0.7, "y": 0.8},
+    {"id": "B", "kind": "goal", "label": "Camden Town", "x": 0.86, "y": 0.96},
+    {"id": "S", "kind": "switch", "x": 0.4, "y": 0.86},
+    {"id": "M", "kind": "switch", "x": 0.5, "y": 0.5},
+    {"id": "L", "kind": "goal", "label": "Moorgate", "x": 0.64, "y": 0.63}
   ],
   "edges": [
-    {"id": "AE", "a": "A", "b": "E"},
-    {"id": "EV", "a": "E", "b": "V"},
-    {"id": "VY", "a": "V", "b": "Y"},
-    {"id": "DY", "a": "D", "b": "Y"},
-    {"id": "YX", "a": "Y", "b": "X"},
-    {"id": "XR", "a": "X", "b": "R"},
-    {"id": "XZ", "a": "X", "b": "Z"},
-    {"id": "ZB", "a": "Z", "b": "B"},
-    {"id": "ZW", "a": "Z", "b": "W"},
-    {"id": "WE", "a": "W", "b": "E"},
-    {"id": "FW", "a": "F", "b": "W"},
-    {"id": "VL", "a": "V", "b": "L"}
+    {"id": "AW", "a": "A", "b": "W"},
+    {"id": "WN1", "a": "W", "b": "NW"},
+    {"id": "DN", "a": "D", "b": "NW"},
+    {"id": "N1N", "a": "NW", "b": "N"},
+    {"id": "NNE", "a": "N", "b": "NE"},
+    {"id": "FNE", "a": "F", "b": "NE"},
+    {"id": "NEE", "a": "NE", "b": "E"},
+    {"id": "ER", "a": "E", "b": "R"},
+    {"id": "ESE", "a": "E", "b": "SE"},
+    {"id": "SEB", "a": "SE", "b": "B"},
+    {"id": "SES", "a": "SE", "b": "S"},
+    {"id": "SW", "a": "S", "b": "W"},
+    {"id": "NM", "a": "N", "b": "M"},
+    {"id": "MS", "a": "M", "b": "S"},
+    {"id": "ML", "a": "M", "b": "L"}
   ],
   "switches": [
-    {"nodeId": "E", "trunkEdge": "EV", "branchAEdge": "WE", "branchBEdge": "AE", "selectedBranch": "B"},
-    {"nodeId": "V", "trunkEdge": "EV", "branchAEdge": "VY", "branchBEdge": "VL", "selectedBranch": "A"},
-    {"nodeId": "Y", "trunkEdge": "YX", "branchAEdge": "VY", "branchBEdge": "DY", "selectedBranch": "A"},
-    {"nodeId": "X", "trunkEdge": "YX", "branchAEdge": "XZ", "branchBEdge": "XR", "selectedBranch": "A"},
-    {"nodeId": "Z", "trunkEdge": "XZ", "branchAEdge": "ZW", "branchBEdge": "ZB", "selectedBranch": "A"},
-    {"nodeId": "W", "trunkEdge": "WE", "branchAEdge": "ZW", "branchBEdge": "FW", "selectedBranch": "A"}
+    {"nodeId": "W", "trunkEdge": "WN1", "branchAEdge": "SW", "branchBEdge": "AW", "selectedBranch": "B"},
+    {"nodeId": "NW", "trunkEdge": "N1N", "branchAEdge": "WN1", "branchBEdge": "DN", "selectedBranch": "A"},
+    {"nodeId": "N", "trunkEdge": "N1N", "branchAEdge": "NNE", "branchBEdge": "NM", "selectedBranch": "A"},
+    {"nodeId": "NE", "trunkEdge": "NEE", "branchAEdge": "NNE", "branchBEdge": "FNE", "selectedBranch": "B"},
+    {"nodeId": "E", "trunkEdge": "NEE", "branchAEdge": "ESE", "branchBEdge": "ER", "selectedBranch": "A"},
+    {"nodeId": "SE", "trunkEdge": "ESE", "branchAEdge": "SES", "branchBEdge": "SEB", "selectedBranch": "A"},
+    {"nodeId": "S", "trunkEdge": "SW", "branchAEdge": "SES", "branchBEdge": "MS", "selectedBranch": "A"},
+    {"nodeId": "M", "trunkEdge": "NM", "branchAEdge": "MS", "branchBEdge": "ML", "selectedBranch": "A"}
   ],
   "signals": [],
   "trains": [
@@ -50,7 +57,7 @@
     {"id": "lime_1", "startNode": "F", "goalNode": "R", "symbol": "square", "style": "lime"}
   ],
   "tutorialSteps": [
-    {"tr": "Bazen hedef tam bir tur ötede.", "en": "Sometimes the goal is a full lap away."}
+    {"tr": "Ortadaki hat bir kestirme: makasla treni içeri al.", "en": "The middle line is a shortcut: switch a train inside."}
   ],
-  "solution": ["switch:W", "switch:Y", "switch:W", "switch:Y", "switch:E", "switch:Z", "switch:V", "switch:X"]
+  "solution": ["switch:E", "switch:NW", "switch:N", "switch:M", "switch:NW", "switch:N", "switch:NE", "switch:E", "switch:SE"]
 }

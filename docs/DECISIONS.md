@@ -94,4 +94,10 @@ Tasarım: `docs/superpowers/specs/2026-11-06-metro-map-look-design.md`, plan: `d
   - Saat `00:00 − maxPulses`'tan başlar, süre bitince tam 00:00'ı gösterir. 23:50 sabit başlangıcı ve D-035'ten sonra gece yarısını geçmesi düzeltildi.
   - Dokunma: 36 pt içindeki makas ve sinyal, daha yakın başka duraklara göre önceliklidir. Makasın üstünde duran trene dokunmak makası seçer.
   - Kurallar gizliyken tabelanın köşesinde küçük bir "i" rozeti durur; tabelaya dokunmanın kuralları geri getirdiğini gösterir.
+- **D-038 — Bekleme sebebi görünür; haritalar tekrar etmez.**
+  - `TrainMove.waitReason` üç değer alır: kırmızı sinyal, ters makas, çıkmaz. Motor bunu beklemeyle aynı kuraldan hesaplar.
+  - Kırmızı sinyalde ayrı rozet çizilmez, sinyal lambası parlar. Rozet ile lamba üst üste biniyordu (oyun testi).
+  - Ters makasta turuncu çatal rozeti çizilir, çıkmazda ⏸.
+  - Londra 03'e yeni harita: tek yönlü 7 makaslı halka ve ortada aktarma hattı (N–M–S), iç hedefe tek yol. En kısa çözüm 9, sınır 12, rastgele kazanma ~%0.
+  - `level_assets_test` artık iki bölümün aynı haritayı kullanmasına izin vermiyor. Bilinen iki tekrar (LON-05/06, MOS-01/02) açık bir izin listesinde duruyor; liste yalnız küçülebilir.
 

@@ -249,7 +249,7 @@ void main() {
     expect(level.solution.every((a) => a != null), isTrue);
   });
 
-  test('LON-03: blue rides a full lap of the ring to its goal', () {
+  test('LON-03: blue transfers through the centre line to its goal', () {
     final level = levels.firstWhere((l) => l.id == 'LON-03');
     final engine = PulseEngine(level);
     var state = level.initialState;
@@ -258,8 +258,35 @@ void main() {
       state = (engine.simulatePulse(state, action) as PulseApplied).state;
       path.add(state.trainById('blue_1')!.nodeId);
     }
-    expect(path, containsAll(['Y', 'X', 'Z', 'W', 'E', 'V']));
+    expect(path, containsAllInOrder(['N', 'M', 'L']));
     expect(state.trainById('blue_1')!.delivered, isTrue);
+  });
+
+  test('no two levels share a map (playtest: LON-03 repeated LON-02)', () {
+    String shape(LevelDefinition l) {
+      final points = [
+        for (final n in l.nodes.values) '${n.position.x},${n.position.y}',
+      ]..sort();
+      final links = [
+        for (final e in l.edges.values) ([e.a, e.b]..sort()).join('-'),
+      ]..sort();
+      return '${points.join(' ')}|${links.join(' ')}';
+    }
+
+    // Known repeats still to redesign (TASKS P1); shrink this, never grow it.
+    const knownRepeats = {'LON-06': 'LON-05', 'MOS-02': 'MOS-01'};
+    final seen = <String, String>{};
+    for (final level in levels) {
+      final key = shape(level);
+      if (seen[key] case final first?) {
+        expect(
+          knownRepeats[level.id],
+          first,
+          reason: '${level.id} repeats $first',
+        );
+      }
+      seen.putIfAbsent(key, () => level.id);
+    }
   });
 
   test('LON-04: both corridors carry trains in the winning run', () {

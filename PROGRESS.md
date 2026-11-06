@@ -28,6 +28,13 @@ Kabaca **%85**: içerik, okunurluk, ipucu ve ses tamam; kalan oyuncu testi (zorl
 
 **Sıradaki küçük görev:** birkaç kişiye oynatıp zorluk eğrisini ayarlamak; gerçek iPhone'da ses/haptik kontrolü; mağaza hazırlığı.
 
+## 2026-11-06 (12) — Bekleme sebebi ve yeni Londra 03 (`main`)
+
+- D-038: kırmızı sinyalde lamba parlıyor, ters makasta çatal rozeti, çıkmazda ⏸. Londra 03 yeni harita (halka + aktarma hattı, par 9). Bölümlerin aynı haritayı paylaşmaması testle zorlanıyor.
+- Yeni test iki tekrar daha buldu: Londra 05/06 ve Moskova 01/02. Bunlar TASKS P1'e yazıldı.
+- `scripts/check.sh` → No issues found! · **+477 All tests passed**. `solve_levels`: 30/30 `issues=0`.
+- Simülatör: Londra 03'te çatal rozeti ve çarpışma önizlemesi görüldü.
+
 ## 2026-11-06 (11) — Oyun testi düzeltmeleri (`main`)
 
 - D-037: tabelada "3 YILDIZ ≤ N DK" ya da "İPUCU: EN ÇOK 2 YILDIZ" yazıyor. Bitiş ekranı kaçan yıldızın sebebini söylüyor. Sayaçta ★ hedef dakikanın kendisi. Saat süre bitince tam 00:00. Makasa yakın dokunuş makası seçiyor. Kurallar gizliyken tabelada "i" rozeti var.
