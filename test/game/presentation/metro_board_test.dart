@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:swipeout_last_train/game/domain/edge.dart';
@@ -63,6 +65,59 @@ void main() {
       expect((center - path.pointAt(path.length * t)).distance, lessThan(0.5));
       expect(heading, closeTo(path.headingAt(path.length * t), 0.01));
     }
+  });
+
+  test('a bumped train lurches along its bent rail, not across it', () {
+    final (level, edge, g) = bent();
+    final a = layout.toScreen(level.nodes[edge.a]!.position);
+    final corners = g.from(edge.a, edge.id).corners;
+    // Early in the lurch the car moves along the rail's first straight run.
+    final firstRun = corners[1] - corners[0];
+    final small = TrainLayer.lurchOffset(
+      level,
+      g,
+      node: edge.a,
+      toward: edge.b,
+      fraction: 4 / g.pathOf(edge.id).length,
+    );
+    expect(
+      math.atan2(small.dy, small.dx),
+      closeTo(math.atan2(firstRun.dy, firstRun.dx), 0.01),
+    );
+    // At full reach it is still on the rail: near one of its straight runs.
+    final far =
+        a +
+        TrainLayer.lurchOffset(
+          level,
+          g,
+          node: edge.a,
+          toward: edge.b,
+          fraction: TrainLayer.bumpReach,
+        );
+    var nearest = double.infinity;
+    for (var i = 0; i + 1 < corners.length; i++) {
+      final ab = corners[i + 1] - corners[i];
+      final t =
+          (((far - corners[i]).dx * ab.dx + (far - corners[i]).dy * ab.dy) /
+                  (ab.dx * ab.dx + ab.dy * ab.dy))
+              .clamp(0.0, 1.0);
+      nearest = math.min(nearest, (far - (corners[i] + ab * t)).distance);
+    }
+    expect(nearest, lessThan(RailGeometry.cornerRadius * 0.5));
+  });
+
+  test('a train on the conflict node itself does not lurch', () {
+    final (level, edge, g) = bent();
+    expect(
+      TrainLayer.lurchOffset(
+        level,
+        g,
+        node: edge.a,
+        toward: edge.a,
+        fraction: 0.3,
+      ),
+      Offset.zero,
+    );
   });
 
   test('a closed switch arm stops short of the switch along its path', () {

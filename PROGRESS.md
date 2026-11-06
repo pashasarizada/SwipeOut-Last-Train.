@@ -36,8 +36,12 @@ Kabaca **%85**: içerik, okunurluk, ipucu ve ses tamam; kalan oyuncu testi (zorl
   - `MetroLines` ve şehir hat paletleri: renkli, kenarlı hat şeritleri.
   - Trenler, oklar ve çarpı yolu izliyor.
   - Durak çentikleri, depo çerçeveleri ve tamponlar.
-  - 75 hedefe gerçek istasyon adı; büyük telefonda %95'i yerleşiyor.
-- `scripts/check.sh` → No issues found! · **+457 All tests passed**.
+  - 75 hedefe gerçek istasyon adı. 360 pt tahtada 70/75'i yerleşiyor, 260 pt'de 59/75'i; yer bulamayan isim atlanıyor.
+- Bağımsız inceleme: kritik bulgu yok.
+  - Önemli: çarpışma sarsıntısı eğri raydan çıkıyordu, artık rayı izliyor. Yazılar ve yol parçaları her karede yeniden hesaplanıyordu, artık önbellekte.
+  - Küçük: isim çarpı yerine gelebiliyordu; makas dalı açı eşiği gevşekti; ok ucu kıvrımda çarpıktı; 4. renk gerekirse sessizce tekrar ediyordu (artık assert). Hepsi düzeltildi.
+  - Ertelenen küçükler: durak çentikleri ince; isimler sistem yazı boyutunu izlemiyor; bazı testler beklenen değeri aynı fonksiyondan alıyor.
+- `scripts/check.sh` → No issues found! · **+465 All tests passed**.
 - Simülatör (iPhone 16): Ankara 01, Bakü 02, Moskova 06 ve High Contrast Paris 04 görüldü (`docs/images/v2-ux/19–21`). Moskova'nın kalabalık tahtalarında birkaç isim yer bulamıyor (tasarım gereği atlanıyor).
 
 ## 2026-11-06 (8) — Affedici süre sınırı (`main`)

@@ -46,9 +46,10 @@ extension _ForecastMarks on ForecastPainter {
     final neckAt = math.max(from, to - head);
     final end = rail.pointAt(to);
     final neck = rail.pointAt(neckAt);
-    final heading = rail.headingAt(to);
-    final unit = Offset(math.cos(heading), math.sin(heading));
-    final normal = Offset(-unit.dy, unit.dx);
+    // The head's base is square to the rail where it sits, so a head on
+    // a knee does not twist.
+    final heading = rail.headingAt(neckAt);
+    final normal = Offset(-math.sin(heading), math.cos(heading));
     final shaft = rail.segment(from, neckAt);
 
     final width = ForecastPainter.shaftWidth(high: highContrast);

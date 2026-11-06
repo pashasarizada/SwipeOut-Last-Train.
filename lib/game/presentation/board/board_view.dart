@@ -113,6 +113,7 @@ class _BoardViewState extends State<BoardView>
     _flash.dispose();
     _bump.dispose();
     _secondTap?.cancel();
+    _map?.dispose();
     super.dispose();
   }
 

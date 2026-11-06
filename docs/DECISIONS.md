@@ -78,5 +78,9 @@ Tasarım: `docs/superpowers/specs/2026-11-06-metro-map-look-design.md`, plan: `d
   - `MetroLines` rayları hatlara ayırır: makasta ana gövde en düz dala devam eder. Renkler açgözlü boyamayla verilir, böylece buluşan hatlar farklı renkte olur.
   - Hat renkleri tren renklerinden ve önizleme turkuazından en az 30° renk tonu uzaktadır (sönük gri/kum tonu bu kuraldan muaf). Bir şehrin iki ana rengi arasında en az 45° fark vardır.
   - Duraklar çentik, depolar hat renginde çerçeve, çıkmaz uçlar tampon çizgisi olarak çizilir.
-  - Yalnız hedef istasyonlara gerçek istasyon adı yazılır (`GAME_DESIGN_V2` "yalnız kritik istasyonlar" kuralıyla uyumlu). 12 aday yerden ilki seçilir; yer yoksa isim atlanır. Büyük telefonda isimlerin %95'i, 320 pt ekranda %83'ü yerleşir.
+  - Yalnız hedef istasyonlara gerçek istasyon adı yazılır (`GAME_DESIGN_V2` "yalnız kritik istasyonlar" kuralıyla uyumlu). 12 aday yerden ilki seçilir. İsim; düğümlere, raylara, sinyal lambasına, bekliyor rozetine ve çarpı işaretinin olası yerine değmez. Yer yoksa isim atlanır. Yerleşme oranı tahta kenarına göre: 360 pt'de 70/75, 260 pt'de 59/75, 180 pt'de 44/75. Testler 360 pt'de ≥%90, 260 pt'de ≥%75 ister.
+  - İnceleme sonrası:
+    - çarpışma sarsıntısı eğri rayı izler;
+    - isim yazıları ve ray parçaları tahta başına bir kez hesaplanır (karede bir değil);
+    - bir düğümden çıkan raylar en az ~29° ayrılır.
   - High Contrast: beyaz kalın raylar, koyu zeminli isimler.

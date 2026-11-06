@@ -61,6 +61,27 @@ final class TrainLayer extends StatefulWidget {
     return (rail.pointAt(d), rail.headingAt(d));
   }
 
+  /// How far a bumped train at [node] has lurched towards [toward] when it
+  /// is [fraction] of the way there: along the rail between them when they
+  /// are neighbours, so it never leaves a bent track; straight otherwise.
+  static Offset lurchOffset(
+    LevelDefinition level,
+    RailGeometry geometry, {
+    required String node,
+    required String toward,
+    required double fraction,
+  }) {
+    if (node == toward) return Offset.zero;
+    final layout = geometry.layout;
+    final from = layout.toScreen(level.nodes[node]!.position);
+    final neighbour = level.edgesOf(node).any((e) => e.other(node) == toward);
+    if (!neighbour) {
+      return (layout.toScreen(level.nodes[toward]!.position) - from) * fraction;
+    }
+    final rail = geometry.between(node, toward);
+    return rail.pointAt(rail.length * fraction) - from;
+  }
+
   @override
   State<TrainLayer> createState() => _TrainLayerState();
 }
@@ -129,16 +150,35 @@ class _TrainLayerState extends State<TrainLayer> {
     final at = {
       for (final id in widget.bumped)
         if (widget.after.trainById(id) case final t? when !t.delivered)
-          id: _pos(t.nodeId),
+          id: t.nodeId,
     };
     if (at.isEmpty) return const {};
-    final contact = widget.bumpNode != null
-        ? _pos(widget.bumpNode!)
-        : at.values.reduce((a, b) => a + b) / at.length.toDouble();
     final k = TrainLayer.bumpReach * math.sin(v * math.pi);
+    final target = widget.bumpNode;
+    Offset towards(String node) {
+      if (target != null) {
+        // A train standing on the conflict node holds still.
+        return TrainLayer.lurchOffset(
+          widget.level,
+          widget.geometry,
+          node: node,
+          toward: target,
+          fraction: k,
+        );
+      }
+      // No conflict node: the bumped trains meet half way between them.
+      final other = at.values.firstWhere((n) => n != node, orElse: () => node);
+      return TrainLayer.lurchOffset(
+        widget.level,
+        widget.geometry,
+        node: node,
+        toward: other,
+        fraction: k / 2,
+      );
+    }
+
     return {
-      for (final MapEntry(:key, :value) in at.entries)
-        key: (contact - value) * k,
+      for (final MapEntry(:key, :value) in at.entries) key: towards(value),
     };
   }
 

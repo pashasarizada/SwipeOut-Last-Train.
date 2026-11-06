@@ -52,23 +52,11 @@ extension _StationMarks on NetworkPainter {
         Paint()
           ..color = theme.background.withValues(alpha: highContrast ? 1 : 0.7),
       );
-      final painter = TextPainter(
-        text: TextSpan(
-          text: level.nodes[id]!.label,
-          style: StationLabels.style.copyWith(
-            color: AppColors.textPrimary.withValues(
-              alpha: highContrast ? 1 : 0.85,
-            ),
-          ),
-        ),
-        textDirection: TextDirection.ltr,
-      )..layout();
-      painter
-        ..paint(
-          canvas,
-          box.center - Offset(painter.width / 2, painter.height / 2),
-        )
-        ..dispose();
+      final painter = map.labels.painterFor(id, high: highContrast);
+      painter.paint(
+        canvas,
+        box.center - Offset(painter.width / 2, painter.height / 2),
+      );
     }
   }
 

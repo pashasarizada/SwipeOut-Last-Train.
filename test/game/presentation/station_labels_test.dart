@@ -63,6 +63,23 @@ void main() {
               expect(r.overlaps(head), isFalse, reason: '$why: signal head');
             }
           }
+          // Where a conflict cross can sit: on a node, or 26 pt along a
+          // rail in front of a standing train.
+          for (final node in level.nodes.keys) {
+            for (final e in level.edgesOf(node)) {
+              final rail = g.from(node, e.id);
+              final cross = rail.pointAt(
+                rail.length / 2 < ForecastPainter.crossShift
+                    ? rail.length / 2
+                    : ForecastPainter.crossShift,
+              );
+              expect(
+                _hitsCircle(r, cross, 17),
+                isFalse,
+                reason: '$why: cross by $node on ${e.id}',
+              );
+            }
+          }
           for (final other in rects) {
             if (identical(other, r)) continue;
             expect(r.overlaps(other), isFalse, reason: why);
@@ -71,6 +88,40 @@ void main() {
       }
     });
   }
+
+  test('name text is laid out once per board, not every frame', () {
+    final level = levels.firstWhere((l) => l.id == 'BAK-02');
+    final labels = StationLabels(
+      level,
+      RailGeometry(level, BoardLayout(size: const Size.square(408))),
+    );
+    final id = labels.placed.keys.first;
+    expect(
+      labels.painterFor(id, high: false),
+      same(labels.painterFor(id, high: false)),
+    );
+    expect(
+      labels.painterFor(id, high: true),
+      isNot(same(labels.painterFor(id, high: false))),
+    );
+    labels.dispose();
+  });
+
+  test('most names still fit on a small phone board', () {
+    var wanted = 0;
+    var placed = 0;
+    for (final level in levels) {
+      final layout = BoardLayout(size: Size.square(boardSides.last + 48));
+      final labels = StationLabels(level, RailGeometry(level, layout));
+      wanted += labels.wanted;
+      placed += labels.placed.length;
+    }
+    expect(
+      placed / wanted,
+      greaterThanOrEqualTo(0.75),
+      reason: '$placed/$wanted',
+    );
+  });
 
   test('at least 90% of station names fit on a large phone', () {
     var wanted = 0;

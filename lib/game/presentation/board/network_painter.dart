@@ -14,7 +14,6 @@ import '../kit/game_icon.dart';
 import '../theme/app_colors.dart';
 import 'board_layout.dart';
 import 'metro_lines.dart';
-import 'station_labels.dart';
 
 part 'rail_marks.dart';
 part 'station_marks.dart';

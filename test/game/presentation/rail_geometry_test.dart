@@ -80,6 +80,28 @@ void main() {
       }
     });
 
+    test('rails leaving one node are apart where a closed arm stops '
+        '($side)', () {
+      for (final level in levels) {
+        final g = RailGeometry(level, layout);
+        for (final node in level.nodes.keys) {
+          final ends = [
+            for (final e in level.edgesOf(node))
+              g.from(node, e.id).pointAt(RailGeometry.armCheck),
+          ];
+          for (var i = 0; i < ends.length; i++) {
+            for (var j = i + 1; j < ends.length; j++) {
+              expect(
+                (ends[i] - ends[j]).distance,
+                greaterThanOrEqualTo(12),
+                reason: '${level.id} at $node',
+              );
+            }
+          }
+        }
+      }
+    });
+
     test('paths keep clear of other nodes ($side)', () {
       for (final level in levels) {
         final g = RailGeometry(level, layout);
@@ -134,6 +156,13 @@ void main() {
     }
     final first = bent.corners[1] - bent.corners[0];
     expect(bent.headingAt(0), closeTo(math.atan2(first.dy, first.dx), 0.01));
+  });
+
+  test('a drawn piece of a rail is cut once and reused', () {
+    final level = levels.firstWhere((l) => l.id == 'BAK-02');
+    final g = RailGeometry(level, BoardLayout(size: const Size.square(400)));
+    final p = g.pathOf(level.edges.keys.first);
+    expect(p.segment(0, p.length), same(p.segment(0, p.length)));
   });
 
   test('from() runs the same rail from the other end', () {

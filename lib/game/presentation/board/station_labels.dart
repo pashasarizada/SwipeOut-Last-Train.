@@ -3,6 +3,7 @@ import 'package:flutter/painting.dart';
 import '../../domain/level_definition.dart';
 import '../../domain/node.dart';
 import '../kit/game_fonts.dart';
+import '../theme/app_colors.dart';
 import 'forecast_painter.dart';
 import 'network_painter.dart';
 import 'rail_geometry.dart';
@@ -54,6 +55,31 @@ final class StationLabels {
     letterSpacing: 0.2,
   );
 
+  final Map<(String, bool), TextPainter> _painters = {};
+
+  /// [id]'s name laid out once per board (and per High Contrast), so the
+  /// repainting board never lays text out again.
+  TextPainter painterFor(String id, {required bool high}) =>
+      _painters.putIfAbsent(
+        (id, high),
+        () => TextPainter(
+          text: TextSpan(
+            text: level.nodes[id]!.label,
+            style: style.copyWith(
+              color: AppColors.textPrimary.withValues(alpha: high ? 1 : 0.85),
+            ),
+          ),
+          textDirection: TextDirection.ltr,
+        )..layout(),
+      );
+
+  void dispose() {
+    for (final p in _painters.values) {
+      p.dispose();
+    }
+    _painters.clear();
+  }
+
   static Size measure(String name) {
     final p = TextPainter(
       text: TextSpan(text: name, style: style),
@@ -104,6 +130,9 @@ final class StationLabels {
             layout.toScreen(node.position) + ForecastPainter.badgeOffset,
             12,
           ),
+        // The conflict cross, moved in front of a standing train.
+        for (final e in level.edgesOf(node.id))
+          _Zone.circle(_crossSpot(node.id, e.id), 19),
         if (node.kind == NodeKind.signal)
           _Zone.rect(
             Rect.fromCenter(
@@ -116,6 +145,15 @@ final class StationLabels {
           ),
       ],
     ];
+  }
+
+  Offset _crossSpot(String nodeId, String edgeId) {
+    final rail = geometry.from(nodeId, edgeId);
+    return rail.pointAt(
+      rail.length / 2 < ForecastPainter.crossShift
+          ? rail.length / 2
+          : ForecastPainter.crossShift,
+    );
   }
 
   /// Points along every rail, 4 pt apart, grown by the rail's half width.

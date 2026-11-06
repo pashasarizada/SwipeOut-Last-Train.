@@ -31,11 +31,17 @@ final class RailPath {
     return math.atan2(v.dy, v.dx);
   }
 
-  /// The piece of the path between two distances from its start.
-  Path segment(double from, double to) => _metric.extractPath(
-    from.clamp(0, length).toDouble(),
-    to.clamp(0, length).toDouble(),
+  /// The piece of the path between two distances from its start, cut once
+  /// and reused: the board repaints every frame of a pulse.
+  Path segment(double from, double to) => _segments.putIfAbsent(
+    (from, to),
+    () => _metric.extractPath(
+      from.clamp(0, length).toDouble(),
+      to.clamp(0, length).toDouble(),
+    ),
   );
+
+  final Map<(double, double), Path> _segments = {};
 
   RailPath get reversed =>
       RailPath(corners.reversed.toList(), straightFallback: straightFallback);
@@ -90,6 +96,14 @@ final class RailGeometry {
 
   /// How close a rail may pass to a node it does not serve.
   static const double nodeClearance = 20;
+
+  /// Rails leaving one node must part by at least this angle (radians),
+  /// so a switch's branches never draw on top of each other.
+  static const double minBranchAngle = 0.5;
+
+  /// Where along a rail its branch must already stand apart: the gap a
+  /// closed arm leaves at its switch (`NetworkPainter.closedGap`).
+  static const double armCheck = 30;
 
   /// A rail within this many degrees of 0°/45°/90° stays one straight run.
   static const double snapDegrees = 8;
@@ -167,7 +181,7 @@ final class RailGeometry {
     for (final other in _leaving[nodeId] ?? const <double>[]) {
       var d = (heading - other).abs() % (2 * math.pi);
       d = math.min(d, 2 * math.pi - d);
-      if (d < 0.2) return true;
+      if (d < minBranchAngle) return true;
     }
     return false;
   }

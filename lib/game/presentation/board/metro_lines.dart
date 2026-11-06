@@ -87,6 +87,10 @@ final class MetroLines {
       _colour[line] = c;
       colorsNeeded = math.max(colorsNeeded, c + 1);
     }
+    assert(
+      colorsNeeded <= 3,
+      '${level.id} needs $colorsNeeded line colours; palettes hold three',
+    );
   }
 }
 
@@ -104,15 +108,21 @@ final class MetroMap {
   /// Where the goals' station names go.
   late final StationLabels labels = StationLabels(geometry.level, geometry);
 
-  /// Reuses [previous] while the level and layout are unchanged.
+  void dispose() => labels.dispose();
+
+  /// Reuses [previous] while the level and layout are unchanged; a
+  /// replaced map is disposed.
   static MetroMap reuse(
     MetroMap? previous,
     LevelDefinition level,
     BoardLayout layout,
-  ) =>
-      previous != null &&
-          identical(previous.geometry.level, level) &&
-          previous.geometry.layout == layout
-      ? previous
-      : MetroMap(level, layout);
+  ) {
+    if (previous != null &&
+        identical(previous.geometry.level, level) &&
+        previous.geometry.layout == layout) {
+      return previous;
+    }
+    previous?.dispose();
+    return MetroMap(level, layout);
+  }
 }
