@@ -273,19 +273,11 @@ void main() {
       return '${points.join(' ')}|${links.join(' ')}';
     }
 
-    // Known repeats still to redesign (TASKS P1); shrink this, never grow it.
-    const knownRepeats = {'LON-06': 'LON-05', 'MOS-02': 'MOS-01'};
     final seen = <String, String>{};
     for (final level in levels) {
       final key = shape(level);
-      if (seen[key] case final first?) {
-        expect(
-          knownRepeats[level.id],
-          first,
-          reason: '${level.id} repeats $first',
-        );
-      }
-      seen.putIfAbsent(key, () => level.id);
+      expect(seen[key], isNull, reason: '${level.id} repeats ${seen[key]}');
+      seen[key] = level.id;
     }
   });
 
@@ -307,10 +299,13 @@ void main() {
     expect(level.solution, contains(const ToggleSignal('G')));
   });
 
-  test('London is complete: the finale leaves three spare minutes', () {
+  test('London is complete: the finale queues every train at one signal', () {
     final london = levels.where((l) => l.city == CityId.london).toList();
     expect(london.map((l) => l.number), [1, 2, 3, 4, 5, 6]);
-    expect((london.last.parPulses, london.last.maxPulses), (9, 12));
+    final finale = london.last;
+    expect((finale.parPulses, finale.maxPulses), (10, 13));
+    expect(finale.initialSignals, {'G': SignalAspect.red});
+    expect(finale.solution, contains(const ToggleSignal('G')));
   });
 
   test('MOS-01: red crosses the bridge from one ring to the other', () {
@@ -326,20 +321,24 @@ void main() {
     expect(state.trains.every((t) => t.delivered), isTrue);
   });
 
-  test('MOS-02: lime, not red, must take the bridge', () {
-    final level = levels.firstWhere((l) => l.id == 'MOS-02');
-    final engine = PulseEngine(level);
-    var state = level.initialState;
-    final lime = <String>[];
-    final red = <String>[];
-    for (final action in level.solution) {
-      state = (engine.simulatePulse(state, action) as PulseApplied).state;
-      lime.add(state.trainById('lime_1')!.nodeId);
-      red.add(state.trainById('red_1')!.nodeId);
-    }
-    expect(lime, contains('J'));
-    expect(red, isNot(contains('J')));
-  });
+  test(
+    'MOS-02: blue enters the inner ring by one link, lime leaves by the other',
+    () {
+      final level = levels.firstWhere((l) => l.id == 'MOS-02');
+      final engine = PulseEngine(level);
+      var state = level.initialState;
+      final paths = {for (final t in level.trains) t.id: <String>[]};
+      for (final action in level.solution) {
+        state = (engine.simulatePulse(state, action) as PulseApplied).state;
+        for (final t in state.trains) {
+          paths[t.id]!.add(t.nodeId);
+        }
+      }
+      expect(paths['blue_1'], containsAllInOrder(['O1', 'I1', 'I2', 'L']));
+      expect(paths['lime_1'], containsAllInOrder(['I3', 'O4']));
+      expect(state.trains.every((t) => t.delivered), isTrue);
+    },
+  );
 
   test('MOS-03: the bridge signal must open for red to cross', () {
     final level = levels.firstWhere((l) => l.id == 'MOS-03');

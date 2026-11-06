@@ -99,5 +99,9 @@ Tasarım: `docs/superpowers/specs/2026-11-06-metro-map-look-design.md`, plan: `d
   - Kırmızı sinyalde ayrı rozet çizilmez, sinyal lambası parlar. Rozet ile lamba üst üste biniyordu (oyun testi).
   - Ters makasta turuncu çatal rozeti çizilir, çıkmazda ⏸.
   - Londra 03'e yeni harita: tek yönlü 7 makaslı halka ve ortada aktarma hattı (N–M–S), iç hedefe tek yol. En kısa çözüm 9, sınır 12, rastgele kazanma ~%0.
-  - `level_assets_test` artık iki bölümün aynı haritayı kullanmasına izin vermiyor. Bilinen iki tekrar (LON-05/06, MOS-01/02) açık bir izin listesinde duruyor; liste yalnız küçülebilir.
+  - `level_assets_test` iki bölümün aynı haritayı kullanmasına izin vermiyor.
+  - Bulunan iki tekrar da yeni haritayla çözüldü:
+    - Londra 06: alttaki tek kırmızı sinyalden bütün trenlerin geçtiği halka finali. En kısa çözüm 10, sınır 13.
+    - Moskova 02: iç içe iki halka ve iki bağlantı. En kısa çözüm 11, sınır 14.
+  - İstasyon isimleri artık hedefin çevresinde ikinci, biraz daha uzak bir halkada da yer arıyor. 360 pt tahtada 68/75, 260 pt'de 59/75 isim yerleşiyor.
 

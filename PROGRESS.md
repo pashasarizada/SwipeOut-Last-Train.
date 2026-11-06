@@ -28,6 +28,13 @@ Kabaca **%85**: içerik, okunurluk, ipucu ve ses tamam; kalan oyuncu testi (zorl
 
 **Sıradaki küçük görev:** birkaç kişiye oynatıp zorluk eğrisini ayarlamak; gerçek iPhone'da ses/haptik kontrolü; mağaza hazırlığı.
 
+## 2026-11-06 (13) — Tekrarlanan haritalar bitti (`main`)
+
+- Londra 06 (sinyalli halka finali, par 10) ve Moskova 02 (iç içe iki halka, par 11) yeni haritalarla yapıldı. `level_assets_test` artık hiçbir harita tekrarına izin vermiyor.
+- İsimler için ikinci yer halkası eklendi (D-038).
+- `scripts/check.sh` → No issues found! · **+477 All tests passed**. `solve_levels` → 30/30 `issues=0`.
+- Simülatörde ikisi de Türkçe olarak görüldü.
+
 ## 2026-11-06 (12) — Bekleme sebebi ve yeni Londra 03 (`main`)
 
 - D-038: kırmızı sinyalde lamba parlıyor, ters makasta çatal rozeti, çıkmazda ⏸. Londra 03 yeni harita (halka + aktarma hattı, par 9). Bölümlerin aynı haritayı paylaşmaması testle zorlanıyor.

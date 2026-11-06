@@ -9,7 +9,8 @@ import 'network_painter.dart';
 import 'rail_geometry.dart';
 
 /// Where each goal's station name goes: the first of twelve spots around
-/// the goal that stays on the board and clear of nodes, rails, signal
+/// the goal (then twelve a little further out) that stays on the board
+/// and clear of nodes, rails, signal
 /// heads, waiting badges, goal glows and other names. A name with no free
 /// spot is left out — the game never depends on it (D-036).
 final class StationLabels {
@@ -23,7 +24,7 @@ final class StationLabels {
       wanted++;
       final size = measure(name);
       final c = geometry.layout.toScreen(node.position);
-      for (final spot in _spots(c, size)) {
+      for (final spot in [..._spots(c, size), ..._spots(c, size, reach: 18)]) {
         final padded = spot.inflate(2);
         if (!_inside(board, spot)) continue;
         if (keepClear.any((k) => k.hits(padded))) continue;
@@ -92,9 +93,9 @@ final class StationLabels {
 
   /// Right, left, above, below, the four corners, then above and below
   /// slid sideways so a goal at the board's edge still finds room.
-  static List<Rect> _spots(Offset c, Size s) {
-    const g = goalClearance + 2;
-    const k = g * 0.7;
+  static List<Rect> _spots(Offset c, Size s, {double reach = 0}) {
+    final g = goalClearance + 2 + reach;
+    final k = g * 0.7;
     final w = s.width;
     final h = s.height;
     return [

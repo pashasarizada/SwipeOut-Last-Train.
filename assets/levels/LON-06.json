@@ -4,46 +4,46 @@
   "number": 6,
   "tutorial": false,
   "title": {"tr": "Son Halka", "en": "Final Circle"},
-  "maxPulses": 12,
-  "parPulses": 9,
+  "maxPulses": 13,
+  "parPulses": 10,
   "maxChangesPerPulse": 1,
   "nodes": [
-    {"id": "A", "kind": "depot", "x": 0.04, "y": 0.04},
-    {"id": "G", "kind": "signal", "x": 0.12, "y": 0.22},
-    {"id": "E", "kind": "switch", "x": 0.28, "y": 0.30},
-    {"id": "V", "kind": "switch", "x": 0.55, "y": 0.16},
-    {"id": "Y", "kind": "switch", "x": 0.80, "y": 0.30},
-    {"id": "D", "kind": "depot", "x": 0.96, "y": 0.10},
-    {"id": "X", "kind": "switch", "x": 0.82, "y": 0.66},
-    {"id": "R", "kind": "goal", "label": "King's Cross", "x": 0.96, "y": 0.86},
-    {"id": "Z", "kind": "switch", "x": 0.55, "y": 0.82},
-    {"id": "B", "kind": "goal", "label": "Waterloo", "x": 0.34, "y": 0.98},
-    {"id": "W", "kind": "switch", "x": 0.28, "y": 0.66},
-    {"id": "F", "kind": "depot", "x": 0.04, "y": 0.56},
-    {"id": "L", "kind": "goal", "label": "Mile End", "x": 0.55, "y": 0.44}
+    {"id": "W", "kind": "switch", "x": 0.12, "y": 0.5},
+    {"id": "NW", "kind": "switch", "x": 0.3, "y": 0.24},
+    {"id": "NE", "kind": "switch", "x": 0.7, "y": 0.24},
+    {"id": "E", "kind": "switch", "x": 0.88, "y": 0.5},
+    {"id": "SE", "kind": "switch", "x": 0.7, "y": 0.76},
+    {"id": "G", "kind": "signal", "x": 0.5, "y": 0.86},
+    {"id": "SW", "kind": "switch", "x": 0.3, "y": 0.76},
+    {"id": "A", "kind": "depot", "x": 0.04, "y": 0.94},
+    {"id": "D", "kind": "depot", "x": 0.96, "y": 0.94},
+    {"id": "F", "kind": "depot", "x": 0.98, "y": 0.28},
+    {"id": "B", "kind": "goal", "label": "Waterloo", "x": 0.14, "y": 0.06},
+    {"id": "R", "kind": "goal", "label": "King's Cross", "x": 0.86, "y": 0.06},
+    {"id": "L", "kind": "goal", "label": "Mile End", "x": 0.38, "y": 0.5}
   ],
   "edges": [
-    {"id": "AG", "a": "A", "b": "G"},
-    {"id": "GE", "a": "G", "b": "E"},
-    {"id": "EV", "a": "E", "b": "V"},
-    {"id": "VY", "a": "V", "b": "Y"},
-    {"id": "DY", "a": "D", "b": "Y"},
-    {"id": "YX", "a": "Y", "b": "X"},
-    {"id": "XR", "a": "X", "b": "R"},
-    {"id": "XZ", "a": "X", "b": "Z"},
-    {"id": "ZB", "a": "Z", "b": "B"},
-    {"id": "ZW", "a": "Z", "b": "W"},
-    {"id": "WE", "a": "W", "b": "E"},
-    {"id": "FW", "a": "F", "b": "W"},
-    {"id": "VL", "a": "V", "b": "L"}
+    {"id": "WNW", "a": "W", "b": "NW"},
+    {"id": "NWNE", "a": "NW", "b": "NE"},
+    {"id": "NEE", "a": "NE", "b": "E"},
+    {"id": "ESE", "a": "E", "b": "SE"},
+    {"id": "SEG", "a": "SE", "b": "G"},
+    {"id": "GSW", "a": "G", "b": "SW"},
+    {"id": "SWW", "a": "SW", "b": "W"},
+    {"id": "WL", "a": "W", "b": "L"},
+    {"id": "NWB", "a": "NW", "b": "B"},
+    {"id": "NER", "a": "NE", "b": "R"},
+    {"id": "FE", "a": "F", "b": "E"},
+    {"id": "DSE", "a": "D", "b": "SE"},
+    {"id": "ASW", "a": "A", "b": "SW"}
   ],
   "switches": [
-    {"nodeId": "E", "trunkEdge": "EV", "branchAEdge": "WE", "branchBEdge": "GE", "selectedBranch": "B"},
-    {"nodeId": "V", "trunkEdge": "EV", "branchAEdge": "VY", "branchBEdge": "VL", "selectedBranch": "A"},
-    {"nodeId": "Y", "trunkEdge": "YX", "branchAEdge": "VY", "branchBEdge": "DY", "selectedBranch": "A"},
-    {"nodeId": "X", "trunkEdge": "YX", "branchAEdge": "XZ", "branchBEdge": "XR", "selectedBranch": "A"},
-    {"nodeId": "Z", "trunkEdge": "XZ", "branchAEdge": "ZW", "branchBEdge": "ZB", "selectedBranch": "A"},
-    {"nodeId": "W", "trunkEdge": "WE", "branchAEdge": "ZW", "branchBEdge": "FW", "selectedBranch": "A"}
+    {"nodeId": "W", "trunkEdge": "SWW", "branchAEdge": "WNW", "branchBEdge": "WL", "selectedBranch": "A"},
+    {"nodeId": "NW", "trunkEdge": "WNW", "branchAEdge": "NWNE", "branchBEdge": "NWB", "selectedBranch": "A"},
+    {"nodeId": "NE", "trunkEdge": "NWNE", "branchAEdge": "NEE", "branchBEdge": "NER", "selectedBranch": "A"},
+    {"nodeId": "E", "trunkEdge": "ESE", "branchAEdge": "NEE", "branchBEdge": "FE", "selectedBranch": "B"},
+    {"nodeId": "SE", "trunkEdge": "SEG", "branchAEdge": "ESE", "branchBEdge": "DSE", "selectedBranch": "A"},
+    {"nodeId": "SW", "trunkEdge": "SWW", "branchAEdge": "GSW", "branchBEdge": "ASW", "selectedBranch": "A"}
   ],
   "signals": [
     {"nodeId": "G", "initial": "red"}
@@ -54,5 +54,5 @@
     {"id": "lime_1", "startNode": "F", "goalNode": "R", "symbol": "square", "style": "lime"}
   ],
   "tutorialSteps": [],
-  "solution": ["switch:Y", "signal:G", "switch:W", "switch:Y", "switch:E", "switch:Z", "switch:W", "switch:X", "switch:V"]
+  "solution": ["switch:NW", "switch:SE", "switch:SW", "signal:G", "switch:SE", "switch:SW", "switch:W", "switch:W", "switch:NW", "switch:NE"]
 }

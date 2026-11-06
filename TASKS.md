@@ -76,7 +76,7 @@
 - [x] RunMeter yıldız işaretleri kafa karıştırıyor (★ 9. sırada görünüyor, hedef 8 dakika) (S).
 - [x] Saat her bölümde 23:50'den başlıyor; süre 10 dakikayı aşınca 00:00'ı geçiyor. Saati `00:00 − maxPulses`'tan başlat (S).
 - [x] Londra 03, Londra 02 ile aynı harita; yeni bir yerleşim tasarla (M). → tek yönlü halka + ortada aktarma hattı, par 9 (D-038).
-- [ ] Londra 06 = Londra 05 haritası, Moskova 02 = Moskova 01 haritası; yeni yerleşim tasarla (M). `level_assets_test` izin listesi yalnız küçülür.
+- [x] Londra 06 = Londra 05 haritası, Moskova 02 = Moskova 01 haritası (M). → Londra 06: tek sinyalli halka finali, par 10; Moskova 02: iç içe iki halka, par 11. İzin listesi boş; artık hiçbir bölüm haritası tekrar etmiyor.
 - [x] Kural kartının tabelaya dokununca geri geldiği keşfedilmiyor; görünür bir ipucu ekle (S).
 - [x] Makas üstünde duran trene dokunmak makası seçmeli (dokunma alanı) (S).
 - [x] "Bekliyor" rozetinin nedeni belirsiz (M). → kırmızı sinyalde lamba parlar, ters makasta çatal rozeti, çıkmazda ⏸ (D-038).
