@@ -54,7 +54,7 @@ final class CityTheme {
       rail: Color(0xFF93A4C0),
       accent: Color(0xFF3BA3C7),
       accentAlt: Color(0xFFD9B98C),
-      lines: [Color(0xFFA48BF0), Color(0xFFC77DDB), Color(0xFFC2B49C)],
+      lines: [Color(0xFFA48BF0), Color(0xFFD66FC4), Color(0xFFC2B49C)],
       art: BakuArt(),
     ),
     CityId.paris: CityTheme._(

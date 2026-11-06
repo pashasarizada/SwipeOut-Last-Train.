@@ -16,10 +16,10 @@
     {"id": "N", "kind": "switch", "x": 0.40, "y": 0.66},
     {"id": "X", "kind": "signal", "x": 0.56, "y": 0.60},
     {"id": "S", "kind": "switch", "x": 0.72, "y": 0.46},
-    {"id": "L", "kind": "goal", "x": 0.92, "y": 0.16},
+    {"id": "L", "kind": "goal", "label": "Étoile", "x": 0.92, "y": 0.16},
     {"id": "K", "kind": "switch", "x": 0.80, "y": 0.72},
-    {"id": "B", "kind": "goal", "x": 0.95, "y": 0.52},
-    {"id": "R", "kind": "goal", "x": 0.94, "y": 0.92}
+    {"id": "B", "kind": "goal", "label": "Trocadéro", "x": 0.95, "y": 0.52},
+    {"id": "R", "kind": "goal", "label": "Gare de Lyon", "x": 0.94, "y": 0.92}
   ],
   "edges": [
     {"id": "AG", "a": "A", "b": "G"},

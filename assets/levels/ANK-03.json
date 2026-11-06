@@ -10,10 +10,10 @@
   "nodes": [
     {"id": "A", "kind": "depot", "x": 0.10, "y": 0.28},
     {"id": "J", "kind": "switch", "x": 0.42, "y": 0.28},
-    {"id": "R", "kind": "goal", "x": 0.88, "y": 0.12},
+    {"id": "R", "kind": "goal", "label": "Batıkent", "x": 0.88, "y": 0.12},
     {"id": "D", "kind": "depot", "x": 0.10, "y": 0.76},
     {"id": "K", "kind": "switch", "x": 0.58, "y": 0.72},
-    {"id": "B", "kind": "goal", "x": 0.90, "y": 0.88}
+    {"id": "B", "kind": "goal", "label": "Çayyolu", "x": 0.90, "y": 0.88}
   ],
   "edges": [
     {"id": "AJ", "a": "A", "b": "J"},

@@ -7,6 +7,7 @@ import 'package:swipeout_last_train/game/data/level_json_codec.dart';
 import 'package:swipeout_last_train/game/domain/city.dart';
 import 'package:swipeout_last_train/game/domain/control_action.dart';
 import 'package:swipeout_last_train/game/domain/level_definition.dart';
+import 'package:swipeout_last_train/game/domain/node.dart';
 import 'package:swipeout_last_train/game/domain/pulse_result.dart';
 import 'package:swipeout_last_train/game/domain/signal_aspect.dart';
 import 'package:swipeout_last_train/game/engine/level_validator.dart';
@@ -34,6 +35,24 @@ void main() {
       expect(result.issues, isEmpty);
     });
   }
+
+  test('every goal has a station name, unique within its level', () {
+    for (final level in levels) {
+      final names = [
+        for (final n in level.nodes.values)
+          if (n.kind == NodeKind.goal) n.label,
+      ];
+      expect(names, everyElement(isNotNull), reason: level.id);
+      expect(names.toSet(), hasLength(names.length), reason: level.id);
+      expect(
+        level.nodes.values.where(
+          (n) => n.kind != NodeKind.goal && n.label != null,
+        ),
+        isEmpty,
+        reason: '${level.id}: only goals are named (D-036)',
+      );
+    }
+  });
 
   test('ids are unique and follow the city prefix', () {
     expect(levels.map((l) => l.id).toSet(), hasLength(levels.length));

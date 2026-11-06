@@ -1,7 +1,77 @@
 part of 'network_painter.dart';
 
-/// Signals (lamp head on a post) and goals (ring, symbol, check mark).
+/// Metro stops (ticks, depot ends, buffers), signals (lamp head on a
+/// post), goals (ring, symbol, check mark) and the goals' station names.
 extension _StationMarks on NetworkPainter {
+  /// The colour of the line serving [node]; white in High Contrast.
+  Color _lineColourAt(Node node) {
+    if (highContrast) return AppColors.textPrimary;
+    final edges = level.edgesOf(node.id);
+    if (edges.isEmpty) return AppColors.track;
+    return theme.lines[map.lines.colorOf(edges.first.id)];
+  }
+
+  /// A short bar across the line: a stop, or the buffer of a dead end.
+  void _paintTick(
+    Canvas canvas,
+    Node node,
+    Offset c, {
+    required double half,
+    required double width,
+  }) {
+    final edges = level.edgesOf(node.id);
+    if (edges.isEmpty) return;
+    final h = map.geometry.from(node.id, edges.first.id).headingAt(0);
+    final across = Offset(-math.sin(h), math.cos(h)) * half;
+    canvas.drawLine(
+      c - across,
+      c + across,
+      NetworkPainter._stroke(_lineColourAt(node), width)
+        ..strokeCap = StrokeCap.butt,
+    );
+  }
+
+  /// A depot: an end box outlined in the line's colour, light enough to
+  /// leave a waiting train the main thing seen.
+  void _paintDepot(Canvas canvas, Node node, Offset c) {
+    final block = RRect.fromRectAndRadius(
+      Rect.fromCircle(center: c, radius: 15),
+      const Radius.circular(6),
+    );
+    canvas
+      ..drawRRect(block, Paint()..color = theme.background)
+      ..drawRRect(block, NetworkPainter._stroke(_lineColourAt(node), 3));
+  }
+
+  /// Station names beside the goals, on a dark plate so they read over
+  /// the city pattern.
+  void _paintNames(Canvas canvas) {
+    for (final MapEntry(key: id, value: box) in map.labels.placed.entries) {
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(box, const Radius.circular(4)),
+        Paint()
+          ..color = theme.background.withValues(alpha: highContrast ? 1 : 0.7),
+      );
+      final painter = TextPainter(
+        text: TextSpan(
+          text: level.nodes[id]!.label,
+          style: StationLabels.style.copyWith(
+            color: AppColors.textPrimary.withValues(
+              alpha: highContrast ? 1 : 0.85,
+            ),
+          ),
+        ),
+        textDirection: TextDirection.ltr,
+      )..layout();
+      painter
+        ..paint(
+          canvas,
+          box.center - Offset(painter.width / 2, painter.height / 2),
+        )
+        ..dispose();
+    }
+  }
+
   void _paintSignal(Canvas canvas, Node node, Offset c) {
     final green = state.signals[node.id] == SignalAspect.green;
     final lit = green ? AppColors.signalGreen : AppColors.danger;

@@ -13,8 +13,8 @@
     {"id": "D", "kind": "depot", "x": 0.10, "y": 0.80},
     {"id": "M", "kind": "switch", "x": 0.40, "y": 0.50},
     {"id": "S", "kind": "switch", "x": 0.66, "y": 0.50},
-    {"id": "R", "kind": "goal", "x": 0.92, "y": 0.24},
-    {"id": "B", "kind": "goal", "x": 0.92, "y": 0.78}
+    {"id": "R", "kind": "goal", "label": "Dikimevi", "x": 0.92, "y": 0.24},
+    {"id": "B", "kind": "goal", "label": "AŞTİ", "x": 0.92, "y": 0.78}
   ],
   "edges": [
     {"id": "AU", "a": "A", "b": "U"},

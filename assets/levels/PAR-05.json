@@ -17,10 +17,10 @@
     {"id": "N", "kind": "switch", "x": 0.42, "y": 0.62},
     {"id": "C", "kind": "track", "x": 0.60, "y": 0.58},
     {"id": "S", "kind": "switch", "x": 0.72, "y": 0.42},
-    {"id": "L", "kind": "goal", "x": 0.92, "y": 0.18},
+    {"id": "L", "kind": "goal", "label": "Montparnasse", "x": 0.92, "y": 0.18},
     {"id": "K", "kind": "switch", "x": 0.82, "y": 0.66},
-    {"id": "B", "kind": "goal", "x": 0.95, "y": 0.50},
-    {"id": "R", "kind": "goal", "x": 0.94, "y": 0.90}
+    {"id": "B", "kind": "goal", "label": "Invalides", "x": 0.95, "y": 0.50},
+    {"id": "R", "kind": "goal", "label": "Concorde", "x": 0.94, "y": 0.90}
   ],
   "edges": [
     {"id": "AG", "a": "A", "b": "G"},

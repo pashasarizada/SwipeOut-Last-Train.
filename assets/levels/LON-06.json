@@ -15,12 +15,12 @@
     {"id": "Y", "kind": "switch", "x": 0.80, "y": 0.30},
     {"id": "D", "kind": "depot", "x": 0.96, "y": 0.10},
     {"id": "X", "kind": "switch", "x": 0.82, "y": 0.66},
-    {"id": "R", "kind": "goal", "x": 0.96, "y": 0.86},
+    {"id": "R", "kind": "goal", "label": "King's Cross", "x": 0.96, "y": 0.86},
     {"id": "Z", "kind": "switch", "x": 0.55, "y": 0.82},
-    {"id": "B", "kind": "goal", "x": 0.34, "y": 0.98},
+    {"id": "B", "kind": "goal", "label": "Waterloo", "x": 0.34, "y": 0.98},
     {"id": "W", "kind": "switch", "x": 0.28, "y": 0.66},
     {"id": "F", "kind": "depot", "x": 0.04, "y": 0.56},
-    {"id": "L", "kind": "goal", "x": 0.55, "y": 0.44}
+    {"id": "L", "kind": "goal", "label": "Mile End", "x": 0.55, "y": 0.44}
   ],
   "edges": [
     {"id": "AG", "a": "A", "b": "G"},

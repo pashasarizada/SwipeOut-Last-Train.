@@ -4,6 +4,7 @@ import '../../domain/level_definition.dart';
 import '../../domain/switch_def.dart';
 import 'board_layout.dart';
 import 'rail_geometry.dart';
+import 'station_labels.dart';
 
 /// Splits a level's rails into metro lines, the way a map colours them:
 /// a line runs on through every two-rail stop, and at a switch the trunk
@@ -99,6 +100,9 @@ final class MetroMap {
 
   final RailGeometry geometry;
   late final MetroLines lines;
+
+  /// Where the goals' station names go.
+  late final StationLabels labels = StationLabels(geometry.level, geometry);
 
   /// Reuses [previous] while the level and layout are unchanged.
   static MetroMap reuse(

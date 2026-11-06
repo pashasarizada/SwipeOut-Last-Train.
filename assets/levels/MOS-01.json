@@ -14,14 +14,14 @@
     {"id": "V", "kind": "switch", "x": 0.40, "y": 0.22},
     {"id": "K", "kind": "switch", "x": 0.40, "y": 0.58},
     {"id": "X", "kind": "switch", "x": 0.18, "y": 0.66},
-    {"id": "R", "kind": "goal", "x": 0.10, "y": 0.90},
+    {"id": "R", "kind": "goal", "label": "Sokolniki", "x": 0.10, "y": 0.90},
     {"id": "J", "kind": "switch", "x": 0.62, "y": 0.62},
     {"id": "D", "kind": "depot", "x": 0.70, "y": 0.06},
     {"id": "Y", "kind": "switch", "x": 0.64, "y": 0.28},
     {"id": "Z", "kind": "switch", "x": 0.88, "y": 0.36},
-    {"id": "B", "kind": "goal", "x": 0.98, "y": 0.14},
+    {"id": "B", "kind": "goal", "label": "Arbatskaya", "x": 0.98, "y": 0.14},
     {"id": "W", "kind": "switch", "x": 0.86, "y": 0.70},
-    {"id": "L", "kind": "goal", "x": 0.94, "y": 0.94}
+    {"id": "L", "kind": "goal", "label": "Kurskaya", "x": 0.94, "y": 0.94}
   ],
   "edges": [
     {"id": "AE", "a": "A", "b": "E"},

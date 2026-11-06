@@ -11,7 +11,7 @@
     {"id": "A", "kind": "depot", "x": 0.12, "y": 0.30},
     {"id": "B", "kind": "switch", "x": 0.45, "y": 0.50},
     {"id": "C", "kind": "track", "x": 0.70, "y": 0.50},
-    {"id": "D", "kind": "goal", "x": 0.90, "y": 0.50},
+    {"id": "D", "kind": "goal", "label": "Kızılay", "x": 0.90, "y": 0.50},
     {"id": "E", "kind": "terminal", "x": 0.40, "y": 0.85}
   ],
   "edges": [

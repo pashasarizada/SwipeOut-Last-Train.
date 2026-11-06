@@ -13,8 +13,8 @@
     {"id": "T", "kind": "track", "x": 0.22, "y": 0.62},
     {"id": "M", "kind": "switch", "x": 0.40, "y": 0.45},
     {"id": "S", "kind": "switch", "x": 0.66, "y": 0.45},
-    {"id": "R", "kind": "goal", "x": 0.92, "y": 0.20},
-    {"id": "B", "kind": "goal", "x": 0.92, "y": 0.72}
+    {"id": "R", "kind": "goal", "label": "Sıhhiye", "x": 0.92, "y": 0.20},
+    {"id": "B", "kind": "goal", "label": "Keçiören", "x": 0.92, "y": 0.72}
   ],
   "edges": [
     {"id": "AM", "a": "A", "b": "M"},

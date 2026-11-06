@@ -15,8 +15,8 @@
     {"id": "S", "kind": "switch", "x": 0.54, "y": 0.45},
     {"id": "Z", "kind": "terminal", "x": 0.54, "y": 0.80},
     {"id": "T", "kind": "switch", "x": 0.76, "y": 0.45},
-    {"id": "R", "kind": "goal", "x": 0.92, "y": 0.20},
-    {"id": "B", "kind": "goal", "x": 0.92, "y": 0.72}
+    {"id": "R", "kind": "goal", "label": "28 May", "x": 0.92, "y": 0.20},
+    {"id": "B", "kind": "goal", "label": "Gənclik", "x": 0.92, "y": 0.72}
   ],
   "edges": [
     {"id": "AM", "a": "A", "b": "M"},

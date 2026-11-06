@@ -97,6 +97,10 @@ void main() {
       }
     });
 
+    test('${city.name} two main line colours are told apart by hue', () {
+      expect(_hueGap(theme.lines[0], theme.lines[1]), greaterThanOrEqualTo(45));
+    });
+
     test('${city.name} saturated lines keep 30° from train colours', () {
       const reserved = [
         AppColors.accentRed,

@@ -19,12 +19,12 @@
     {"id": "T", "kind": "track", "x": 0.46, "y": 0.94},
     {"id": "P", "kind": "switch", "x": 0.36, "y": 0.50},
     {"id": "S", "kind": "switch", "x": 0.56, "y": 0.40},
-    {"id": "R", "kind": "goal", "x": 0.66, "y": 0.14},
+    {"id": "R", "kind": "goal", "label": "Tverskaya", "x": 0.66, "y": 0.14},
     {"id": "U", "kind": "switch", "x": 0.74, "y": 0.56},
-    {"id": "B", "kind": "goal", "x": 0.96, "y": 0.38},
+    {"id": "B", "kind": "goal", "label": "Teatralnaya", "x": 0.96, "y": 0.38},
     {"id": "K", "kind": "switch", "x": 0.84, "y": 0.74},
-    {"id": "L", "kind": "goal", "x": 0.98, "y": 0.58},
-    {"id": "Q", "kind": "goal", "x": 0.98, "y": 0.90}
+    {"id": "L", "kind": "goal", "label": "Mitino", "x": 0.98, "y": 0.58},
+    {"id": "Q", "kind": "goal", "label": "Sokol", "x": 0.98, "y": 0.90}
   ],
   "edges": [
     {"id": "AM", "a": "A", "b": "M"},

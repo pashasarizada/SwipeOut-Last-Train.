@@ -50,3 +50,7 @@ Ses ve görsel asset'ler: yalnız kendi üretimimiz veya lisansı belgelenmiş k
 ## Ses efektleri
 
 `assets/sounds/*.wav` (switch_clack, pulse_tick, delivery, crash, level_won, stamp) **projenin kendi üretimidir**: `tool/make_sounds.py` sinüs/kare dalga ve tohumlu gürültüden sentezler; hiçbir örnek, kayıt veya resmî metro anonsu kullanılmaz. Yeniden üretmek için: `python3 tool/make_sounds.py`. Oynatma eklentisi `audioplayers` MIT lisanslıdır (D-032).
+
+## İstasyon adları ve hat renkleri (D-036)
+
+Hedef istasyonların yanında görünen adlar (Kızılay, 28 May, Châtelet, Paddington, Arbatskaya…) gerçek istasyon veya semt adlarıdır ve yalnız **tematik bilgi** olarak kullanılır. Oyundaki ağ, resmî haritaların kopyası değildir ve bir güzergâh iddiası taşımaz. Adlar özel ad olarak iki dilde aynı yazılır; Moskova adları Latin harfle yazılır. Tahtadaki hat renkleri (`CityTheme.lines`) bizim seçimimizdir: mor–eflatun bandından iki ton ve bir sönük şehir tonu. Hiçbir işletmenin hat renk düzeni taklit edilmez.

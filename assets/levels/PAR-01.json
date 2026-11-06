@@ -15,8 +15,8 @@
     {"id": "M", "kind": "switch", "x": 0.36, "y": 0.56},
     {"id": "C", "kind": "track", "x": 0.56, "y": 0.56},
     {"id": "S", "kind": "switch", "x": 0.74, "y": 0.56},
-    {"id": "R", "kind": "goal", "x": 0.92, "y": 0.84},
-    {"id": "B", "kind": "goal", "x": 0.92, "y": 0.26}
+    {"id": "R", "kind": "goal", "label": "Gare du Nord", "x": 0.92, "y": 0.84},
+    {"id": "B", "kind": "goal", "label": "Nation", "x": 0.92, "y": 0.26}
   ],
   "edges": [
     {"id": "AU", "a": "A", "b": "U"},

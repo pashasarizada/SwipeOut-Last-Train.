@@ -28,6 +28,18 @@ Kabaca **%85**: içerik, okunurluk, ipucu ve ses tamam; kalan oyuncu testi (zorl
 
 **Sıradaki küçük görev:** birkaç kişiye oynatıp zorluk eğrisini ayarlamak; gerçek iPhone'da ses/haptik kontrolü; mağaza hazırlığı.
 
+## 2026-11-06 (9) — Metro haritası görünümü (`main`)
+
+- Kullanıcı isteği: "metro hatlarını gerçek metroların hatlarına benzetecektik"; seçim: metro haritası görünümü (D-036).
+- **Yeni:**
+  - `RailGeometry`: 0°/45°/90° yollar, yuvarlak köşeler, 314/314 ray metro açısında.
+  - `MetroLines` ve şehir hat paletleri: renkli, kenarlı hat şeritleri.
+  - Trenler, oklar ve çarpı yolu izliyor.
+  - Durak çentikleri, depo çerçeveleri ve tamponlar.
+  - 75 hedefe gerçek istasyon adı; büyük telefonda %95'i yerleşiyor.
+- `scripts/check.sh` → No issues found! · **+457 All tests passed**.
+- Simülatör (iPhone 16): Ankara 01, Bakü 02, Moskova 06 ve High Contrast Paris 04 görüldü (`docs/images/v2-ux/19–21`). Moskova'nın kalabalık tahtalarında birkaç isim yer bulamıyor (tasarım gereği atlanıyor).
+
 ## 2026-11-06 (8) — Affedici süre sınırı (`main`)
 
 - Zorluk ölçümü: her bölümü "kırmızı kolu atlayan" rastgele oyuncuyla 3000 kez oynatan geçici betik. Ankara %25–94, Bakü 01–04 %15–26, Bakü 05'ten sonra ~%0–2, Londra/Moskova ~%0 kazanma. Kırmızı kol hamlelerin çok azını yasaklıyor; zorluk ileriyi düşünmekte.

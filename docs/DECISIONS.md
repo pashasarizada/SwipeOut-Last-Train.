@@ -67,3 +67,16 @@ Tasarım: `docs/superpowers/specs/2026-11-06-package-c-hint-sound-design.md`.
 ## Zorluk — süre payı (kullanıcı onayı, 06.11.2026)
 
 - **D-035 — Süre sınırı affeder, yıldız ödüllendirir.** Her bölümde `maxPulses ≥ parPulses + 3` (`LevelValidator.minSpareMinutes`, `tightLimit` sorunu). 27 bölümün sınırı yükseldi (ör. ANK-05 4→7, BAK-06 8→11, MOS-05 12→15); optimumlar ve kayıtlı çözümler değişmedi. Önceki "son bölümde hiç pay yok" tasarımının yerini alır. Gerekçe: dar sınırda tek hata kaybettirir ve haksızlık gibi gelir (mağaza yorumlarında bulmaca oyunu bırakma sebebi); zorluk altın yıldızda (yalnız par) kalır. Rastgele "kırmızı kolu atlayan" oyuncu simülasyonu: Londra/Moskova'da kazanma ~%0, yani gevşeme oyunu kolaylaştırmaz, yalnız insan hatasını affeder.
+
+## Metro haritası görünümü (kullanıcı onayı, 06.11.2026)
+
+Tasarım: `docs/superpowers/specs/2026-11-06-metro-map-look-design.md`, plan: `docs/superpowers/plans/2026-11-06-metro-map-look.md`.
+
+- **D-036 — Tahta metro haritası diliyle çizilir; bölüm mantığı değişmez.**
+  - `RailGeometry` her rayı 0°/45°/90° parçalardan ve 14 pt yuvarlak köşelerle çizer. Düğümler taşınmaz. 8°'den az sapan raylar tek düz parça kalır. 314 rayın hiçbiri düz yedeğe düşmüyor.
+  - Raylar, trenler, önizleme okları, çarpı ve kapalı kol boşluğu aynı yolu kullanır.
+  - `MetroLines` rayları hatlara ayırır: makasta ana gövde en düz dala devam eder. Renkler açgözlü boyamayla verilir, böylece buluşan hatlar farklı renkte olur.
+  - Hat renkleri tren renklerinden ve önizleme turkuazından en az 30° renk tonu uzaktadır (sönük gri/kum tonu bu kuraldan muaf). Bir şehrin iki ana rengi arasında en az 45° fark vardır.
+  - Duraklar çentik, depolar hat renginde çerçeve, çıkmaz uçlar tampon çizgisi olarak çizilir.
+  - Yalnız hedef istasyonlara gerçek istasyon adı yazılır (`GAME_DESIGN_V2` "yalnız kritik istasyonlar" kuralıyla uyumlu). 12 aday yerden ilki seçilir; yer yoksa isim atlanır. Büyük telefonda isimlerin %95'i, 320 pt ekranda %83'ü yerleşir.
+  - High Contrast: beyaz kalın raylar, koyu zeminli isimler.

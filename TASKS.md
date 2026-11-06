@@ -68,5 +68,7 @@
 - [ ] Pasaport/rozet için Rive animasyonları değerlendirmesi (U7 sonrası).
 - [x] Ses efektleri (özgün sentetik), haptik paternleri.
 - [x] Süre sınırı affedici: her bölümde en az par + 3 dakika (D-035), doğrulayıcı zorlar.
-- [ ] Gerçek metro ağlarından esinlenen hat şekilleri (bölüm tasarımı, birebir kopya değil).
+- [x] Metro haritası görünümü: renkli hatlar, 45° yollar, duraklar, hedef istasyon adları (D-036).
+- [ ] Şehir haritası ekranını (bölüm seçimi) aynı metro diline taşımak (M).
+- [ ] Gerçek metro ağlarından esinlenen bölüm topolojisi (bölüm tasarımı, birebir kopya değil) (L).
 - [ ] Yayın hazırlığı (`docs/RELEASE_CHECKLIST.md`).

@@ -14,8 +14,8 @@
     {"id": "M", "kind": "switch", "x": 0.32, "y": 0.44},
     {"id": "C", "kind": "track", "x": 0.52, "y": 0.44},
     {"id": "S", "kind": "switch", "x": 0.72, "y": 0.44},
-    {"id": "R", "kind": "goal", "x": 0.92, "y": 0.18},
-    {"id": "B", "kind": "goal", "x": 0.92, "y": 0.74}
+    {"id": "R", "kind": "goal", "label": "Törekent", "x": 0.92, "y": 0.18},
+    {"id": "B", "kind": "goal", "label": "Koru", "x": 0.92, "y": 0.74}
   ],
   "edges": [
     {"id": "AM", "a": "A", "b": "M"},

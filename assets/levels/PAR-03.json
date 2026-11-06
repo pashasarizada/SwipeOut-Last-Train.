@@ -16,8 +16,8 @@
     {"id": "C", "kind": "track", "x": 0.48, "y": 0.50},
     {"id": "H", "kind": "signal", "x": 0.66, "y": 0.50},
     {"id": "S", "kind": "switch", "x": 0.84, "y": 0.50},
-    {"id": "R", "kind": "goal", "x": 0.95, "y": 0.80},
-    {"id": "B", "kind": "goal", "x": 0.95, "y": 0.20}
+    {"id": "R", "kind": "goal", "label": "Châtelet", "x": 0.95, "y": 0.80},
+    {"id": "B", "kind": "goal", "label": "Odéon", "x": 0.95, "y": 0.20}
   ],
   "edges": [
     {"id": "AG", "a": "A", "b": "G"},

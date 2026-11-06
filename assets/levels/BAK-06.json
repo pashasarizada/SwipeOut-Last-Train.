@@ -17,8 +17,8 @@
     {"id": "S", "kind": "switch", "x": 0.58, "y": 0.50},
     {"id": "Z", "kind": "terminal", "x": 0.58, "y": 0.86},
     {"id": "T", "kind": "switch", "x": 0.76, "y": 0.50},
-    {"id": "R", "kind": "goal", "x": 0.93, "y": 0.24},
-    {"id": "B", "kind": "goal", "x": 0.93, "y": 0.76}
+    {"id": "R", "kind": "goal", "label": "Həzi Aslanov", "x": 0.93, "y": 0.24},
+    {"id": "B", "kind": "goal", "label": "Dərnəgül", "x": 0.93, "y": 0.76}
   ],
   "edges": [
     {"id": "AH", "a": "A", "b": "H"},

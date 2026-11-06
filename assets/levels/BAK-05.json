@@ -12,9 +12,9 @@
     {"id": "H", "kind": "switch", "x": 0.20, "y": 0.34},
     {"id": "Z", "kind": "terminal", "x": 0.40, "y": 0.14},
     {"id": "L", "kind": "switch", "x": 0.34, "y": 0.52},
-    {"id": "B", "kind": "goal", "x": 0.08, "y": 0.70},
+    {"id": "B", "kind": "goal", "label": "Xətai", "x": 0.08, "y": 0.70},
     {"id": "W", "kind": "switch", "x": 0.66, "y": 0.52},
-    {"id": "R", "kind": "goal", "x": 0.92, "y": 0.28},
+    {"id": "R", "kind": "goal", "label": "Neftçilər", "x": 0.92, "y": 0.28},
     {"id": "F", "kind": "track", "x": 0.80, "y": 0.76},
     {"id": "D", "kind": "depot", "x": 0.58, "y": 0.90}
   ],

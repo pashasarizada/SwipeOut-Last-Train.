@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../domain/control_action.dart';
@@ -12,6 +14,7 @@ import '../kit/game_icon.dart';
 import '../theme/app_colors.dart';
 import 'board_layout.dart';
 import 'metro_lines.dart';
+import 'station_labels.dart';
 
 part 'rail_marks.dart';
 part 'station_marks.dart';
@@ -74,6 +77,7 @@ final class NetworkPainter extends CustomPainter {
     for (final node in level.nodes.values) {
       _paintNode(canvas, node);
     }
+    _paintNames(canvas);
     if (flashNode case final id? when flash > 0) {
       canvas.drawCircle(
         _at(id),
@@ -106,15 +110,9 @@ final class NetworkPainter extends CustomPainter {
     final c = _at(node.id);
     switch (node.kind) {
       case NodeKind.depot:
-        canvas.drawRRect(
-          RRect.fromRectAndRadius(
-            Rect.fromCircle(center: c, radius: 16),
-            const Radius.circular(6),
-          ),
-          _stroke(AppColors.trackInactive, 3),
-        );
+        _paintDepot(canvas, node, c);
       case NodeKind.track:
-        canvas.drawCircle(c, 5, Paint()..color = AppColors.track);
+        _paintTick(canvas, node, c, half: 6, width: 4);
       case NodeKind.junction:
         final selected = pending == ToggleSwitch(node.id);
         canvas.drawCircle(c, 11, Paint()..color = AppColors.accentAmber);
@@ -132,10 +130,7 @@ final class NetworkPainter extends CustomPainter {
       case NodeKind.goal:
         _paintGoal(canvas, node, c);
       case NodeKind.terminal:
-        canvas.drawRect(
-          Rect.fromCircle(center: c, radius: 7),
-          Paint()..color = AppColors.trackInactive,
-        );
+        _paintTick(canvas, node, c, half: 8, width: 5);
     }
   }
 

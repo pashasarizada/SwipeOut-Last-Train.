@@ -10,7 +10,7 @@
   "nodes": [
     {"id": "A", "kind": "depot", "x": 0.13, "y": 0.50},
     {"id": "B", "kind": "switch", "x": 0.48, "y": 0.50},
-    {"id": "C", "kind": "goal", "x": 0.84, "y": 0.25},
+    {"id": "C", "kind": "goal", "label": "Ulus", "x": 0.84, "y": 0.25},
     {"id": "D", "kind": "terminal", "x": 0.84, "y": 0.76}
   ],
   "edges": [

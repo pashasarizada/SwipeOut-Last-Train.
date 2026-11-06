@@ -1,6 +1,6 @@
 # Metro Haritası Görünümü — Tasarım
 
-**Tarih:** 06.11.2026 · **Durum:** taslak, kullanıcı onayı bekliyor · okuyucu kontrolünden geçti
+**Tarih:** 06.11.2026 · **Durum:** kullanıcı onayladı ("Evet, başla"), uygulandı — D-036
 **Kullanıcı isteği:** "metro hatlarını gerçek metroların hatlarına benzetecektik" → seçim: **Metro haritası görünümü** (bölüm topolojisi değişmez).
 **Bağlam:** `docs/GAME_DESIGN_V2.md` §5 (gerçek haritadan *esinlenen* özgün dünya) · `docs/UI_UX_GUIDELINES.md` · D-030 (makas yönü yazısız) · D-034 (High Contrast) · `docs/SOURCE_MAPS_AND_LICENSES.md`
 

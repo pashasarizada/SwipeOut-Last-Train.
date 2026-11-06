@@ -92,7 +92,7 @@ final class RailGeometry {
   static const double nodeClearance = 20;
 
   /// A rail within this many degrees of 0°/45°/90° stays one straight run.
-  static const double snapDegrees = 3;
+  static const double snapDegrees = 8;
 
   final Map<String, RailPath> _paths = {};
   final Map<String, RailPath> _reversed = {};
