@@ -10,9 +10,12 @@ import '../kit/motion_settings.dart';
 import '../sound/game_sounds.dart';
 import '../theme/motion.dart';
 import 'board_layout.dart';
+import 'celebration_painter.dart';
 import 'forecast_painter.dart';
 import 'network_painter.dart';
 import 'train_layer.dart';
+
+part 'board_feedback.dart';
 
 /// The interactive network: tap controls, play each pulse as one tween.
 final class BoardView extends StatefulWidget {
@@ -54,6 +57,14 @@ class _BoardViewState extends State<BoardView>
     vsync: this,
     duration: kForecastLoop,
   );
+  late final AnimationController _celebrate = AnimationController(
+    vsync: this,
+    duration: kCelebration,
+  );
+
+  /// Trains the playing pulse delivers; they burst once it lands.
+  List<String> _arriving = const [];
+  List<String> _celebrated = const [];
   late final StreamSubscription<GameEvent> _events;
   String? _flashNode;
   Set<String> _bumped = const {};
@@ -71,16 +82,6 @@ class _BoardViewState extends State<BoardView>
     _controller.addListener(_wakeIdle);
   }
 
-  /// Plays the idle loop when there is a forecast to animate.
-  void _wakeIdle() {
-    if (_reduced || _controller.forecast == null) {
-      _idle.value = 0;
-      _idle.stop();
-      return;
-    }
-    _idle.repeat(count: kForecastLoops);
-  }
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -88,52 +89,6 @@ class _BoardViewState extends State<BoardView>
     _wakeIdle();
   }
 
-  void _onEvent(GameEvent event) {
-    switch (event) {
-      case PulseCommitted(:final delivered):
-        _pulse.forward(from: 0);
-        GameSound.play(context, SoundCue.pulseTick);
-        if (delivered.isNotEmpty) _deliveryTaps(delivered.length);
-      case PulseRejected(:final trainIds, :final nodeId):
-        setState(() {
-          _flashNode = nodeId;
-          _bumped = trainIds.toSet();
-          _bumpNode = nodeId;
-        });
-        _flash.forward(from: 0).then((_) => _flash.reverse());
-        if (!_reduced) _bump.forward(from: 0);
-        GameHaptics.play(context, HapticKind.heavy);
-        GameSound.play(context, SoundCue.crash);
-      case LevelWon() || LevelLost():
-        break;
-    }
-  }
-
-  /// Delivery speaks in two light taps (docs/UI_UX_GUIDELINES.md §9).
-  /// Several trains home in one minute chime twice.
-  void _deliveryTaps(int count) {
-    GameHaptics.play(context, HapticKind.light);
-    GameSound.play(context, SoundCue.delivery);
-    _secondTap?.cancel();
-    _secondTap = Timer(kDeliveryTapGap, () {
-      if (!mounted) return;
-      GameHaptics.play(context, HapticKind.light);
-      if (count > 1) GameSound.play(context, SoundCue.delivery);
-    });
-  }
-
-  /// A damped side-to-side shake that starts and ends at rest.
-  double get _shakeOffset {
-    if (_reduced || !_bump.isAnimating) return 0;
-    final v = _bump.value;
-    return BoardView.shakeAmplitude * math.sin(v * math.pi * 6) * (1 - v);
-  }
-
-  void _onPulseStatus(AnimationStatus status) {
-    if (status == AnimationStatus.completed) _controller.finishAnimation();
-  }
-
-  /// Leaving the app mid-pulse settles on the committed state.
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state != AppLifecycleState.resumed && _pulse.isAnimating) {
@@ -148,6 +103,7 @@ class _BoardViewState extends State<BoardView>
     _events.cancel();
     _controller.removeListener(_wakeIdle);
     _idle.dispose();
+    _celebrate.dispose();
     _pulse.dispose();
     _flash.dispose();
     _bump.dispose();
@@ -216,6 +172,18 @@ class _BoardViewState extends State<BoardView>
                       bumpNode: _bumpNode,
                     ),
                   ),
+                  if (_celebrated.isNotEmpty)
+                    Positioned.fill(
+                      child: CustomPaint(
+                        painter: CelebrationPainter(
+                          level: _controller.level,
+                          trainIds: _celebrated,
+                          layout: layout,
+                          reduced: _reduced,
+                          progress: _celebrate,
+                        ),
+                      ),
+                    ),
                   Positioned.fill(
                     child: CustomPaint(
                       painter: ForecastPainter(

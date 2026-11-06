@@ -7,11 +7,13 @@ import 'package:swipeout_last_train/game/domain/pulse_forecast.dart';
 import 'package:swipeout_last_train/game/domain/pulse_result.dart';
 import 'package:swipeout_last_train/game/presentation/board/board_layout.dart';
 import 'package:swipeout_last_train/game/presentation/board/board_view.dart';
+import 'package:swipeout_last_train/game/presentation/board/celebration_painter.dart';
 import 'package:swipeout_last_train/game/presentation/board/forecast_painter.dart';
 import 'package:swipeout_last_train/game/presentation/board/network_painter.dart';
 import 'package:swipeout_last_train/game/presentation/board/train_sprite.dart';
 import 'package:swipeout_last_train/game/presentation/game/pulse_controller.dart';
 import 'package:swipeout_last_train/game/presentation/theme/app_colors.dart';
+import 'package:swipeout_last_train/game/presentation/theme/motion.dart';
 
 import '../../support/graph_builders.dart';
 
@@ -262,5 +264,40 @@ void main() {
     final cross = painter.crossPoint!;
     expect((cross - n).distance, closeTo(ForecastPainter.crossShift, 0.01));
     expect((cross - m).distance, lessThan((n - m).distance));
+  });
+
+  testWidgets('a delivery bursts at the goal once the train arrives', (
+    tester,
+  ) async {
+    final c = await _pump(tester, ank01());
+    CelebrationPainter? burst() => tester
+        .widgetList<CustomPaint>(find.byType(CustomPaint))
+        .map((p) => p.painter)
+        .whereType<CelebrationPainter>()
+        .firstOrNull;
+
+    c.advance();
+    await tester.pumpAndSettle();
+    c.tapNode('B');
+    c.advance();
+    await tester.pump();
+    await tester.pump(kPulseMove + const Duration(milliseconds: 50));
+    expect(burst()?.trainIds, ['red_1']);
+    expect(burst()!.particleCount, CelebrationPainter.sparks);
+    await tester.pumpAndSettle();
+  });
+
+  test('two trains home in one minute make a bigger burst', () {
+    final level = ank01();
+    CelebrationPainter painter(List<String> ids, {bool reduced = false}) =>
+        CelebrationPainter(
+          level: level,
+          trainIds: ids,
+          layout: BoardLayout(size: const Size(400, 400)),
+          reduced: reduced,
+          progress: kAlwaysDismissedAnimation,
+        );
+    expect(painter(['a', 'b']).particleCount, 2 * CelebrationPainter.sparks);
+    expect(painter(['a'], reduced: true).particleCount, 0);
   });
 }

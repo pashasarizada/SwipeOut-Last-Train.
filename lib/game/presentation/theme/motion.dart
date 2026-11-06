@@ -15,3 +15,6 @@ const Duration kScreenIntro = Duration(milliseconds: 450);
 /// board changes before it rests (D-030).
 const Duration kForecastLoop = Duration(milliseconds: 1600);
 const int kForecastLoops = 3;
+
+/// The burst at a goal when a train arrives.
+const Duration kCelebration = Duration(milliseconds: 600);
