@@ -31,6 +31,7 @@ Kabaca **%85**: içerik, okunurluk, ipucu ve ses tamam; kalan oyuncu testi (zorl
 ## 2026-11-06 (7) — Yüksek kontrast (`main`)
 
 - `ContrastSettings` + Ayarlar'da "Yüksek kontrast" (D-034): beyaz kalın raylar, görünür kapalı kollar, kenarlı oklar, sönük şehir. `scripts/check.sh` → **+411 All tests passed**. Simülatörde BAK-02'de doğrulandı (`docs/images/v2-ux/18`).
+- **Android:** `flutter build apk --debug` başarılı (70 sn). Uyarı: `audioplayers_android`, `path_provider_android`, `shared_preferences_android` NDK 27.0.12077973 istiyor; makinedeki NDK 27 klasörü eksik (`source.properties` yok) ve Android SDK lisansları kabul edilmemiş. **Kullanıcı adımı:** `flutter doctor --android-licenses` ve Android Studio > SDK Manager'dan NDK 27.0.12077973 kurulumu; ardından `android/app/build.gradle.kts`'te `ndkVersion = "27.0.12077973"`. Emülatör tanımlı değil; Android'de elle oynanmadı.
 
 ## 2026-11-06 (5) — tahta okunurluğu, Paket A + B (`main`)
 
