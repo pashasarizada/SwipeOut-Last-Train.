@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import '../../domain/level_definition.dart';
 import '../../domain/switch_def.dart';
+import 'board_layout.dart';
 import 'rail_geometry.dart';
 
 /// Splits a level's rails into metro lines, the way a map colours them:
@@ -86,4 +87,28 @@ final class MetroLines {
       colorsNeeded = math.max(colorsNeeded, c + 1);
     }
   }
+}
+
+/// A level's metro map on one board layout: paths and lines, built once
+/// per layout and shared by every painter and the trains.
+final class MetroMap {
+  MetroMap(LevelDefinition level, BoardLayout layout)
+    : geometry = RailGeometry(level, layout) {
+    lines = MetroLines(level, geometry);
+  }
+
+  final RailGeometry geometry;
+  late final MetroLines lines;
+
+  /// Reuses [previous] while the level and layout are unchanged.
+  static MetroMap reuse(
+    MetroMap? previous,
+    LevelDefinition level,
+    BoardLayout layout,
+  ) =>
+      previous != null &&
+          identical(previous.geometry.level, level) &&
+          previous.geometry.layout == layout
+      ? previous
+      : MetroMap(level, layout);
 }

@@ -2,11 +2,20 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:swipeout_last_train/game/presentation/board/board_layout.dart';
 import 'package:swipeout_last_train/game/presentation/board/board_view.dart';
+import 'package:swipeout_last_train/game/presentation/board/rail_geometry.dart';
+import 'package:swipeout_last_train/game/presentation/board/train_layer.dart';
 import 'package:swipeout_last_train/game/presentation/board/train_sprite.dart';
 import 'package:swipeout_last_train/game/presentation/game/pulse_controller.dart';
+import 'package:swipeout_last_train/game/presentation/theme/motion.dart';
 
 import '../../support/graph_builders.dart';
+
+/// Eased pulse progress after [elapsed], as the train layer plays it.
+double _t(Duration elapsed) => Curves.easeInOut.transform(
+  elapsed.inMicroseconds / kPulseMove.inMicroseconds,
+);
 
 void main() {
   test('heading follows screen direction', () {
@@ -21,7 +30,7 @@ void main() {
     );
   });
 
-  testWidgets('the car shows its symbol upright and turns along its edge', (
+  testWidgets('the car shows its symbol upright and turns along its rail', (
     tester,
   ) async {
     final level = ank02();
@@ -39,17 +48,29 @@ void main() {
       findsOneWidget,
     );
 
+    final g = RailGeometry(
+      level,
+      BoardLayout(size: tester.getSize(find.byType(BoardView))),
+    );
     controller.advance();
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 200));
-    final a = level.nodes['A']!.position;
-    final b = level.nodes['B']!.position;
-    final expected = math.atan2(b.y - a.y, b.x - a.x);
-    expect(tester.widget<TrainSprite>(sprite).heading, closeTo(expected, 1e-6));
+    final (_, moving) = TrainLayer.placeOnRail(
+      level,
+      g,
+      from: 'A',
+      to: 'B',
+      t: _t(const Duration(milliseconds: 200)),
+    );
+    expect(tester.widget<TrainSprite>(sprite).heading, closeTo(moving, 1e-6));
     expect(tester.widget<TrainSprite>(sprite).headlights, 1);
 
     await tester.pumpAndSettle();
-    expect(tester.widget<TrainSprite>(sprite).heading, closeTo(expected, 1e-6));
+    final rail = g.between('A', 'B');
+    expect(
+      tester.widget<TrainSprite>(sprite).heading,
+      closeTo(rail.headingAt(rail.length), 1e-6),
+    );
     expect(tester.widget<TrainSprite>(sprite).headlights, lessThan(1));
   });
 
@@ -67,26 +88,37 @@ void main() {
     );
     double heading() =>
         tester.widget<TrainSprite>(find.byType(TrainSprite)).heading;
-    double angle(String from, String to) {
-      final a = level.nodes[from]!.position;
-      final b = level.nodes[to]!.position;
-      return math.atan2(b.y - a.y, b.x - a.x);
+    final g = RailGeometry(
+      level,
+      BoardLayout(size: tester.getSize(find.byType(BoardView))),
+    );
+    double arrived(String from, String to) {
+      final rail = g.between(from, to);
+      return rail.headingAt(rail.length);
     }
 
     final atStart = heading();
-    expect(atStart, closeTo(angle('A', 'B'), 1e-6));
+    expect(atStart, closeTo(g.between('A', 'B').headingAt(0), 1e-6));
 
     controller.advance();
     await tester.pumpAndSettle();
     controller.tapNode('B');
     controller.advance();
+    await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
-    expect(heading(), closeTo(angle('B', 'C'), 1e-6));
+    final (_, moving) = TrainLayer.placeOnRail(
+      level,
+      g,
+      from: 'B',
+      to: 'C',
+      t: _t(const Duration(milliseconds: 100)),
+    );
+    expect(heading(), closeTo(moving, 1e-6));
     await tester.pumpAndSettle();
 
     controller.undo();
     await tester.pump();
-    expect(heading(), closeTo(angle('A', 'B'), 1e-6), reason: 'undo');
+    expect(heading(), closeTo(arrived('A', 'B'), 1e-6), reason: 'undo');
 
     controller.restart();
     await tester.pump();

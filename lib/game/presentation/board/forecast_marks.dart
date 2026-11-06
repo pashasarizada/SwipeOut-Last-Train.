@@ -37,33 +37,32 @@ extension _ForecastMarks on ForecastPainter {
   }
 
   void _paintArrow(Canvas canvas, TrainMove move) {
-    final (start, end) = arrowFor(move);
+    final rail = _railOf(move);
+    final from = rail.length * ForecastPainter.arrowFrom;
+    final to = rail.length * ForecastPainter.arrowTo;
+    if (to - from < 1) return;
     final color = colorFor(move);
-    final direction = end - start;
-    if (direction.distance < 1) return;
-    final unit = direction / direction.distance;
-    final normal = Offset(-unit.dy, unit.dx);
     const head = 11.0;
-    final neck = end - unit * head;
+    final neckAt = math.max(from, to - head);
+    final end = rail.pointAt(to);
+    final neck = rail.pointAt(neckAt);
+    final heading = rail.headingAt(to);
+    final unit = Offset(math.cos(heading), math.sin(heading));
+    final normal = Offset(-unit.dy, unit.dx);
+    final shaft = rail.segment(from, neckAt);
 
     final width = ForecastPainter.shaftWidth(high: highContrast);
+    Paint stroke(Color c, double w) => Paint()
+      ..color = c
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = w
+      ..strokeCap = StrokeCap.round;
     if (highContrast) {
-      canvas.drawLine(
-        start,
-        neck,
-        Paint()
-          ..color = AppColors.background
-          ..strokeWidth = width + 4
-          ..strokeCap = StrokeCap.round,
-      );
+      canvas.drawPath(shaft, stroke(AppColors.background, width + 4));
     }
-    canvas.drawLine(
-      start,
-      neck,
-      Paint()
-        ..color = color.withValues(alpha: highContrast ? 1 : 0.75)
-        ..strokeWidth = width
-        ..strokeCap = StrokeCap.round,
+    canvas.drawPath(
+      shaft,
+      stroke(color.withValues(alpha: highContrast ? 1 : 0.75), width),
     );
     canvas.drawPath(
       Path()
@@ -77,7 +76,7 @@ extension _ForecastMarks on ForecastPainter {
     final dot = Paint()..color = AppColors.textPrimary.withValues(alpha: 0.85);
     for (var i = 0; i < 2; i++) {
       final t = (_flow.value + i / 2) % 1;
-      canvas.drawCircle(Offset.lerp(start, neck, t)!, 1.8, dot);
+      canvas.drawCircle(rail.pointAt(from + (neckAt - from) * t), 1.8, dot);
     }
   }
 

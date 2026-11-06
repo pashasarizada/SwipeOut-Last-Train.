@@ -13,6 +13,7 @@ import '../theme/motion.dart';
 import 'board_layout.dart';
 import 'celebration_painter.dart';
 import 'forecast_painter.dart';
+import 'metro_lines.dart';
 import 'network_painter.dart';
 import 'train_layer.dart';
 
@@ -73,6 +74,7 @@ class _BoardViewState extends State<BoardView>
   Timer? _secondTap;
   bool _reduced = false;
   bool _highContrast = false;
+  MetroMap? _map;
 
   PulseController get _controller => widget.controller;
 
@@ -119,17 +121,10 @@ class _BoardViewState extends State<BoardView>
     return LayoutBuilder(
       builder: (context, constraints) {
         final layout = BoardLayout(size: constraints.biggest);
+        final map = _map = MetroMap.reuse(_map, _controller.level, layout);
         return GestureDetector(
           behavior: HitTestBehavior.opaque,
-          onTapUp: (d) {
-            final id = layout.nodeAt(d.localPosition, _controller.level.nodes);
-            if (id == null) return;
-            final before = _controller.pending;
-            _controller.tapNode(id);
-            if (_controller.pending != before) {
-              GameSound.play(context, SoundCue.switchClack);
-            }
-          },
+          onTapUp: (d) => _onTap(layout, d.localPosition),
           child: ListenableBuilder(
             listenable: Listenable.merge([_controller, _wave, _flash, _bump]),
             builder: (context, _) => Transform.translate(
@@ -151,6 +146,7 @@ class _BoardViewState extends State<BoardView>
                         wave: _pulse.isAnimating ? 1 - _wave.value : 0,
                         flashNode: _flashNode,
                         flash: _flash.value,
+                        map: map,
                       ),
                     ),
                   ),
@@ -162,6 +158,7 @@ class _BoardViewState extends State<BoardView>
                         layout: layout,
                         highContrast: _highContrast,
                         flow: _idle,
+                        geometry: map.geometry,
                       ),
                     ),
                   ),
@@ -172,6 +169,7 @@ class _BoardViewState extends State<BoardView>
                       after: _controller.state,
                       progress: _pulse,
                       layout: layout,
+                      geometry: map.geometry,
                       bump: _bump,
                       bumped: _bumped,
                       bumpNode: _bumpNode,
@@ -186,6 +184,7 @@ class _BoardViewState extends State<BoardView>
                         layout: layout,
                         layer: ForecastLayer.overTrains,
                         flow: _idle,
+                        geometry: map.geometry,
                       ),
                     ),
                   ),

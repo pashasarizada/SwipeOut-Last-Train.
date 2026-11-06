@@ -8,6 +8,7 @@ import '../../domain/train_def.dart';
 import '../kit/game_icon.dart';
 import '../theme/app_colors.dart';
 import 'board_layout.dart';
+import 'rail_geometry.dart';
 
 part 'forecast_marks.dart';
 
@@ -31,7 +32,9 @@ final class ForecastPainter extends CustomPainter {
     this.layer = ForecastLayer.underTrains,
     this.highContrast = false,
     Animation<double> flow = kAlwaysDismissedAnimation,
+    RailGeometry? geometry,
   }) : _flow = flow,
+       _geometry = geometry,
        super(repaint: flow);
 
   final LevelDefinition level;
@@ -46,6 +49,10 @@ final class ForecastPainter extends CustomPainter {
 
   static double shaftWidth({required bool high}) => high ? 7 : 5;
   final Animation<double> _flow;
+  final RailGeometry? _geometry;
+
+  /// The metro paths the arrows follow (D-036).
+  late final RailGeometry geometry = _geometry ?? RailGeometry(level, layout);
 
   /// Where along its edge an arrow starts and ends.
   static const double arrowFrom = 0.30;
@@ -59,12 +66,16 @@ final class ForecastPainter extends CustomPainter {
 
   Offset _at(String nodeId) => layout.toScreen(level.nodes[nodeId]!.position);
 
-  /// The arrow's screen ends for a moving train.
+  /// The arrow's screen ends for a moving train, on its rail's path.
   (Offset, Offset) arrowFor(TrainMove move) {
-    final from = _at(move.from);
-    final delta = _at(move.to!) - from;
-    return (from + delta * arrowFrom, from + delta * arrowTo);
+    final rail = _railOf(move);
+    return (
+      rail.pointAt(rail.length * arrowFrom),
+      rail.pointAt(rail.length * arrowTo),
+    );
   }
+
+  RailPath _railOf(TrainMove move) => geometry.between(move.from, move.to!);
 
   /// The colour [move] is drawn in: red when its train is in the conflict.
   Color colorFor(TrainMove move) =>
@@ -87,8 +98,8 @@ final class ForecastPainter extends CustomPainter {
     if (!occupied) return at;
     for (final m in moves) {
       if (m.to == node) {
-        final back = _at(m.from) - at;
-        return at + back / back.distance * crossShift;
+        final back = geometry.between(node, m.from);
+        return back.pointAt(math.min(crossShift, back.length / 2));
       }
     }
     return at;
@@ -130,5 +141,6 @@ final class ForecastPainter extends CustomPainter {
       old.layout != layout ||
       old.level != level ||
       old.layer != layer ||
+      old.geometry != geometry ||
       old.highContrast != highContrast;
 }

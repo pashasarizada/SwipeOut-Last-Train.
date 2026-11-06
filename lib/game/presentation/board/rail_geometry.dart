@@ -108,6 +108,12 @@ final class RailGeometry {
       ? pathOf(edgeId)
       : _reversed.putIfAbsent(edgeId, () => pathOf(edgeId).reversed);
 
+  /// The rail a train runs from [fromNode] to the neighbouring [toNode].
+  RailPath between(String fromNode, String toNode) => from(
+    fromNode,
+    level.edgesOf(fromNode).firstWhere((e) => e.other(fromNode) == toNode).id,
+  );
+
   int get fallbackCount =>
       _paths.values.where((p) => p.straightFallback).length;
 

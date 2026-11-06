@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import '../../domain/game_state.dart';
 import '../../domain/level_definition.dart';
 import 'board_layout.dart';
+import 'rail_geometry.dart';
 import 'train_sprite.dart';
 
 /// Trains tweened from [before] to [after] — all of them at once. Each car
@@ -19,6 +20,7 @@ final class TrainLayer extends StatefulWidget {
     required this.after,
     required this.progress,
     required this.layout,
+    required this.geometry,
     this.bump = kAlwaysDismissedAnimation,
     this.bumped = const {},
     this.bumpNode,
@@ -29,6 +31,9 @@ final class TrainLayer extends StatefulWidget {
   final GameState after;
   final Animation<double> progress;
   final BoardLayout layout;
+
+  /// The metro paths trains run along (D-036).
+  final RailGeometry geometry;
   final Animation<double> bump;
   final Set<String> bumped;
 
@@ -41,6 +46,20 @@ final class TrainLayer extends StatefulWidget {
 
   /// How far towards the conflict a bumped train lurches.
   static const double bumpReach = 0.35;
+
+  /// Where a train running from [from] to [to] is at progress [t] (0–1),
+  /// and which way it faces: on the rail's path, along its tangent.
+  static (Offset, double) placeOnRail(
+    LevelDefinition level,
+    RailGeometry geometry, {
+    required String from,
+    required String to,
+    required double t,
+  }) {
+    final rail = geometry.between(from, to);
+    final d = rail.length * t;
+    return (rail.pointAt(d), rail.headingAt(d));
+  }
 
   @override
   State<TrainLayer> createState() => _TrainLayerState();
@@ -58,13 +77,15 @@ class _TrainLayerState extends State<TrainLayer> {
   /// can never leave it pointing the wrong way: along the edge it came in
   /// on, or at the depot towards the depot's only edge.
   double _standingHeading(String nodeId, String? incomingEdgeId) {
+    final g = widget.geometry;
     final incoming = widget.level.edges[incomingEdgeId];
     if (incoming != null) {
-      return headingOf(_pos(incoming.other(nodeId)), _pos(nodeId));
+      final rail = g.from(incoming.other(nodeId), incoming.id);
+      return rail.headingAt(rail.length);
     }
     final edges = widget.level.edgesOf(nodeId);
     if (edges.isEmpty) return 0;
-    return headingOf(_pos(nodeId), _pos(edges.first.other(nodeId)));
+    return g.from(nodeId, edges.first.id).headingAt(0);
   }
 
   @override
@@ -131,12 +152,16 @@ class _TrainLayerState extends State<TrainLayer> {
     required double lights,
     Offset lurch = Offset.zero,
   }) {
-    final start = _pos(from);
-    final end = _pos(to);
-    final heading = from != to
-        ? headingOf(start, end)
-        : _standingHeading(to, incomingEdgeId);
-    final center = Offset.lerp(start, end, t)! + lurch;
+    final (onRail, heading) = from != to
+        ? TrainLayer.placeOnRail(
+            widget.level,
+            widget.geometry,
+            from: from,
+            to: to,
+            t: t,
+          )
+        : (_pos(to), _standingHeading(to, incomingEdgeId));
+    final center = onRail + lurch;
     const box = _length * 1.6;
     return Positioned(
       key: ValueKey(id),

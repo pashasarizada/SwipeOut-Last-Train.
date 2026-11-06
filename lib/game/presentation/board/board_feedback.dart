@@ -3,6 +3,17 @@ part of 'board_view.dart';
 /// How the board answers the game: a pulse plays as one tween and ticks,
 /// a crash flashes, shakes and buzzes, a delivery chimes and bursts.
 extension _BoardFeedback on _BoardViewState {
+  /// A tap picks the control nearest to it; a changed choice clacks.
+  void _onTap(BoardLayout layout, Offset at) {
+    final id = layout.nodeAt(at, _controller.level.nodes);
+    if (id == null) return;
+    final before = _controller.pending;
+    _controller.tapNode(id);
+    if (_controller.pending != before) {
+      GameSound.play(context, SoundCue.switchClack);
+    }
+  }
+
   void _onEvent(GameEvent event) {
     switch (event) {
       case PulseCommitted(:final delivered):

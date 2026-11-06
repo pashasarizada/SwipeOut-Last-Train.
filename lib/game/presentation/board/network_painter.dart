@@ -6,11 +6,14 @@ import '../../domain/level_definition.dart';
 import '../../domain/node.dart';
 import '../../domain/signal_aspect.dart';
 import '../../domain/train_def.dart';
+import '../city/city_theme.dart';
 import '../kit/game_fonts.dart';
 import '../kit/game_icon.dart';
 import '../theme/app_colors.dart';
 import 'board_layout.dart';
+import 'metro_lines.dart';
 
+part 'rail_marks.dart';
 part 'station_marks.dart';
 
 /// Draws the static network: rails, switches, signals, goals, the pending
@@ -26,7 +29,9 @@ final class NetworkPainter extends CustomPainter {
     this.flashNode,
     this.flash = 0,
     this.highContrast = false,
-  }) : arrivals = arrivals ?? state;
+    MetroMap? map,
+  }) : arrivals = arrivals ?? state,
+       _map = map;
 
   final LevelDefinition level;
   final GameState state;
@@ -42,6 +47,12 @@ final class NetworkPainter extends CustomPainter {
 
   /// Brighter, thicker rails (High Contrast).
   final bool highContrast;
+
+  final MetroMap? _map;
+
+  /// Metro-map paths and line colours (D-036); built here when not given.
+  late final MetroMap map = _map ?? MetroMap(level, layout);
+  late final CityTheme theme = CityTheme.of(level.city);
 
   /// Colour and width of a rail: open or a closed switch arm.
   static (Color, double) railStyle({required bool open, required bool high}) =>
@@ -90,44 +101,6 @@ final class NetworkPainter extends CustomPainter {
   /// How far a closed arm stops short of its switch, so the gap reads as
   /// "this way is shut" (D-030).
   static const double closedGap = 30;
-
-  void _paintRails(Canvas canvas) {
-    final preview = switch (pending) {
-      ToggleSwitch(:final nodeId) => level.switches[nodeId]!.edgeFor(
-        state.switches[nodeId]!.toggled,
-      ),
-      _ => null,
-    };
-    for (final edge in level.edges.values) {
-      var from = _at(edge.a);
-      var to = _at(edge.b);
-      if (edge.id == preview) {
-        canvas.drawLine(
-          from,
-          to,
-          _stroke(AppColors.accentTurquoise.withValues(alpha: 0.45), 14),
-        );
-      }
-      if (!isOpen(edge.id)) {
-        (from, to) = _shortenAtSwitch(edge.a, from, to);
-        (to, from) = _shortenAtSwitch(edge.b, to, from);
-        final (closed, width) = railStyle(open: false, high: highContrast);
-        canvas.drawLine(from, to, _stroke(closed, width));
-        continue;
-      }
-      final (rail, width) = railStyle(open: true, high: highContrast);
-      final lit = Color.lerp(rail, AppColors.textPrimary, wave * 0.6)!;
-      canvas.drawLine(from, to, _stroke(lit, width));
-    }
-  }
-
-  /// Pulls [end] away from [nodeId] by [closedGap] when it is a switch.
-  (Offset, Offset) _shortenAtSwitch(String nodeId, Offset end, Offset other) {
-    if (!level.switches.containsKey(nodeId)) return (end, other);
-    final delta = other - end;
-    final gap = closedGap.clamp(0, delta.distance * 0.45);
-    return (end + delta / delta.distance * gap.toDouble(), other);
-  }
 
   void _paintNode(Canvas canvas, Node node) {
     final c = _at(node.id);
