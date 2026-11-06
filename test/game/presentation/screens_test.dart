@@ -10,14 +10,18 @@ import 'package:swipeout_last_train/game/domain/progress.dart';
 import 'package:swipeout_last_train/game/presentation/board/board_layout.dart';
 import 'package:swipeout_last_train/game/presentation/board/board_view.dart';
 import 'package:swipeout_last_train/game/presentation/game/progress_store.dart';
+import 'package:swipeout_last_train/game/presentation/game/tutorial_guide.dart';
 import 'package:swipeout_last_train/game/presentation/kit/control_ticket.dart';
+import 'package:swipeout_last_train/game/presentation/kit/departure_board.dart';
 import 'package:swipeout_last_train/game/presentation/kit/motion_settings.dart';
+import 'package:swipeout_last_train/game/presentation/kit/platform_announcement.dart';
 import 'package:swipeout_last_train/game/presentation/screens/city_map_screen.dart';
 import 'package:swipeout_last_train/game/presentation/screens/home_screen.dart';
 import 'package:swipeout_last_train/game/presentation/screens/pulse_game_screen.dart';
 import 'package:swipeout_last_train/game/presentation/screens/tunnel_intro_screen.dart';
 import 'package:swipeout_last_train/game/presentation/widgets/outcome_board.dart';
 import 'package:swipeout_last_train/game/presentation/widgets/run_meter.dart';
+import 'package:swipeout_last_train/game/presentation/widgets/tutorial_hand.dart';
 
 import '../../support/graph_builders.dart';
 import '../../support/memory_progress_repository.dart';
@@ -297,7 +301,7 @@ void main() {
     expect(find.textContaining('1 DAKİKA İLERLET'), findsOneWidget);
     expect(find.text('GERİ AL'), findsOneWidget);
     expect(
-      find.text('Trenler her dakikada bir durak ilerler.'),
+      find.textContaining('Trenler her dakikada bir durak ilerler.'),
       findsOneWidget,
     );
     expect(find.bySemanticsLabel(RegExp('0/1 TREN')), findsOneWidget);
@@ -359,4 +363,51 @@ void main() {
       handle.dispose();
     });
   }
+
+  group('rules and the tutorial hand', () {
+    testWidgets('rules show as a notice that the first tap clears', (
+      tester,
+    ) async {
+      final level = ank01();
+      await _app(tester, home: PulseGameScreen(level: level));
+      final notice = find.descendant(
+        of: find.byType(PlatformAnnouncement),
+        matching: find.textContaining('Trains move one stop each minute.'),
+      );
+      expect(notice, findsOneWidget);
+      expect(
+        tester
+            .widget<PlatformAnnouncement>(find.byType(PlatformAnnouncement))
+            .tone,
+        AnnouncementTone.info,
+      );
+
+      await _tapNode(tester, level, 'B');
+      await tester.pumpAndSettle();
+      expect(notice, findsNothing);
+
+      await tester.tap(find.byType(DepartureBoard));
+      await tester.pumpAndSettle();
+      expect(notice, findsOneWidget, reason: 'the board brings them back');
+    });
+
+    testWidgets('the hand follows the recorded solution', (tester) async {
+      final level = ank01();
+      await _app(tester, home: PulseGameScreen(level: level));
+      TutorialHand hand() =>
+          tester.widget<TutorialHand>(find.byType(TutorialHand));
+
+      expect(hand().target, const GuideLever(), reason: 'ANK-01 waits first');
+      await _advance(tester);
+      expect(hand().target, const GuideNode('B'));
+      await _tapNode(tester, level, 'B');
+      await tester.pumpAndSettle();
+      expect(hand().target, const GuideLever());
+    });
+
+    testWidgets('levels that are not tutorials have no hand', (tester) async {
+      await _app(tester, home: PulseGameScreen(level: wrongWayLevel()));
+      expect(find.byType(TutorialHand), findsNothing);
+    });
+  });
 }

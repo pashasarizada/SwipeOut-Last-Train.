@@ -12,15 +12,17 @@ import '../game/game_event.dart';
 import '../game/game_scope.dart';
 import '../game/progress_store.dart';
 import '../game/pulse_controller.dart';
+import '../game/tutorial_guide.dart';
 import '../kit/game_scaffold.dart';
 import '../kit/platform_announcement.dart';
 import '../passport/passport_screen.dart';
-import '../theme/app_colors.dart';
 import '../widgets/game_texts.dart';
 import '../widgets/outcome_board.dart';
 import '../widgets/pulse_controls.dart';
 import '../widgets/pulse_hud.dart';
+import '../widgets/tutorial_hand.dart';
 
+part 'pulse_game/notices.dart';
 part 'pulse_game/outcome_boards.dart';
 
 /// The platform for one level: owns its controller, saves the run after
@@ -44,8 +46,6 @@ final class PulseGameScreen extends StatefulWidget {
 }
 
 class _PulseGameScreenState extends State<PulseGameScreen> {
-  static const Duration _messageDuration = Duration(milliseconds: 1600);
-
   late final PulseController _controller = widget.restore.isEmpty
       ? PulseController(level: widget.level)
       : PulseController.restore(level: widget.level, actions: widget.restore);
@@ -53,8 +53,13 @@ class _PulseGameScreenState extends State<PulseGameScreen> {
   ProgressStore? _store;
   List<ControlAction?> _saved = const [];
   String? _message;
+  AnnouncementTone _messageTone = AnnouncementTone.alarm;
   int _messageSerial = 0;
   Timer? _messageTimer;
+  bool _rulesShown = false;
+  final GlobalKey _boardKey = GlobalKey();
+  final GlobalKey _leverKey = GlobalKey();
+  final GlobalKey _undoKey = GlobalKey();
 
   @override
   void initState() {
@@ -62,12 +67,17 @@ class _PulseGameScreenState extends State<PulseGameScreen> {
     _saved = _controller.history;
     _events = _controller.events.listen(_onEvent);
     _controller.addListener(_saveRun);
+    _controller.addListener(_hideRulesOnPlay);
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _store = GameScope.of(context);
+    if (!_rulesShown) {
+      _rulesShown = true;
+      _showRules();
+    }
   }
 
   /// Persist the half-played run whenever its history changes. A lost run
@@ -100,76 +110,60 @@ class _PulseGameScreenState extends State<PulseGameScreen> {
     }
   }
 
-  void _showMessage(String? message) {
-    if (message == null) return;
-    _messageTimer?.cancel();
-    setState(() {
-      _message = message;
-      _messageSerial++;
-    });
-    _messageTimer = Timer(_messageDuration, () {
-      if (mounted) setState(() => _message = null);
-    });
-  }
-
   @override
   void dispose() {
     _messageTimer?.cancel();
     _events.cancel();
     _controller.removeListener(_saveRun);
+    _controller.removeListener(_hideRulesOnPlay);
     _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final language = Localizations.localeOf(context).languageCode;
     return GameScaffold(
       city: widget.level.city,
       backdropOpacity: 0.35,
-      header: PulseHud(controller: _controller),
-      body: Column(
+      header: PulseHud(controller: _controller, onBoardTap: _showRules),
+      body: Stack(
         children: [
-          for (final step in widget.level.tutorialSteps.take(
-            isCompactScreen(context) ? 1 : 2,
-          ))
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                step.of(language),
-                maxLines: isCompactScreen(context) ? 1 : 2,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: AppColors.textPrimary,
-                  fontSize: 14,
-                ),
-              ),
-            ),
-          Expanded(
-            child: Stack(
-              children: [
-                Positioned.fill(child: BoardView(controller: _controller)),
-                // The announcement floats over the board's top edge so the
-                // board keeps that space; it never blocks a tap.
-                if (_message case final message?)
-                  Positioned(
-                    top: 4,
-                    left: 0,
-                    right: 0,
-                    child: IgnorePointer(
-                      child: Center(
-                        child: PlatformAnnouncement(
-                          message: message,
-                          serial: _messageSerial,
+          Column(
+            children: [
+              Expanded(
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: BoardView(key: _boardKey, controller: _controller),
+                    ),
+                    // The notice floats over the board's top edge so the
+                    // board keeps that space; it never blocks a tap.
+                    if (_message case final message?)
+                      Positioned(
+                        top: 4,
+                        left: 12,
+                        right: 12,
+                        child: IgnorePointer(
+                          child: Center(
+                            child: PlatformAnnouncement(
+                              message: message,
+                              serial: _messageSerial,
+                              tone: _messageTone,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-              ],
-            ),
+                  ],
+                ),
+              ),
+              PulseControls(
+                controller: _controller,
+                leverKey: _leverKey,
+                undoKey: _undoKey,
+              ),
+            ],
           ),
-          PulseControls(controller: _controller),
+          Positioned.fill(child: _tutorialHand()),
         ],
       ),
     );

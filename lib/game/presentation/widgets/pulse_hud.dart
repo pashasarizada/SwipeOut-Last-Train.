@@ -11,9 +11,12 @@ import 'run_meter.dart';
 /// The platform's departure board (line, level and the clock: 23:50 + one
 /// minute per pulse) above the drawn [RunMeter] of trains and minutes.
 final class PulseHud extends StatelessWidget {
-  const PulseHud({super.key, required this.controller});
+  const PulseHud({super.key, required this.controller, this.onBoardTap});
 
   final PulseController controller;
+
+  /// Tapping the departure board (brings the level's rules back).
+  final VoidCallback? onBoardTap;
 
   @override
   Widget build(BuildContext context) {
@@ -53,12 +56,16 @@ final class PulseHud extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    DepartureBoard(
-                      color: theme.accentAlt,
-                      lines: [
-                        '${l.levelCode(level)} · ${level.title.of(language)}',
-                        GameTexts.clock(controller.pulses),
-                      ],
+                    GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: onBoardTap,
+                      child: DepartureBoard(
+                        color: theme.accentAlt,
+                        lines: [
+                          '${l.levelCode(level)} · ${level.title.of(language)}',
+                          GameTexts.clock(controller.pulses),
+                        ],
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),

@@ -10,9 +10,18 @@ import 'game_texts.dart';
 /// Undo / Restart and the big advance lever, which warns before a pulse
 /// that would fail.
 final class PulseControls extends StatelessWidget {
-  const PulseControls({super.key, required this.controller});
+  const PulseControls({
+    super.key,
+    required this.controller,
+    this.leverKey,
+    this.undoKey,
+  });
 
   final PulseController controller;
+
+  /// Let the tutorial hand find the lever and Undo.
+  final GlobalKey? leverKey;
+  final GlobalKey? undoKey;
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +53,16 @@ final class PulseControls extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Expanded(child: undo),
+                  Expanded(
+                    child: KeyedSubtree(key: undoKey, child: undo),
+                  ),
                   const SizedBox(width: 12),
                   Expanded(child: restart),
                 ],
               ),
               SizedBox(height: compact ? 6 : 10),
               AdvanceLever(
+                key: leverKey,
                 label: l.advance,
                 compact: compact,
                 warning: warning,
