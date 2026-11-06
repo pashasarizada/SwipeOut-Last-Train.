@@ -26,6 +26,7 @@ final class GameButton extends StatefulWidget {
     this.size = GameButtonSize.large,
     this.color = AppColors.accentTurquoise,
     this.haptic = HapticKind.selection,
+    this.semanticsLabel,
   });
 
   static const Key faceKey = ValueKey('game-button-face');
@@ -37,6 +38,9 @@ final class GameButton extends StatefulWidget {
   final GameButtonSize size;
   final Color color;
   final HapticKind haptic;
+
+  /// What a screen reader says; defaults to [label].
+  final String? semanticsLabel;
 
   @override
   State<GameButton> createState() => _GameButtonState();
@@ -120,7 +124,7 @@ class _GameButtonState extends State<GameButton> {
     return Semantics(
       button: true,
       enabled: _enabled,
-      label: widget.label,
+      label: widget.semanticsLabel ?? widget.label,
       excludeSemantics: true,
       child: Opacity(
         opacity: _enabled ? 1 : 0.4,

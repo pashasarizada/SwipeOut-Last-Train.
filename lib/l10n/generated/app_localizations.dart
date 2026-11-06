@@ -194,6 +194,12 @@ abstract class AppLocalizations {
   /// **'▶  ADVANCE 1 MINUTE'**
   String get advance;
 
+  /// No description provided for @forecastWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Warning: this minute will fail'**
+  String get forecastWarning;
+
   /// No description provided for @cancel.
   ///
   /// In en, this message translates to:

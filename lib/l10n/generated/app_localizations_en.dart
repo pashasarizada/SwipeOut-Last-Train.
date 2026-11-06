@@ -64,6 +64,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get advance => '▶  ADVANCE 1 MINUTE';
 
   @override
+  String get forecastWarning => 'Warning: this minute will fail';
+
+  @override
   String get cancel => 'Cancel';
 
   @override

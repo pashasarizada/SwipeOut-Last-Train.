@@ -15,6 +15,7 @@ import 'package:swipeout_last_train/game/presentation/kit/signal_back_button.dar
 import 'package:swipeout_last_train/game/presentation/kit/signal_toggle.dart';
 import 'package:swipeout_last_train/game/presentation/kit/split_flap_text.dart';
 import 'package:swipeout_last_train/game/presentation/kit/track_loader.dart';
+import 'package:swipeout_last_train/game/presentation/theme/app_colors.dart';
 
 Future<void> _pump(WidgetTester tester, Widget child, {bool reduced = false}) =>
     tester.pumpWidget(
@@ -310,6 +311,34 @@ void main() {
     await tester.pumpAndSettle();
     expect(pulses, 1);
     expect(haptics, contains('HapticFeedbackType.mediumImpact'));
+  });
+
+  testWidgets('a warning lever turns red, shows a cross and still pulls', (
+    tester,
+  ) async {
+    var pulses = 0;
+    await _pump(
+      tester,
+      AdvanceLever(
+        label: '1 DAKİKA İLERLET',
+        warning: true,
+        semanticsLabel: '1 DAKİKA İLERLET. Dikkat',
+        onPressed: () => pulses++,
+      ),
+    );
+
+    final button = tester.widget<GameButton>(find.byType(GameButton));
+    expect(button.color, AppColors.danger);
+    expect(
+      find.byWidgetPredicate(
+        (w) => w is GameIcon && w.kind == GameIconKind.cross,
+      ),
+      findsOneWidget,
+    );
+    expect(find.bySemanticsLabel('1 DAKİKA İLERLET. Dikkat'), findsOneWidget);
+    await tester.tap(find.text('1 DAKİKA İLERLET'));
+    await tester.pumpAndSettle();
+    expect(pulses, 1);
   });
 
   testWidgets('DepartureBoard shows every line on the board font', (

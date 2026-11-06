@@ -43,6 +43,7 @@
     }
   },
   "advance": "▶  ADVANCE 1 MINUTE",
+  "forecastWarning": "Warning: this minute will fail",
   "cancel": "Cancel",
   "undo": "UNDO",
   "restart": "RESTART",

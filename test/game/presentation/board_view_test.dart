@@ -4,12 +4,14 @@ import 'package:swipeout_last_train/game/domain/control_action.dart';
 import 'package:swipeout_last_train/game/domain/level_definition.dart';
 import 'package:swipeout_last_train/game/domain/node.dart';
 import 'package:swipeout_last_train/game/domain/pulse_forecast.dart';
+import 'package:swipeout_last_train/game/domain/pulse_result.dart';
 import 'package:swipeout_last_train/game/presentation/board/board_layout.dart';
 import 'package:swipeout_last_train/game/presentation/board/board_view.dart';
 import 'package:swipeout_last_train/game/presentation/board/forecast_painter.dart';
 import 'package:swipeout_last_train/game/presentation/board/network_painter.dart';
 import 'package:swipeout_last_train/game/presentation/board/train_sprite.dart';
 import 'package:swipeout_last_train/game/presentation/game/pulse_controller.dart';
+import 'package:swipeout_last_train/game/presentation/theme/app_colors.dart';
 
 import '../../support/graph_builders.dart';
 
@@ -132,7 +134,7 @@ void main() {
         .widgetList<CustomPaint>(find.byType(CustomPaint))
         .map((p) => p.painter)
         .whereType<ForecastPainter>()
-        .single;
+        .firstWhere((p) => p.layer == ForecastLayer.underTrains);
 
     expect(painter().forecast?.moveOf('red_1')!.to, 'B');
     c.advance();
@@ -143,6 +145,13 @@ void main() {
     c.tapNode('B');
     await tester.pump();
     expect(painter().forecast?.moveOf('red_1')!.to, 'C');
+    // The conflict cross is drawn above the trains.
+    final layers = tester
+        .widgetList<CustomPaint>(find.byType(CustomPaint))
+        .map((p) => p.painter)
+        .whereType<ForecastPainter>()
+        .map((p) => p.layer);
+    expect(layers, [ForecastLayer.underTrains, ForecastLayer.overTrains]);
   });
 
   test('a moving train gets an arrow, a standing one the waiting badge', () {
@@ -188,5 +197,70 @@ void main() {
     expect(network(const ToggleSwitch('B')).isOpen('BC'), isTrue);
     expect(network(const ToggleSwitch('B')).isOpen('BD'), isFalse);
     expect(network(null).isOpen('AB'), isTrue, reason: 'trunk is always on');
+  });
+
+  test('trains in a conflict turn red and the conflict node is crossed', () {
+    final level = wrongWayLevel();
+    final painter = ForecastPainter(
+      level: level,
+      forecast: PulseForecast(
+        moves: const [TrainMove(trainId: 'a', from: 'J', to: 'G')],
+        conflict: const PulseFailed(
+          PulseFailure.wrongGoal,
+          trainIds: ['a'],
+          nodeId: 'G',
+        ),
+      ),
+      layout: BoardLayout(size: const Size(400, 400)),
+    );
+    expect(
+      painter.colorFor(const TrainMove(trainId: 'a', from: 'J', to: 'G')),
+      AppColors.danger,
+    );
+    expect(painter.crossAt, 'G');
+    expect(painter.glowingGoals, isEmpty);
+  });
+
+  test('a goal about to receive its train glows', () {
+    final level = ank01();
+    final painter = ForecastPainter(
+      level: level,
+      forecast: PulseForecast(
+        moves: const [TrainMove(trainId: 'red_1', from: 'B', to: 'C')],
+        delivers: const {'red_1'},
+      ),
+      layout: BoardLayout(size: const Size(400, 400)),
+    );
+    expect(painter.crossAt, isNull);
+    expect(painter.glowingGoals, {'C'});
+    expect(
+      painter.colorFor(const TrainMove(trainId: 'red_1', from: 'B', to: 'C')),
+      isNot(AppColors.danger),
+    );
+  });
+
+  test('the cross sits in front of a standing train, not on it', () {
+    final level = jamLevel();
+    final layout = BoardLayout(size: const Size(400, 400));
+    final painter = ForecastPainter(
+      level: level,
+      forecast: PulseForecast(
+        moves: const [
+          TrainMove(trainId: 'a', from: 'M', to: 'N'),
+          TrainMove(trainId: 'b', from: 'N'),
+        ],
+        conflict: const PulseFailed(
+          PulseFailure.blockedByStanding,
+          trainIds: ['a', 'b'],
+          nodeId: 'N',
+        ),
+      ),
+      layout: layout,
+    );
+    final n = layout.toScreen(level.nodes['N']!.position);
+    final m = layout.toScreen(level.nodes['M']!.position);
+    final cross = painter.crossPoint!;
+    expect((cross - n).distance, closeTo(ForecastPainter.crossShift, 0.01));
+    expect((cross - m).distance, lessThan((n - m).distance));
   });
 }

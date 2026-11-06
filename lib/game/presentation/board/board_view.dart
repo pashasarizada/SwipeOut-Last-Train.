@@ -204,6 +204,17 @@ class _BoardViewState extends State<BoardView>
                       bumpNode: _bumpNode,
                     ),
                   ),
+                  Positioned.fill(
+                    child: CustomPaint(
+                      painter: ForecastPainter(
+                        level: _controller.level,
+                        forecast: _controller.forecast,
+                        layout: layout,
+                        layer: ForecastLayer.overTrains,
+                        flow: _idle,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

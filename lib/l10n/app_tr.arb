@@ -16,6 +16,7 @@
   "trainsDelivered": "{done}/{total} TREN",
   "controlsLeft": "Kontrol: {left}/1",
   "advance": "▶  1 DAKİKA İLERLET",
+  "forecastWarning": "Dikkat: bu dakika geçmez",
   "cancel": "İptal",
   "undo": "GERİ AL",
   "restart": "BAŞTAN",

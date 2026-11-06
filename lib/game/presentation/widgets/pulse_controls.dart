@@ -26,6 +26,7 @@ final class PulseControls extends StatelessWidget {
         final playing = idle && !controller.isSolved && !controller.isLost;
         final pending = controller.pending;
         final compact = isCompactScreen(context);
+        final warning = !(controller.forecast?.ok ?? true);
         final undo = GameButton(
           label: l.undo,
           size: GameButtonSize.small,
@@ -70,6 +71,12 @@ final class PulseControls extends StatelessWidget {
               AdvanceLever(
                 label: l.advance,
                 compact: compact,
+                warning: warning,
+                semanticsLabel: [
+                  l.advance,
+                  if (pending != null) l.pendingLabel(pending),
+                  if (warning) l.forecastWarning,
+                ].join('. '),
                 onPressed: playing ? controller.advance : null,
               ),
             ],

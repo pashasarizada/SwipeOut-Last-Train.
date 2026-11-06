@@ -64,6 +64,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get advance => '▶  1 DAKİKA İLERLET';
 
   @override
+  String get forecastWarning => 'Dikkat: bu dakika geçmez';
+
+  @override
   String get cancel => 'İptal';
 
   @override

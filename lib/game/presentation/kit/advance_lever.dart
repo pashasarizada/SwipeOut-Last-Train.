@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import 'game_button.dart';
 import 'game_haptics.dart';
+import 'game_icon.dart';
 
 /// The big "advance one minute" control at the bottom of the platform:
 /// a hero-sized game button with a clock mark and a medium thump.
@@ -12,6 +13,8 @@ final class AdvanceLever extends StatelessWidget {
     required this.label,
     this.onPressed,
     this.compact = false,
+    this.warning = false,
+    this.semanticsLabel,
   });
 
   final String label;
@@ -19,6 +22,14 @@ final class AdvanceLever extends StatelessWidget {
 
   /// On short screens the lever is large instead of hero-sized.
   final bool compact;
+
+  /// The next pulse would fail: the lever turns red and shows a cross,
+  /// but it can still be pulled (docs/superpowers/specs board readability).
+  final bool warning;
+
+  /// What a screen reader says: the label plus the pending control and
+  /// any warning.
+  final String? semanticsLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +40,18 @@ final class AdvanceLever extends StatelessWidget {
         onPressed: onPressed,
         size: compact ? GameButtonSize.large : GameButtonSize.hero,
         haptic: HapticKind.medium,
-        icon: const SizedBox.square(
-          dimension: 26,
-          child: CustomPaint(painter: _ClockPainter()),
-        ),
+        color: warning ? AppColors.danger : AppColors.accentTurquoise,
+        semanticsLabel: semanticsLabel,
+        icon: warning
+            ? const GameIcon(
+                GameIconKind.cross,
+                size: 26,
+                color: AppColors.background,
+              )
+            : const SizedBox.square(
+                dimension: 26,
+                child: CustomPaint(painter: _ClockPainter()),
+              ),
       ),
     );
   }
