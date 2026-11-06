@@ -28,6 +28,20 @@ Kabaca **%85**: içerik, okunurluk, ipucu ve ses tamam; kalan oyuncu testi (zorl
 
 **Sıradaki küçük görev:** birkaç kişiye oynatıp zorluk eğrisini ayarlamak; gerçek iPhone'da ses/haptik kontrolü; mağaza hazırlığı.
 
+## 2026-11-06 (10) — Oyun testi ve tanıtım PDF'i (`main`)
+
+- **AI oyuncu testi:** ajan yalnız ekrana dokunarak oynadı. 20/30 bölüm oynandı (Londra 03–06 ve Moskova bütçe yüzünden kalmadı).
+  - Puanlar: genel 6/10, görsel 8/10, bırakamama 4/10.
+  - Rapor: `docs/playtest/2026-11-06-agent-playtest.md`.
+  - Doğrulananlar:
+    - Londra 02 ile 03 aynı harita.
+    - Saat 00:00'ı geçebiliyor (D-035'in yan etkisi).
+    - "Hiç 3★ yok" bulgusu hata değil; ipucu 3. yıldızı tasarım gereği götürüyor, ama ekranda yazmıyor.
+  - Bulgular TASKS P1'e yazıldı.
+- **Tanıtım ve pazarlama PDF'i:** `docs/pitch/LastTrain-tanitim-ve-pazarlama.pdf`, 6 sayfa. Kaynak dosyaları `docs/pitch/src` altında, `python3 build.py OUT.pdf` ile yeniden üretilir.
+  - Görüntüler gerçek oyun ekranlarından alındı: iPhone 16 Pro simülatörüne Türkçe, tamamlanmış ilerleme yazıldı. Pasaportun 5 damgası, 5 şehir kartı, hat haritası, çarpışma önizlemesi ve "HAT TEMİZ" ekranı var.
+  - Pazar verileri kaynaklı. TL fiyatı ve KPI hedefleri tahmindir.
+
 ## 2026-11-06 (9) — Metro haritası görünümü (`main`)
 
 - Kullanıcı isteği: "metro hatlarını gerçek metroların hatlarına benzetecektik"; seçim: metro haritası görünümü (D-036).
