@@ -70,7 +70,7 @@ final class PulseControls extends StatelessWidget {
                   l.advance,
                   if (pending != null) l.pendingLabel(pending),
                   if (warning) l.forecastWarning,
-                ].join('. '),
+                ].join(l.labelSeparator),
                 onPressed: playing ? controller.advance : null,
               ),
             ],

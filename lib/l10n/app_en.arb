@@ -35,6 +35,19 @@
     }
   },
   "advance": "▶  ADVANCE 1 MINUTE",
+  "meterLabel": "{minutes} · {trains}",
+  "@meterLabel": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      },
+      "trains": {
+        "type": "String"
+      }
+    }
+  },
+  "labelSeparator": ". ",
+  "showRulesAgain": "Show the rules again",
   "forecastWarning": "Warning: this minute will fail",
   "cancel": "Cancel",
   "undo": "UNDO",

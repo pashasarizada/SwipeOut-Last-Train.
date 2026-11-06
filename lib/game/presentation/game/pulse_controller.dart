@@ -67,7 +67,19 @@ final class PulseController extends ChangeNotifier {
   /// including the conflict that would reject it, so the board can warn
   /// before the lever is pulled. Null while a pulse plays and once the run
   /// is over.
-  PulseForecast? get forecast => _canPlan ? _session.forecast(_pending) : null;
+  PulseForecast? get forecast {
+    // Cheap checks first; the run-over test (isLost) simulates every
+    // action, so it runs once per board, not once per read.
+    if (!_acceptsInput) return null;
+    final key = (state, _pending);
+    if (_forecast case (final k, final f) when k == key) return f;
+    final fresh = isSolved || isLost ? null : _session.forecast(_pending);
+    _forecast = (key, fresh);
+    return fresh;
+  }
+
+  /// The last forecast and the board it was worked out for.
+  ((GameState, ControlAction?), PulseForecast?)? _forecast;
 
   /// True between a committed pulse and [finishAnimation].
   bool get isAnimating => _animatingFrom != null;

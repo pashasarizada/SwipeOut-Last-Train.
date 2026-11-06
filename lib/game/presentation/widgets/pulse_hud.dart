@@ -41,9 +41,10 @@ final class PulseHud extends StatelessWidget {
           used: controller.pulses,
           max: controller.maxPulses,
           par: level.tutorial ? null : level.parPulses,
-          semanticsLabel:
-              '${l.pulseCounter(controller.pulses, controller.maxPulses)} · '
-              '${l.trainsDelivered(delivered, trains.length)}',
+          semanticsLabel: l.meterLabel(
+            l.pulseCounter(controller.pulses, controller.maxPulses),
+            l.trainsDelivered(delivered, trains.length),
+          ),
         );
         return Padding(
           padding: const EdgeInsets.fromLTRB(4, 4, 12, 0),
@@ -59,12 +60,18 @@ final class PulseHud extends StatelessWidget {
                     GestureDetector(
                       behavior: HitTestBehavior.opaque,
                       onTap: onBoardTap,
-                      child: DepartureBoard(
-                        color: theme.accentAlt,
-                        lines: [
-                          '${l.levelCode(level)} · ${level.title.of(language)}',
-                          GameTexts.clock(controller.pulses),
-                        ],
+                      excludeFromSemantics: true,
+                      child: Semantics(
+                        button: onBoardTap != null,
+                        onTap: onBoardTap,
+                        onTapHint: onBoardTap == null ? null : l.showRulesAgain,
+                        child: DepartureBoard(
+                          color: theme.accentAlt,
+                          lines: [
+                            '${l.levelCode(level)} · ${level.title.of(language)}',
+                            GameTexts.clock(controller.pulses),
+                          ],
+                        ),
                       ),
                     ),
                     Padding(

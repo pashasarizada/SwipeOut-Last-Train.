@@ -188,6 +188,24 @@ abstract class AppLocalizations {
   /// **'▶  ADVANCE 1 MINUTE'**
   String get advance;
 
+  /// No description provided for @meterLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} · {trains}'**
+  String meterLabel(String minutes, String trains);
+
+  /// No description provided for @labelSeparator.
+  ///
+  /// In en, this message translates to:
+  /// **'. '**
+  String get labelSeparator;
+
+  /// No description provided for @showRulesAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the rules again'**
+  String get showRulesAgain;
+
   /// No description provided for @forecastWarning.
   ///
   /// In en, this message translates to:

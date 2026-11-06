@@ -59,6 +59,17 @@ class AppLocalizationsTr extends AppLocalizations {
   String get advance => '▶  1 DAKİKA İLERLET';
 
   @override
+  String meterLabel(String minutes, String trains) {
+    return '$minutes · $trains';
+  }
+
+  @override
+  String get labelSeparator => '. ';
+
+  @override
+  String get showRulesAgain => 'Kuralları yeniden göster';
+
+  @override
   String get forecastWarning => 'Dikkat: bu dakika geçmez';
 
   @override

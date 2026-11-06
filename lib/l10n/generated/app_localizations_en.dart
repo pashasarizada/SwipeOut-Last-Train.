@@ -59,6 +59,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get advance => '▶  ADVANCE 1 MINUTE';
 
   @override
+  String meterLabel(String minutes, String trains) {
+    return '$minutes · $trains';
+  }
+
+  @override
+  String get labelSeparator => '. ';
+
+  @override
+  String get showRulesAgain => 'Show the rules again';
+
+  @override
   String get forecastWarning => 'Warning: this minute will fail';
 
   @override

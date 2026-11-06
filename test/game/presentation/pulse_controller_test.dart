@@ -247,6 +247,14 @@ void main() {
       expect(c.forecast!.ok, isTrue);
     });
 
+    test('is worked out once per board, not on every read', () async {
+      final (c, _) = await _start(ank01());
+      final first = c.forecast;
+      expect(identical(c.forecast, first), isTrue);
+      c.tapNode('B');
+      expect(identical(c.forecast, first), isFalse);
+    });
+
     test('is empty while a pulse plays and once the run is over', () async {
       final (c, _) = await _start(jamLevel());
       c.advance();
