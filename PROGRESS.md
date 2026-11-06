@@ -8,13 +8,22 @@
 | Görünüm (UI kiti, 5 şehir teması, pasaport, ekran akışı, animasyon) | tamam |
 | **Bölümler** | **30/30** — her biri çözücü + replay + iki ekranda 44 pt testi |
 | Ayarlar (titreşim, hareketi azalt, dil) | tamam |
-| Hayalet tren önizlemesi | tamam |
+| Tahta okunurluğu (oklar, makas yönü, çarpışma önizlemesi, simge HUD, öğretici el) | tamam |
 | Küçük ekran (320×568) düzeni | tamam |
 | Ses efektleri, High Contrast | yok |
 | Gerçek cihaz / Android / insan oyuncu testi | yapılmadı |
 | Mağaza hazırlığı (logo hakları, bundle id, görseller) | yapılmadı |
 
-Kabaca **%75**: içerik ve ürün tamam; kalan ses, oyuncu testi (zorluk eğrisi) ve yayın hazırlığı.
+Kabaca **%80**: içerik ve ürün tamam, tahta artık yazısız okunuyor; kalan Paket C (ipucu, ses), oyuncu testi (zorluk eğrisi) ve yayın hazırlığı.
+
+## 2026-11-06 (5) — tahta okunurluğu, Paket A + B (`main`)
+
+- Kullanıcı isteği: "napacağı yazıyla değil, neyin hareket edip etmeyeceğine göre" anlaşılsın. Simülatörde oynanıp mağaza yorumları araştırıldı (Railbound, Mini Metro, Into the Breach, Hitman GO, Two Dots…); tasarım + plan yazıldı, bağımsız okuyucu kontrolünden geçti (D-030, D-031).
+- **Yeni:** motor tahmini · kapalı makas kolu kesik · hareket okları + bekliyor rozeti · çarpışma çarpısı + kırmızı kol (basılabilir) · teslim parıltısı · `RunMeter` (PULSE/Kontrol/bilet kalktı, "dakika") · kurallar sakin anons · öğretici bölümlerde çizilmiş el.
+- `scripts/check.sh` → No issues found! · **+386 All tests passed**.
+- Simülatör: BAK-02 (oklar, çarpı, kırmızı kol, RunMeter) ve ANK-01 baştan sona elle (el: kol → makas → kol → teslim) doğrulandı; görüntüler `docs/images/v2-ux/13–16`. ANK-02'de el yalnız testle doğrulandı.
+
+**Sıradaki küçük görev:** Paket C — ipucu düğmesi (çözücü bir sonraki hamleyi parlatır, bedeli 3. yıldız) ve ses efektleri.
 
 ## 2026-11-06 (4) — gece çalışmasının devamı (`main`)
 

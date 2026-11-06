@@ -28,6 +28,15 @@
 - [x] **U9 Çarpışma juice + haptik dili** (S, ←U8) — Kabul: geri sıçrama + sarsıntı, durum değişmez.
 - [x] **U10 Doğrulama** (S) — Kabul: tüm ekranların simülatör görüntüleri PROGRESS'te.
 
+## P0 — Tahta okunurluğu: Paket A + B (plan `docs/superpowers/plans/2026-11-06-board-readability.md`) — tamamlandı 06.11.2026
+
+- [x] Motor tahmini `forecast` (niyet + çatışma), 30 bölümde gerçek dakikayla aynı
+- [x] Açık makas kolu, hareket okları, bekliyor rozeti
+- [x] Çarpışma önizlemesi (çarpı + kırmızı ok + kırmızı kol), teslim parıltısı
+- [x] `RunMeter`: tren jetonları + dakika noktaları; "PULSE/Kontrol" ve bilet kalktı
+- [x] Kurallar sakin anons; öğretici bölümlerde çizilmiş el
+- [ ] Paket C: ipucu düğmesi (3. yıldız bedeli), ses + teslim kutlaması, günün bulmacası, ek görevler
+
 ## P1 — V2-B (Ankara + Bakü kabuğu)
 - [x] ANK-03 "İki Vagon" (S) — iki tren, iki makas, par 2; bekleme kafa kafaya çarpışma.
 - [x] ANK-04 "Son Aktarma", ANK-05 "Bir Dakika Daha", ANK-06 "Başkent Finali" — Ankara 6/6, ilk damga basıldı (06.11.2026).
